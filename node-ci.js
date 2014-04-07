@@ -4,7 +4,7 @@ var exec = require('child_process').exec;
 
 http.createServer( function(req, res) {
 
-   var child = exec('ls -la', function (error, stdout, stderr) {
+   var child = exec('git pull origin master', function (error, stdout, stderr) {
         res.writeHead(200, {'Content-Type': 'text/plain' });
 
         res.write('Hello from the QueueSpy CI server.\n');
