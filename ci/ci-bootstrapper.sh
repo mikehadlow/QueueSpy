@@ -2,4 +2,5 @@
 echo Running QueueSpy CI Bootstrapper
 
 git pull origin master
+pwd
 ./ci.sh
