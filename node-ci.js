@@ -21,5 +21,5 @@ http.createServer( function(req, res) {
 
 }).listen(1337);
 
-// log successful start
+// log successful start. Updated.
 console.log('CI server running at http://queuespy.com:1337');
