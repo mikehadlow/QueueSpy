@@ -6,12 +6,14 @@ namespace QueueSpy.Api
 {
     class Program
     {
+		private static string url = "http://localhost:8080/";
+
         static void Main(string[] args)
         {
-			var nancyHost = new NancyHost (new Uri ("http://localhost:8888/"));
+			var nancyHost = new NancyHost (new Uri (url));
 			nancyHost.Start ();
 
-			Console.WriteLine ("Nancy listening on port 8888. Hit <Return> to close.");
+			Console.WriteLine ("Nancy listening on {0}. Hit <Return> to close.", url);
 
 			var are = new AutoResetEvent (false);
 
