@@ -110,3 +110,6 @@ UpgradeLog*.XML
 
 # DS Store
 .DS_Store
+
+# VIM swap files
+*.swp
