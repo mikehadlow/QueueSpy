@@ -6,6 +6,9 @@
 # create a new temp location for nginx.conf
 mkdir -p /tmp/tmp_nginx_conf
 
+# copy over the local nginx configuration. This location is correct for nginx installed with homebrew on OSX. You may have to change it for your setup.
+cp /usr/local/etc/nginx/* /tmp/tmp_nginx_conf/
+
 # copy over the copy of nginx.conf from the repo
 cp $(pwd)/website/nginx.conf /tmp/tmp_nginx_conf/
 
