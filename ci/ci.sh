@@ -1,7 +1,15 @@
 #!/bin/bash
 echo QueueSpy CI Script
 
-docker build -t mikehadlow/website website/
-docker stop nginx_1
-docker rm nginx_1
-docker run -d --name nginx_1 -p 80:80 mikehadlow/website
+docker build -t queuespy/website website/
+docker build -t queuespy/app    app/
+
+docker stop queuespy_app
+docker rm queuespy_app
+docker run -d --name queuespy_app queuespy/app
+
+docker stop queuespy_website
+docker rm queuespy_website
+docker run -d --link queuespy_app:app --name queuespy_website -p 80:80 queuespy/website
+
+

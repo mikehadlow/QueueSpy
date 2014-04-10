@@ -14,6 +14,7 @@ RUN rm -v /etc/nginx/nginx.conf
 
 # Add the nginx.conf from the current directory
 ADD nginx.conf /etc/nginx/
+ADD start_nginx.sh /src/
 
 # Append "daemon off;" to the beginning of the configuration. We DO NOT want Nginx to fork and exit.
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
@@ -25,4 +26,4 @@ ADD sites sites
 EXPOSE  80
 
 # Start Nginx when the container is started
-CMD service nginx start
+CMD /src/start_nginx.sh
