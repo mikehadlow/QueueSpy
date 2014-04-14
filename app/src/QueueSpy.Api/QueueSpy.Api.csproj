@@ -50,6 +50,7 @@
       <HintPath>..\packages\Npgsql.2.1.3\lib\net45\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Version.cs">
@@ -71,5 +72,6 @@
   -->
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="App.config" />
   </ItemGroup>
 </Project>
