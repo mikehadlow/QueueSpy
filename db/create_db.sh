@@ -1,10 +1,14 @@
 #! /bin/bash
 
+id
+
 /etc/init.d/postgresql start
 
 psql --command "CREATE USER queuespy WITH SUPERUSER PASSWORD 'queuespy';"
 
 createdb -O queuespy queuespy
+
+psql -l
 
 for i in /sql/tables/*.sql
 do
