@@ -13,6 +13,9 @@ namespace QueueSpy.Api
 			var nancyHost = new NancyHost (new Uri (url));
 			nancyHost.Start ();
 
+			var heartbeatMonitor = new HeartbeatMonitor ();
+			heartbeatMonitor.Start ();
+
 			Console.WriteLine ("Nancy listening on {0}. Hit <Return> to close.", url);
 
 			var are = new AutoResetEvent (false);
@@ -25,6 +28,7 @@ namespace QueueSpy.Api
 
 			are.WaitOne ();
 			nancyHost.Stop ();
+			heartbeatMonitor.Stop ();
 
 			Console.WriteLine ("Nancy host closed.");
         }
