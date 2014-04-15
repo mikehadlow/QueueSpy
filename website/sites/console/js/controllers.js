@@ -13,6 +13,10 @@ queuespyApp.config(['$routeProvider', function ($routeProvider){
 			templateUrl: 'html/users.html',
 			controller: 'UserController'
 		}).
+		when('/heartbeats', {
+			templateUrl: 'html/heartbeats.html',
+			controller: 'HeartbeatController'
+		}).
 		otherwise({
 			redirectTo: '/version'
 		});
@@ -30,5 +34,11 @@ queuespyControllers.controller('VersionController', function ($scope, $http) {
 queuespyControllers.controller('UserController', function ($scope, $http) {
 	$http.get('/api/user').success(function(data){
 		$scope.users = data;
+	});
+});
+
+queuespyControllers.controller('HeartbeatController', function ($scope, $http) {
+	$http.get('/api/heartbeats').success(function(data){
+		$scope.heartbeats = data;
 	});
 });

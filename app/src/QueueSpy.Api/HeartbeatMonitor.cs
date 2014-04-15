@@ -7,7 +7,7 @@ namespace QueueSpy.Api
 {
 	public class HeartbeatMonitor
 	{
-		private static ConcurrentBag<string> services = new ConcurrentBag<string>();
+		private static HashSet<string> services = new HashSet<string>();
 		private IBus bus;
 
 		public HeartbeatMonitor ()
