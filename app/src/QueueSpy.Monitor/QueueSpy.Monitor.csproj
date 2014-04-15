@@ -36,7 +36,16 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\packages\RabbitMQ.Client.3.2.4\lib\net30\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyNetQ">
+      <HintPath>..\packages\EasyNetQ.0.28.5.245\lib\net40\EasyNetQ.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Version.cs">
@@ -53,4 +62,18 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <ProjectReference Include="..\QueueSpy.Messages\QueueSpy.Messages.csproj">
+      <Project>{CD4FD95E-9F97-45FB-9DA2-ADAAFB835ED1}</Project>
+      <Name>QueueSpy.Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QueueSpy\QueueSpy.csproj">
+      <Project>{C64AA71F-6D86-4412-B128-66D3698FB46E}</Project>
+      <Name>QueueSpy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="App.config" />
+  </ItemGroup>
 </Project>

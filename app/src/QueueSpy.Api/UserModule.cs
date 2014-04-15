@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using Nancy;
 using Npgsql;
 using System.Data;
@@ -8,11 +9,17 @@ namespace QueueSpy.Api
 {
 	public class UserModule : NancyModule
 	{
-		private string connectionString = "Server=127.0.0.1;Port=5432;User Id=mike;Password=;Database=mike";
+		private string connectionString = "";
 
 		public UserModule ()
 		{
+			Initialize ();
 			Get ["/user/"] = parameters => GetAllUsers ();
+		}
+
+		public void Initialize()
+		{
+			connectionString = ConfigurationManager.ConnectionStrings ["queueSpyDb"].ConnectionString;
 		}
 
 		public IEnumerable<User> GetAllUsers()
