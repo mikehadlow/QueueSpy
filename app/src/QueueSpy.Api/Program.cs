@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Nancy.Hosting.Self;
+using Nancy;
 
 namespace QueueSpy.Api
 {
@@ -10,6 +11,8 @@ namespace QueueSpy.Api
 
         static void Main(string[] args)
         {
+			StaticConfiguration.DisableErrorTraces = true;
+
 			var nancyHost = new NancyHost (new Uri (url));
 			nancyHost.Start ();
 

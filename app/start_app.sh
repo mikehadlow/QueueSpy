@@ -1,3 +1,3 @@
 #! /bin/bash
 
-supervisord -n -c supervisord.conf
+supervisord -n -c supervisord.dev.conf
