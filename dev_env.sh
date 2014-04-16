@@ -10,7 +10,7 @@ mkdir -p /tmp/tmp_nginx_conf
 cp /usr/local/etc/nginx/* /tmp/tmp_nginx_conf/
 
 # copy over the copy of nginx.conf from the repo
-cp $(pwd)/website/nginx.conf /tmp/tmp_nginx_conf/
+cp $(pwd)/website/nginx.dev.conf /tmp/tmp_nginx_conf/nginx.conf
 
 # replace the API placeholder location with localhost. So we can run up the mono API locally and have it proxied successfully via nginx
 sed -i '' "s/app_ip_addr/localhost/g" /tmp/tmp_nginx_conf/nginx.conf

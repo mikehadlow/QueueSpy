@@ -15,6 +15,8 @@ RUN rm -v /etc/nginx/nginx.conf
 # Add the nginx.conf from the current directory
 ADD nginx.conf /etc/nginx/
 ADD start_nginx.sh /src/
+ADD queuespy.com.crt /etc/ssl/
+ADD queuespy.com.key /etc/ssl/
 
 # Append "daemon off;" to the beginning of the configuration. We DO NOT want Nginx to fork and exit.
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
@@ -24,6 +26,7 @@ ADD sites sites
 
 # Expose ports
 EXPOSE  80
+EXPOSE	443
 
 # Start Nginx when the container is started
 CMD /src/start_nginx.sh
