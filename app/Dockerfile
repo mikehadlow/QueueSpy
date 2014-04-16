@@ -10,7 +10,7 @@ RUN mkdir -p /var/log/supervisor
 
 ADD     src src
 ADD     docker_start.sh /src/
-ADD     start_app.sh /src/
+ADD     supervisord.conf /src/
 
 # import mozilla root certs so that NuGet can perform HTTPS
 RUN     mozroots --import --sync
