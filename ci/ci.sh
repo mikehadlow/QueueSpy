@@ -8,12 +8,12 @@
 
 echo QueueSpy CI Script
 
-docker build -t queuespy/website website/
-docker build -t queuespy/app    app/
+docker build -t queuespy/website --no-cache=true website/
+docker build -t queuespy/app --no-cache=true app/
 
 docker stop queuespy_rabbit
 docker rm queuespy_rabbit
-docker run -d -p 55672:55672 -e --name queuespy_rabbit RABBITMQ_PASS="i8rUx_32mn" tutum/rabbitmq
+docker run -d -p 55672:55672 --name queuespy_rabbit -e RABBITMQ_PASS="i8rUx_32mn" tutum/rabbitmq
 
 docker stop queuespy_app
 docker rm queuespy_app
