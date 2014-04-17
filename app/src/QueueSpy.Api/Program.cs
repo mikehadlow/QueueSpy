@@ -11,7 +11,7 @@ namespace QueueSpy.Api
 
         static void Main(string[] args)
         {
-			StaticConfiguration.DisableErrorTraces = true;
+			StaticConfiguration.DisableErrorTraces = false;
 
 			var nancyHost = new NancyHost (new Uri (url));
 			nancyHost.Start ();
