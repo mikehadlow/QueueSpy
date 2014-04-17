@@ -34,5 +34,5 @@ docker rm queuespy_website
 docker run -d --link queuespy_app:app --name queuespy_website -p 80:80 -p 443:443 queuespy/website
 
 # remove all untagged images
-docker rmi $( sudo docker images | grep '<none>' | tr -s ' ' | cut -d ' ' -f 3)
+docker rmi $( docker images | grep '<none>' | tr -s ' ' | cut -d ' ' -f 3)
 
