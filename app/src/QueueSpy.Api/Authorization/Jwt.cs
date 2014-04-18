@@ -18,8 +18,8 @@ namespace QueueSpy.Api.Authorization
 	/// </summary>
 	public static class JsonWebToken
 	{
-		private static Dictionary<JwtHashAlgorithm, Func<byte[], byte[], byte[]>> HashAlgorithms;
-		private static JavaScriptSerializer jsonSerializer = new JavaScriptSerializer { RetainCasing = true };
+		private static readonly Dictionary<JwtHashAlgorithm, Func<byte[], byte[], byte[]>> HashAlgorithms;
+		private static readonly JavaScriptSerializer jsonSerializer = new JavaScriptSerializer { RetainCasing = true };
 
 		static JsonWebToken()
 		{
@@ -34,7 +34,7 @@ namespace QueueSpy.Api.Authorization
 		/// <summary>
 		/// Creates a JWT given a payload, the signing key, and the algorithm to use.
 		/// </summary>
-		/// <param name="payload">An arbitrary payload (must be serializable to JSON via <see cref="System.Web.Script.Serialization.JavaScriptSerializer"/>).</param>
+		/// <param name="payload">An arbitrary payload (must be serializable to JSON).</param>
 		/// <param name="key">The key bytes used to sign the token.</param>
 		/// <param name="algorithm">The hash algorithm to use.</param>
 		/// <returns>The generated JWT.</returns>
@@ -62,7 +62,7 @@ namespace QueueSpy.Api.Authorization
 		/// <summary>
 		/// Creates a JWT given a payload, the signing key, and the algorithm to use.
 		/// </summary>
-		/// <param name="payload">An arbitrary payload (must be serializable to JSON via <see cref="System.Web.Script.Serialization.JavaScriptSerializer"/>).</param>
+		/// <param name="payload">An arbitrary payload (must be serializable to JSON).</param>
 		/// <param name="key">The key used to sign the token.</param>
 		/// <param name="algorithm">The hash algorithm to use.</param>
 		/// <returns>The generated JWT.</returns>
@@ -125,7 +125,7 @@ namespace QueueSpy.Api.Authorization
 		}
 
 		/// <summary>
-		/// Given a JWT, decode it and return the payload as an object (by deserializing it with <see cref="System.Web.Script.Serialization.JavaScriptSerializer"/>).
+		/// Given a JWT, decode it and return the payload as an object.
 		/// </summary>
 		/// <param name="token">The JWT.</param>
 		/// <param name="key">The key that was used to sign the JWT.</param>

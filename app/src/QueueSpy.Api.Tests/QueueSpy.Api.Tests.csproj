@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="UserModuleTests.cs" />
     <Compile Include="Authorization\JwtTests.cs" />
+    <Compile Include="LoginModuleTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
