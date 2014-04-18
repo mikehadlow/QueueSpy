@@ -53,6 +53,7 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="UserModuleTests.cs" />
+    <Compile Include="Authorization\JwtTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -68,5 +69,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Authorization\" />
   </ItemGroup>
 </Project>
