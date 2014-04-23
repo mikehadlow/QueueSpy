@@ -8,9 +8,13 @@ namespace QueueSpy.Api
 {
 	public class LoginModule : NancyModule
 	{
+		private readonly string secretKey;
+
 		public LoginModule ()
 		{
 			Post ["/login/"] = _ => LoginHandler(this.Bind<LoginRequest>());
+
+			secretKey = System.Configuration.ConfigurationManager.AppSettings ["SecretKey"];
 		}
 
 		public JwtToken LoginHandler(LoginRequest loginRequest)
@@ -22,7 +26,6 @@ namespace QueueSpy.Api
 				{ "userId", 101 }
 			};
 
-			var secretKey = System.Configuration.ConfigurationManager.AppSettings ["SecretKey"];
 			var token = JsonWebToken.Encode (payload, secretKey, JwtHashAlgorithm.HS256);
 
 			return new JwtToken { Token = token };

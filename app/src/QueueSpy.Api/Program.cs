@@ -42,7 +42,9 @@ namespace QueueSpy.Api
 	{
 		public void Configuration(IAppBuilder app)
 		{
-			app.UseNancy ();
+			app
+				.Use(typeof(QueueSpy.Api.Authorization.JwtOwinAuth))
+				.UseNancy ();
 		}
 	}
 }
