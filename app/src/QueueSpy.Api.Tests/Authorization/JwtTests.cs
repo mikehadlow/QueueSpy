@@ -16,18 +16,14 @@ namespace QueueSpy.Api.Tests.Authorization
 				{ "exp", 123456789 }
 			};
 
-			var secretKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
-			var token = JsonWebToken.Encode (payload, secretKey, JwtHashAlgorithm.HS256);
+			var token = JsonWebToken.Encode (payload, TestAuthValues.SharedSecret, JwtHashAlgorithm.HS256);
 			Console.WriteLine ("Token: '{0}'", token);
 		}
 
 		[Test]
 		public void Should_be_able_to_verify_Jwt()
 		{
-			var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoibWlrZSIsImV4cCI6MTIzNDU2Nzg5fQ.KG-ds05HT7kK8uGZcRemhnw3er_9brQSF1yB2xAwc_E";
-			var secretKey = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
-
-			var jsonPayload = JsonWebToken.DecodeToObject (token, secretKey) as Dictionary<string, object>;
+			var jsonPayload = JsonWebToken.DecodeToObject (TestAuthValues.Token, TestAuthValues.SharedSecret) as Dictionary<string, object>;
 
 			foreach (var item in jsonPayload) {
 				Console.WriteLine ("{0}: {1}", item.Key, item.Value);
