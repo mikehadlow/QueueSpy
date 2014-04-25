@@ -31,8 +31,9 @@ namespace QueueSpy.Api.Authorization
 				if (headers.ContainsKey ("Authorization")) {
 					var token = GetTokenFromAuthorizationHeader (headers ["Authorization"]);
 					try {
-						var payload = JsonWebToken.DecodeToObject (token, secretKey);
-						// TODO: set current user using payload data.
+						var payload = JsonWebToken.DecodeToObject (token, secretKey) as Dictionary<string, object>;
+						environment.Add("queuespy.userId", (int)payload["userId"]);
+						environment.Add("queuespy.email", payload["email"].ToString());
 					} catch (SignatureVerificationException) {
 						return UnauthorizedResponse (environment);
 					}

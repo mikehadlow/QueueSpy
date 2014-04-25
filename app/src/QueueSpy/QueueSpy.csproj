@@ -48,6 +48,7 @@
     </Compile>
     <Compile Include="HeartbeatPublisher.cs" />
     <Compile Include="QueuespyApp.cs" />
+    <Compile Include="Preconditions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

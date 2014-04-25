@@ -57,6 +57,8 @@
     <Compile Include="LoginModuleTests.cs" />
     <Compile Include="Authorization\JwtOwinAuthTests.cs" />
     <Compile Include="TestAuthValues.cs" />
+    <Compile Include="Services\PasswordServiceTests.cs" />
+    <Compile Include="Data\DbReaderTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -75,5 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authorization\" />
+    <Folder Include="Services\" />
+    <Folder Include="Data\" />
   </ItemGroup>
 </Project>
