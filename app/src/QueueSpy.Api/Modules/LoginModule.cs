@@ -9,26 +9,33 @@ namespace QueueSpy.Api
 	public class LoginModule : NancyModule
 	{
 		private readonly string secretKey;
+		private readonly IUserService userService;
 
-		public LoginModule ()
+		public LoginModule (IUserService userService)
 		{
+			Preconditions.CheckNotNull (userService, "userService");
+			this.userService = userService;
+
 			Post ["/login/"] = _ => LoginHandler(this.Bind<LoginRequest>());
 
 			secretKey = System.Configuration.ConfigurationManager.AppSettings ["SecretKey"];
 		}
 
-		public JwtToken LoginHandler(LoginRequest loginRequest)
+		public dynamic LoginHandler(LoginRequest loginRequest)
 		{
-			// TODO: validate user against the user database.
+			if (userService.IsValidUser (loginRequest.email, loginRequest.password)) {
 
-			var payload = new Dictionary<string, object> {
-				{ "email", loginRequest.email },
-				{ "userId", 101 }
-			};
+				var payload = new Dictionary<string, object> {
+					{ "email", loginRequest.email },
+					{ "userId", 101 }
+				};
 
-			var token = JsonWebToken.Encode (payload, secretKey, JwtHashAlgorithm.HS256);
+				var token = JsonWebToken.Encode (payload, secretKey, JwtHashAlgorithm.HS256);
 
-			return new JwtToken { Token = token };
+				return new JwtToken { Token = token };
+			} else {
+				return HttpStatusCode.Unauthorized;
+			}
 		}
 	}
 

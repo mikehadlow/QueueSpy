@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Configuration;
-using Npgsql;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace QueueSpy.Api
 {
@@ -8,6 +8,7 @@ namespace QueueSpy.Api
 	{
 		User GetLoggedInUser();
 		User GetUserByEmail (string email);
+		IEnumerable<User> GetAllUsers();
 		bool IsValidUser (string email, string password);
 		bool IsLoggedIn();
 	}
@@ -15,15 +16,16 @@ namespace QueueSpy.Api
 	public class UserService : IUserService
 	{
 		private User loggedInUser;
-		private readonly string connectionString = "";
 		private readonly IPasswordService passwordService;
+		private readonly IDbReader dbReader;
 
-		public UserService (IPasswordService passwordService)
+		public UserService (IPasswordService passwordService, IDbReader dbReader)
 		{
 			Preconditions.CheckNotNull (passwordService, "passwordService");
-			this.passwordService = passwordService;
+			Preconditions.CheckNotNull (dbReader, "dbReader");
 
-			connectionString = ConfigurationManager.ConnectionStrings ["queueSpyDb"].ConnectionString;
+			this.passwordService = passwordService;
+			this.dbReader = dbReader;
 		}
 
 		public User GetLoggedInUser()
@@ -53,24 +55,17 @@ namespace QueueSpy.Api
 		public User GetUserByEmail(string email)
 		{
 			Preconditions.CheckNotNull (email, "email");
-
-			using (var connection = new NpgsqlConnection (connectionString)) {
-				connection.Open ();
-				var command = new NpgsqlCommand ("select Id, Email, PasswordHash, Salt from \"User\" where Email = ':email'", connection);
-				command.Parameters.Add (new NpgsqlParameter ("email", NpgsqlTypes.NpgsqlDbType.Varchar));
-				command.Parameters[0].Value = email;
-				var reader = command.ExecuteReader ();
-				User user = null;
-				while (reader.Read ()) {
-					user = new User (reader.GetInt32 (0), reader.GetString (1), reader.GetString(2), reader.GetString(3));
-				}
-				if (user == null) {
-					throw new UserNotFoundException ();
-				}
-				return user;
+			var user = dbReader.Get<User> ("Email = :Email", x => x.Email = email).SingleOrDefault ();
+			if (user == null) {
+				throw new UserNotFoundException ();
 			}
+			return user;
 		}
 
+		public IEnumerable<User> GetAllUsers()
+		{
+			return dbReader.Get<User> ();
+		}
 	}
 
 

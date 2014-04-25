@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 
 namespace QueueSpy.Api.Tests
 {
@@ -19,6 +18,7 @@ namespace QueueSpy.Api.Tests
 		{
 			var user = dbReader.GetById<User> (1);
 			Assert.IsNotNull (user);
+			Assert.AreEqual (user.Email, "mike@suteki.co.uk");
 		}
 	}
 }

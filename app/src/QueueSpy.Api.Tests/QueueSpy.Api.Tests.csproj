@@ -46,19 +46,20 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
-    <Compile Include="UserModuleTests.cs" />
     <Compile Include="Authorization\JwtTests.cs" />
     <Compile Include="LoginModuleTests.cs" />
     <Compile Include="Authorization\JwtOwinAuthTests.cs" />
     <Compile Include="TestAuthValues.cs" />
     <Compile Include="Services\PasswordServiceTests.cs" />
     <Compile Include="Data\DbReaderTests.cs" />
+    <Compile Include="Services\UserServiceTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
