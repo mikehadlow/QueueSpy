@@ -36,7 +36,7 @@ queuespyApp.factory('authInterceptor', function ($rootScope, $q, $window, $locat
 			return config;
 		},
 		responseError: function (response) {
-			if(response.status == 401) {
+			if(response.status === 401) {
 				// TODO: better handling of unauthorized response
 				$location.path('/login');
 			}
@@ -49,17 +49,42 @@ queuespyApp.config(function ($httpProvider) {
 	$httpProvider.interceptors.push('authInterceptor');
 });
 
+// Controllers
+
 var queuespyControllers = angular.module('queuespyControllers', []);
 
-queuespyControllers.controller('LoginController', function ($scope, $http, $window) {
+queuespyControllers.controller('ProfileController', function ($scope, $window, $rootScope) {
+
+	var onLoggedIn = function () {
+		$scope.showLogin = false;
+		$scope.email = $window.sessionStorage.email;
+	};
+
+	if(!$window.sessionStorage.token) {
+		$scope.showLogin = true;
+		$scope.email = "";
+	} else {
+		onLoggedIn();
+	}
+
+	$rootScope.$on("LoginController.login", function (event) {
+		onLoggedIn();
+	});
+});
+
+queuespyControllers.controller('LoginController', function ($scope, $http, $window, $location, $rootScope) {
 	$scope.message = '';
 	$scope.user = { email: '', password: '' };
-	$scope.submit= function () {
+	$scope.submit = function () {
 		$http
 			.post('/api/login', $scope.user)
 			.success(function (data, status, headers, config) {
 				$window.sessionStorage.token = data.token;
-				$scope.message = 'Login successful. Welcome.';
+				var user = angular.fromJson($window.atob(data.token.split('.')[1]));
+				$window.sessionStorage.email = user.email;
+				$window.sessionStorage.userId = user.userId;
+				$rootScope.$emit("LoginController.login");
+				$location.path('/');
 			})
 			.error(function (data, status, headers, config) {
 				// Erase the token if the user fails to login
