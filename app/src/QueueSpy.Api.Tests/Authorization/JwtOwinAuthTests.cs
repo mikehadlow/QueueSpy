@@ -7,7 +7,8 @@ namespace QueueSpy.Api.Tests.Authorization
 	[TestFixture ()]
 	public class JwtOwinAuthTests
 	{
-		private const string uri = @"http://localhost:8080/version/";
+		private const string baseUri = @"http://localhost:8080/";
+		private const string versionUri = baseUri + @"version/";
 
 		[Test]
 		[ExpectedException(typeof(WebException))]
@@ -16,7 +17,7 @@ namespace QueueSpy.Api.Tests.Authorization
 			using (var client = new WebClient ()) {
 				client.Headers [HttpRequestHeader.Accept] = "application/json";
 
-				client.DownloadString (uri);
+				client.DownloadString (versionUri);
 			}
 		}
 
@@ -27,8 +28,18 @@ namespace QueueSpy.Api.Tests.Authorization
 				client.Headers [HttpRequestHeader.Accept] = "application/json";
 				client.Headers [HttpRequestHeader.Authorization] = "Bearer " + TestAuthValues.Token;
 
-				var result = client.DownloadString (uri);
+				var result = client.DownloadString (versionUri);
 				Console.WriteLine ("version result: '{0}'", result);
+			}
+		}
+
+		[Test]
+		public void Unauthorized_base_Uri_request_should_be_accepted()
+		{
+			using (var client = new WebClient ()) {
+				client.Headers [HttpRequestHeader.Accept] = "application/json";
+
+				client.DownloadString (baseUri);
 			}
 		}
 	}

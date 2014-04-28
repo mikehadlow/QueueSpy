@@ -6,10 +6,18 @@ namespace QueueSpy.Api.Authorization
 {
 	using AppFunc = Func<IDictionary<string, object>, Task>;
 
+	/// <summary>
+	/// OWIN add-in module that authorizes each request.
+	/// </summary>
 	public class JwtOwinAuth
 	{
 		private readonly AppFunc next;
 		private readonly string secretKey;
+		private readonly HashSet<string> exceptions = new HashSet<string>{ 
+			"/",
+			"/login",
+			"/login/"
+		};
 
 		public JwtOwinAuth (AppFunc next)
 		{
@@ -23,7 +31,7 @@ namespace QueueSpy.Api.Authorization
 			if (path == null) {
 				throw new ApplicationException ("Invalid OWIN request. Expected owin.RequestPath, but not present.");
 			}
-			if (!path.StartsWith("/login")) {
+			if (!exceptions.Contains(path)) {
 				var headers = environment ["owin.RequestHeaders"] as IDictionary<string, string[]>;
 				if (headers == null) {
 					throw new ApplicationException ("Invalid OWIN request. Expected owin.RequestHeaders to be an IDictionary<string, string[]>.");

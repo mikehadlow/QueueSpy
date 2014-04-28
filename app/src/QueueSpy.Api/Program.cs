@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Net;
 using System.Threading;
 using Nancy;
 using Microsoft.Owin.Hosting;
@@ -6,9 +8,9 @@ using Owin;
 
 namespace QueueSpy.Api
 {
-    class Program
+	public class Program
     {
-		private const string url = "http://localhost:8080/";
+		const string url = @"http://+:8080/";
 
         static void Main(string[] args)
         {
