@@ -26,7 +26,7 @@ queuespyApp.config(['$routeProvider', function ($routeProvider){
 		});
 }]);
 
-queuespyApp.factory('authInterceptor', function ($rootScope, $q, $window) {
+queuespyApp.factory('authInterceptor', function ($rootScope, $q, $window, $location) {
 	return {
 		request: function (config) {
 			config.headers = config.headers || {};
@@ -35,12 +35,12 @@ queuespyApp.factory('authInterceptor', function ($rootScope, $q, $window) {
 			}
 			return config;
 		},
-		response: function (response) {
+		responseError: function (response) {
 			if(response.status == 401) {
 				// TODO: better handling of unauthorized response
-				console.log('Unauthorized access to API attempted');
+				$location.path('/login');
 			}
-			return response || $q.when(response);
+			return $q.reject(response);
 		}
 	};
 });
