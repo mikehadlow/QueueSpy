@@ -9,6 +9,10 @@ queuespyApp.config(['$routeProvider', function ($routeProvider){
 			templateUrl: 'html/login.html',
 			controller: 'LoginController'
 		}).
+		when('/logout', {
+			template: ' ',
+			controller: 'LogoutController'
+		}).
 		when('/version', {
 			templateUrl: 'html/version.html',
 			controller: 'VersionController'
@@ -60,15 +64,23 @@ queuespyControllers.controller('ProfileController', function ($scope, $window, $
 		$scope.email = $window.sessionStorage.email;
 	};
 
-	if(!$window.sessionStorage.token) {
+	var onLoggedOut = function () {
 		$scope.showLogin = true;
 		$scope.email = "";
+	};
+
+	if(!$window.sessionStorage.token) {
+		onLoggedOut();
 	} else {
 		onLoggedIn();
 	}
 
 	$rootScope.$on("LoginController.login", function (event) {
 		onLoggedIn();
+	});
+
+	$rootScope.$on("LogoutController.logout", function (event) {
+		onLoggedOut();
 	});
 });
 
@@ -93,6 +105,12 @@ queuespyControllers.controller('LoginController', function ($scope, $http, $wind
 				$scope.message = 'Error: Invalid email or password';
 			});
 	};
+});
+
+queuespyControllers.controller('LogoutController', function ($window, $location, $rootScope) {
+	delete $window.sessionStorage.token;
+	$rootScope.$emit("LogoutController.logout");
+	$location.path('/');
 });
 
 queuespyControllers.controller('VersionController', function ($scope, $http) {
