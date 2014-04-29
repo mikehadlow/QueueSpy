@@ -37,6 +37,7 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="Heartbeat.cs" />
+    <Compile Include="RegisterUser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

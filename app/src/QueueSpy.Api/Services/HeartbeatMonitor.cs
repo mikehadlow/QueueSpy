@@ -5,26 +5,25 @@ using EasyNetQ;
 
 namespace QueueSpy.Api
 {
-	public class HeartbeatMonitor
+	public interface IHeartbeatMonitor
 	{
-		private static HashSet<string> services = new HashSet<string>();
-		private IBus bus;
+		void Start ();
+	}
 
-		public HeartbeatMonitor ()
+	public class HeartbeatMonitor : IHeartbeatMonitor, IDisposable
+	{
+		private readonly static HashSet<string> services = new HashSet<string>();
+		private readonly IBus bus;
+
+		public HeartbeatMonitor (IBus bus)
 		{
+			Preconditions.CheckNotNull (bus, "bus");
+			this.bus = bus;
 		}
 
 		public void Start()
 		{
-			var connectionString = System.Configuration.ConfigurationManager.AppSettings ["RabbitMQ"];
-			bus = RabbitHutch.CreateBus (connectionString);
-
 			bus.Subscribe<QueueSpy.Messages.Heartbeat> ("heartbeatMonitor", OnHeartbeat);
-		}
-
-		public void Stop()
-		{
-			bus.Dispose ();
 		}
 
 		public void OnHeartbeat(QueueSpy.Messages.Heartbeat heartbeat)
@@ -36,6 +35,15 @@ namespace QueueSpy.Api
 		{
 			return services;
 		}
+
+		#region IDisposable implementation
+
+		public void Dispose ()
+		{
+			bus.Dispose ();
+		}
+
+		#endregion
 	}
 }
 

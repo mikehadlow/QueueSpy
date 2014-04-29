@@ -16,7 +16,9 @@ namespace QueueSpy.Api.Authorization
 		private readonly HashSet<string> exceptions = new HashSet<string>{ 
 			"/",
 			"/login",
-			"/login/"
+			"/login/",
+			"/user",
+			"/user/"
 		};
 
 		public JwtOwinAuth (AppFunc next)
