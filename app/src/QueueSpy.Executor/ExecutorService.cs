@@ -31,7 +31,7 @@ namespace QueueSpy.Executor
 			// Find all types in this assembly that implement ICommandHandler<T>
 			var handlerTypes = 
 				from t in this.GetType().Assembly.GetTypes()
-				where typeof(ICommandHandler<>).IsAssignableFrom(t)
+				where t.GetInterfaces ().Any (x => x.Name == "ICommandHandler`1")
 				let messageType = t.GetInterfaces()[0].GetGenericArguments()[0]
 				select new 
 					{ 
@@ -46,9 +46,16 @@ namespace QueueSpy.Executor
 			}
 
 			// register handler instances to receive on the command queue
-			var addMethod = this.GetType().GetMethod ("AddReceiveRegistration");
+			var addMethod = this.GetType().GetMethod ("AddReceiveRegistration", BindingFlags.NonPublic | BindingFlags.Instance);
+			if (addMethod == null) {
+				throw new ApplicationException ("Couldn't resolve AddReceiveRegistration`1");
+			}
+
 			foreach (var handlerType in handlerTypes) {
 				var handler = container.Resolve (handlerType.InterfaceType);
+				if (handler == null) {
+					throw new ApplicationException (string.Format("Couldn't resolve handler: {0}", handlerType.InterfaceType.Name));
+				}
 				addMethod.MakeGenericMethod (handlerType.MessageType).Invoke (this, new object[] {receiveRegistration, handler});
 			}
 		}
@@ -64,5 +71,13 @@ namespace QueueSpy.Executor
 	public interface ICommandHandler<T>
 	{
 		void Handle(T command);
+	}
+
+	public class TestHandler : ICommandHandler<string>
+	{
+		public void Handle(string command)
+		{
+			Console.WriteLine ("Got command {0}");
+		}
 	}
 }
