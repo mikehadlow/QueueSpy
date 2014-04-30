@@ -3,24 +3,27 @@ using EasyNetQ;
 
 namespace QueueSpy
 {
-	public class HeartbeatPublisher
+	public interface IHeartbeatPublisher
 	{
-		private IBus bus;
-		private string source;
-		private System.Threading.Timer timer;
+		void Start();
+	}
 
-		public HeartbeatPublisher (IBus bus, string source)
+	public class HeartbeatPublisher : IHeartbeatPublisher, IDisposable
+	{
+		private readonly IBus bus;
+		private readonly string source;
+		private readonly System.Threading.Timer timer;
+
+		public HeartbeatPublisher (IBus bus)
 		{
 			this.bus = bus;
-			this.source = source;
-
+			this.source = System.Reflection.Assembly.GetEntryAssembly().FullName;
 			timer = new System.Threading.Timer (OnTimer);
-			timer.Change (0, 5000);
 		}
 
-		public void Stop()
+		public void Start()
 		{
-			timer.Dispose ();
+			timer.Change (0, 5000);
 		}
 
 		public void OnTimer(object state)
@@ -31,6 +34,15 @@ namespace QueueSpy
 				// got a timeout exeception, just ignore, the EasyNetQ log will show it anyway.
 			}
 		}
+
+		#region IDisposable implementation
+
+		public void Dispose ()
+		{
+			timer.Dispose ();
+		}
+
+		#endregion
 	}
 }
 

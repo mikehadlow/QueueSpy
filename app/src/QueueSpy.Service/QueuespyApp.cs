@@ -1,17 +1,16 @@
 ﻿using System;
 using EasyNetQ;
 using System.Threading;
-using System.Configuration;
+using TinyIoC;
 
 namespace QueueSpy
 {
-	public class QueuespyApp
+	/// <summary>
+	/// Common startup method for all QueueSpy components. Sets up container, EasyNetQ IBus, and Hearbeat publisher.
+	/// </summary>
+	public static class QueuespyApp
 	{
-		public QueuespyApp ()
-		{
-		}
-
-		public static void Run(Action<IBus> onStart)
+		public static void Run()
 		{
 			var are = new AutoResetEvent (false);
 
@@ -21,17 +20,33 @@ namespace QueueSpy
 				are.Set();
 			};
 
-			var connectionString = System.Configuration.ConfigurationManager.AppSettings ["RabbitMQ"];
-			var bus = RabbitHutch.CreateBus (connectionString);
-			var heartbeatPublisher = new HeartbeatPublisher (bus, System.Reflection.Assembly.GetEntryAssembly().FullName);
+			var container = TinyIoCContainer.Current;
+			container.AutoRegister ();
+			container.Register<IBus> (CreateBus ());
+
+			var service = container.Resolve<IQueueSpyService> ();
+			service.Start ();
+
+			var heartbeatPublisher = container.Resolve<IHeartbeatPublisher> ();
+			heartbeatPublisher.Start ();
 
 			Console.WriteLine ("Service started. Ctrl-C to stop.");
 			are.WaitOne ();
 
-			heartbeatPublisher.Stop ();
-			bus.Dispose ();
-
+			container.Dispose ();
 		}
+
+		public static IBus CreateBus()
+		{
+			var connectionString = System.Configuration.ConfigurationManager.AppSettings ["RabbitMQ"];
+			return RabbitHutch.CreateBus (connectionString);
+		}
+	}
+
+
+	public interface IQueueSpyService
+	{
+		void Start();
 	}
 }
 
