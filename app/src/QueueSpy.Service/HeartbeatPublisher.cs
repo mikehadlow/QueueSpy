@@ -29,7 +29,10 @@ namespace QueueSpy
 		public void OnTimer(object state)
 		{
 			try {
-				bus.Publish (new QueueSpy.Messages.Heartbeat { Source = source });
+				bus.Publish (new QueueSpy.Messages.Heartbeat { 
+					Source = source,
+					DateTime = DateTime.UtcNow
+				});
 			} catch (TimeoutException) {
 				// got a timeout exeception, just ignore, the EasyNetQ log will show it anyway.
 			}

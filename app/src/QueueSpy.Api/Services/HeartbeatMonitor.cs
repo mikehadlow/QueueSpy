@@ -8,11 +8,12 @@ namespace QueueSpy.Api
 	public interface IHeartbeatMonitor
 	{
 		void Start ();
+		IEnumerable<QueueSpy.Messages.Heartbeat> GetListOfHeartbeatServices ();
 	}
 
 	public class HeartbeatMonitor : IHeartbeatMonitor, IDisposable
 	{
-		private readonly static HashSet<string> services = new HashSet<string>();
+		private readonly ConcurrentDictionary<string, QueueSpy.Messages.Heartbeat> services = new ConcurrentDictionary<string, QueueSpy.Messages.Heartbeat> ();
 		private readonly IBus bus;
 
 		public HeartbeatMonitor (IBus bus)
@@ -28,12 +29,12 @@ namespace QueueSpy.Api
 
 		public void OnHeartbeat(QueueSpy.Messages.Heartbeat heartbeat)
 		{
-			services.Add (heartbeat.Source);
+			services.AddOrUpdate (heartbeat.Source, _ => heartbeat, (s, h) => heartbeat);
 		}
 
-		public static IEnumerable<string> GetListOfHeartbeatServices()
+		public IEnumerable<QueueSpy.Messages.Heartbeat> GetListOfHeartbeatServices()
 		{
-			return services;
+			return services.Values;
 		}
 
 		#region IDisposable implementation

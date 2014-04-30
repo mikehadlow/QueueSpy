@@ -5,10 +5,7 @@ namespace QueueSpy.Messages
 	public class Heartbeat
 	{
 		public string Source { get; set; }
-
-		public Heartbeat ()
-		{
-		}
+		public DateTime DateTime { get; set; }
 	}
 }
 
