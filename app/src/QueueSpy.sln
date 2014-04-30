@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueSpy", "QueueSpy\QueueS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueSpy.Service", "QueueSpy.Service\QueueSpy.Service.csproj", "{CDA14634-E796-43B4-8841-B28FA24E4CF3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueSpy.Executor.Tests", "QueueSpy.Executor.Tests\QueueSpy.Executor.Tests.csproj", "{5E4AA5B5-BCF0-4CCA-B988-DBC29A53DA8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{0AEDC275-349B-4444-9C3B-5BD5DB6CC5A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AEDC275-349B-4444-9C3B-5BD5DB6CC5A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AEDC275-349B-4444-9C3B-5BD5DB6CC5A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E4AA5B5-BCF0-4CCA-B988-DBC29A53DA8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E4AA5B5-BCF0-4CCA-B988-DBC29A53DA8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E4AA5B5-BCF0-4CCA-B988-DBC29A53DA8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E4AA5B5-BCF0-4CCA-B988-DBC29A53DA8A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{71F6C802-309C-4B62-9879-E5305A1A5678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{71F6C802-309C-4B62-9879-E5305A1A5678}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71F6C802-309C-4B62-9879-E5305A1A5678}.Release|Any CPU.ActiveCfg = Release|Any CPU
