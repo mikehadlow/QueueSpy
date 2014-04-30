@@ -38,6 +38,7 @@
     </Compile>
     <Compile Include="Heartbeat.cs" />
     <Compile Include="RegisterUser.cs" />
+    <Compile Include="QueueSpyQueues.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

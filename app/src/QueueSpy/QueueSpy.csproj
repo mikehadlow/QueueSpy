@@ -30,34 +30,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\packages\RabbitMQ.Client.3.2.4\lib\net30\RabbitMQ.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.28.5.245\lib\net40\EasyNetQ.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\Version.cs">
       <Link>Properties\Version.cs</Link>
     </Compile>
-    <Compile Include="HeartbeatPublisher.cs" />
-    <Compile Include="QueuespyApp.cs" />
     <Compile Include="Preconditions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\QueueSpy.Messages\QueueSpy.Messages.csproj">
-      <Project>{CD4FD95E-9F97-45FB-9DA2-ADAAFB835ED1}</Project>
-      <Name>QueueSpy.Messages</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

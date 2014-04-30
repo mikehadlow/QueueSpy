@@ -16,7 +16,7 @@ namespace QueueSpy.Api
 		{
 			Preconditions.CheckNotNull (user, "user");
 
-			bus.Publish (new Messages.RegisterUser { 
+			bus.Send (Messages.QueueSpyQueues.CommandQueue, new Messages.RegisterUser { 
 				Email = user.Email,
 				Password = user.Password
 			});

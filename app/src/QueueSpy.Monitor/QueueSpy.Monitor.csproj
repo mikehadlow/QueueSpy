@@ -71,6 +71,10 @@
       <Project>{C64AA71F-6D86-4412-B128-66D3698FB46E}</Project>
       <Name>QueueSpy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QueueSpy.Service\QueueSpy.Service.csproj">
+      <Project>{CDA14634-E796-43B4-8841-B28FA24E4CF3}</Project>
+      <Name>QueueSpy.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
