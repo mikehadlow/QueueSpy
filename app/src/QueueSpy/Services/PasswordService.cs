@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Security.Cryptography;
 
-namespace QueueSpy.Api
+namespace QueueSpy
 {
 	public interface IPasswordService
 	{

@@ -2,7 +2,7 @@
 {
 	public interface IModel
 	{
-		int Id { get; }
+		int Id { get; set; }
 	}
 }
 

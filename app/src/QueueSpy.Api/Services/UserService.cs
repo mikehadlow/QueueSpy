@@ -8,6 +8,7 @@ namespace QueueSpy.Api
 	{
 		User GetLoggedInUser();
 		User GetUserByEmail (string email);
+		bool UserExists (string email);
 		IEnumerable<User> GetAllUsers();
 		bool IsValidUser (string email, string password);
 		bool IsLoggedIn();
@@ -60,6 +61,13 @@ namespace QueueSpy.Api
 				throw new UserNotFoundException ();
 			}
 			return user;
+		}
+
+		public bool UserExists(string email)
+		{
+			Preconditions.CheckNotNull (email, "email");
+			var user = dbReader.Get<User> ("Email = :Email", x => x.Email = email).SingleOrDefault ();
+			return (user != null);
 		}
 
 		public IEnumerable<User> GetAllUsers()

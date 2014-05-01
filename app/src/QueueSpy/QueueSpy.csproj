@@ -37,6 +37,10 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="Preconditions.cs" />
+    <Compile Include="Services\PasswordService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
 </Project>

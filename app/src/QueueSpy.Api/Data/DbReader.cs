@@ -11,8 +11,8 @@ namespace QueueSpy.Api
 {
 	public interface IDbReader
 	{
-		T GetById<T>(int id) where T : class, IModel;
-		IEnumerable<T> Get<T> (string whereClause = null, Action<dynamic> parameters = null) where T : class, IModel;
+		T GetById<T>(int id) where T : class, IModel, new();
+		IEnumerable<T> Get<T> (string whereClause = null, Action<dynamic> parameters = null) where T : class, IModel, new();
 	}
 
 	public class DbReader : IDbReader
@@ -23,7 +23,7 @@ namespace QueueSpy.Api
 			connectionString = ConfigurationManager.ConnectionStrings ["queueSpyDb"].ConnectionString;
 		}
 
-		public T GetById<T> (int id) where T : class, IModel
+		public T GetById<T> (int id) where T : class, IModel, new()
 		{
 			var model = Get<T> ("Id = :Id", x => x.Id = id).SingleOrDefault ();
 			if(model == null) {
@@ -32,7 +32,7 @@ namespace QueueSpy.Api
 			return model;
 		}
 
-		public IEnumerable<T> Get<T> (string whereClause = null, Action<dynamic> parameters = null) where T : class, IModel
+		public IEnumerable<T> Get<T> (string whereClause = null, Action<dynamic> parameters = null) where T : class, IModel, new()
 		{
 			var parameterString = string.Join (", ", typeof(T).GetProperties ().Select (x => x.Name));
 			var sql = string.Format ("select {0} from \"{1}\" {2}", parameterString, typeof(T).Name, whereClause == null ? "" : "where " + whereClause);
@@ -60,13 +60,13 @@ namespace QueueSpy.Api
 			}
 		}
 
-		public T CreateInstanceFromDataReader<T>(IDataReader reader) where T : class, IModel
+		public T CreateInstanceFromDataReader<T>(IDataReader reader) where T : class, IModel, new()
 		{
-			var constructorParameters = typeof(T).GetProperties().Select<PropertyInfo, object>((x, i) => 
-				x.PropertyType == typeof(int) ? (object)reader.GetInt32 (i) : 
-				x.PropertyType == typeof(string) ? (object)reader.GetString (i) : 
-				(object)null).ToArray();
-			return typeof(T).GetConstructors () [0].Invoke (constructorParameters) as T;
+			var model = new T ();
+			foreach (var property in typeof(T).GetProperties()) {
+				property.SetValue (model, reader [property.Name]);
+			}
+			return model;
 		}
 	}
 			

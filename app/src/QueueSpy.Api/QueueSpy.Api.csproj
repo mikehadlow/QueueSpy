@@ -83,7 +83,6 @@
     <Compile Include="Authorization\Jwt.cs" />
     <Compile Include="Authorization\JwtOwinAuth.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Services\PasswordService.cs" />
     <Compile Include="Modules\HeartbeatModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\LoginModule.cs" />

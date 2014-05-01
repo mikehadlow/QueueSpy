@@ -47,6 +47,16 @@
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>..\packages\Npgsql.2.1.3\lib\net45\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\packages\Npgsql.2.1.3\lib\net45\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -54,12 +64,13 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="Authorization\JwtTests.cs" />
-    <Compile Include="LoginModuleTests.cs" />
     <Compile Include="Authorization\JwtOwinAuthTests.cs" />
     <Compile Include="TestAuthValues.cs" />
     <Compile Include="Services\PasswordServiceTests.cs" />
     <Compile Include="Data\DbReaderTests.cs" />
     <Compile Include="Services\UserServiceTests.cs" />
+    <Compile Include="Modules\LoginModuleTests.cs" />
+    <Compile Include="Modules\UserModuleTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -71,6 +82,10 @@
       <Project>{CD4FD95E-9F97-45FB-9DA2-ADAAFB835ED1}</Project>
       <Name>QueueSpy.Messages</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QueueSpy\QueueSpy.csproj">
+      <Project>{C64AA71F-6D86-4412-B128-66D3698FB46E}</Project>
+      <Name>QueueSpy</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -80,5 +95,6 @@
     <Folder Include="Authorization\" />
     <Folder Include="Services\" />
     <Folder Include="Data\" />
+    <Folder Include="Modules\" />
   </ItemGroup>
 </Project>

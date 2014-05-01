@@ -50,6 +50,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QueueSpy.Executor\QueueSpy.Executor.csproj">
@@ -68,5 +69,9 @@
   <ItemGroup>
     <Compile Include="TinyIocGenericRegistrationSpike.cs" />
     <Compile Include="ExecutorServiceTests.cs" />
+    <Compile Include="Data\DataWriterTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 </Project>

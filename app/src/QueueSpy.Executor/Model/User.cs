@@ -1,4 +1,6 @@
-namespace QueueSpy.Api
+﻿using System;
+
+namespace QueueSpy.Executor
 {
 	public class User : IModel
 	{
@@ -8,3 +10,4 @@ namespace QueueSpy.Api
 		public string Salt { get; set; }
 	}
 }
+

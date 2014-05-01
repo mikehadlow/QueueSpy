@@ -1,7 +1,8 @@
-create table "User" 
-(
-	Id		int,
-	Email	varchar(1024),
-	PasswordHash	varchar(1024),
-	Salt	varchar(1024)
-)
+DROP TABLE IF EXISTS "User";
+
+CREATE TABLE "User" (
+	Id				SERIAL PRIMARY KEY,
+	Email			VARCHAR(1024) UNIQUE,
+	PasswordHash	VARCHAR(1024),
+	Salt			VARCHAR(1024)
+);

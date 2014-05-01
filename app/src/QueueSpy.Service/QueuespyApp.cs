@@ -21,7 +21,7 @@ namespace QueueSpy
 			};
 
 			var container = TinyIoCContainer.Current;
-			container.AutoRegister (t => t.Assembly.FullName.StartsWith("QueueSpy."));
+			container.AutoRegister (t => t.Assembly.FullName.StartsWith("QueueSpy"));
 			container.Register<IBus> (CreateBus ());
 
 			var service = container.Resolve<IQueueSpyService> ();
