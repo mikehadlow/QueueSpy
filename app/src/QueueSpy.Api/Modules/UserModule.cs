@@ -9,7 +9,10 @@ namespace QueueSpy.Api
 		public UserModule (IUserService userService, IBus bus) : base("/user")
 		{
 			Get ["/"] = _ => userService.GetAllUsers ();
+
 			Post ["/"] = _ => RegisterUser(bus, userService, this.Bind<RegisterUserPost>());
+
+			Post ["/changePassword"] = _ => ChangePassword (bus, userService, this.Bind<ChangePasswordPost> ());
 		}
 
 		public dynamic RegisterUser(IBus bus, IUserService userService, RegisterUserPost user)
@@ -36,6 +39,32 @@ namespace QueueSpy.Api
 			});
 
 			return HttpStatusCode.Created;
+		}
+
+		public dynamic ChangePassword (IBus bus, IUserService userService, ChangePasswordPost changePassword)
+		{
+			Preconditions.CheckNotNull (bus, "bus");
+			Preconditions.CheckNotNull (userService, "userService");
+			Preconditions.CheckNotNull (changePassword, "changePassword");
+
+			if (string.IsNullOrWhiteSpace (changePassword.oldPassword)) {
+				return Respond.WithBadRequest ("Please enter your old password.");
+			}
+
+			if (string.IsNullOrWhiteSpace (changePassword.newPassword)) {
+				return Respond.WithBadRequest ("Please enter a new password.");
+			}
+
+			var email = this.GetCurrentLoggedInUser().Email;
+			if (userService.IsValidUser(email, changePassword.oldPassword)) {
+				bus.Send(Messages.QueueSpyQueues.CommandQueue, new Messages.ChangePassword {
+					Email = email,
+					NewPassword = changePassword.newPassword
+				});
+				return HttpStatusCode.OK;
+			}
+
+			return Respond.WithBadRequest ("Incorrect Old Password.");
 		}
 	}
 

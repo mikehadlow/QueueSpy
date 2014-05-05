@@ -13,6 +13,10 @@ queuespyApp.config(['$routeProvider', function ($routeProvider){
 			template: ' ',
 			controller: 'LogoutController'
 		}).
+		when('/account', {
+			templateUrl: 'html/account.html',
+			controller: 'AccountController'
+		}).
 		when('/version', {
 			templateUrl: 'html/version.html',
 			controller: 'VersionController'
@@ -111,6 +115,25 @@ queuespyControllers.controller('LogoutController', function ($window, $location,
 	delete $window.sessionStorage.token;
 	$rootScope.$emit("LogoutController.logout");
 	$location.path('/');
+});
+
+queuespyControllers.controller('AccountController', function ($scope, $http) {
+	$scope.user = {};
+	$scope.user.email = window.sessionStorage.email;
+
+	$scope.changePw = { oldPassword: '', newPassword: '' };
+
+	$scope.submitChangePassword = function () {
+		$http
+			.post('/api/user/changePassword', $scope.changePw)
+			.success(function (data, status, headers, config) {
+				$scope.changePw = { oldPassword: '', newPassword: '' };
+				$scope.changePasswordMessage = 'Password successfully changed.'
+			})
+			.error(function (data, status, headers, config) {
+				$scope.changePasswordMessage = data.message;
+			});
+	};
 });
 
 queuespyControllers.controller('VersionController', function ($scope, $http) {

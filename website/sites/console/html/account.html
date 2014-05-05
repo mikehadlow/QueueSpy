@@ -1,0 +1,51 @@
+<div class="row">
+	<h1>Account</h1>
+</div>
+
+<div class="row">
+	<div class="col-sm-2">Email:</div>
+	<div class="col-sm-3">{{user.email}}</div>
+</div>
+
+<div class="row">
+	<h3>Change Password</h3>
+</div>
+
+<form ng-submit="submitChangePassword()" class="form-horizontal" role="form">
+
+	<div class="form-group">
+	  <label for="inputOldPassword" class="col-sm-2 control-label">Old Password</label>
+	  <div class="col-sm-4">
+	    <input ng-model="changePw.oldPassword" type="password" class="form-control" id="inputOldPassword" placeholder="Old Password">
+	  </div>
+	  <div class="col-sm-4">&nbsp;</div>
+	</div>
+
+	<div class="form-group">
+	  <label for="inputNewPassword" class="col-sm-2 control-label">New Password</label>
+	  <div class="col-sm-4">
+	    <input ng-model="changePw.newPassword" type="password" class="form-control" id="inputNewPassword" placeholder="New Password">
+	  </div>
+	  <div class="col-sm-4">&nbsp;</div>
+	</div>
+
+	<div class="form-group">
+	  <div class="col-sm-offset-2 col-sm-4">
+	    <button type="submit" class="btn btn-default">Change Password</button>
+	  </div>
+	</div>
+	<div class="col-sm-offset-2 col-sm-4">
+		<p>{{changePasswordMessage}}</p>
+	</div>
+
+</form>
+
+<div class="row">
+	<h3>Cancel Account</h3>
+</div>
+
+<div class="row">
+  <div class="col-sm-offset-2 col-sm-4">
+    <button class="btn btn-default">Cancel Account</button>
+  </div>
+</div>

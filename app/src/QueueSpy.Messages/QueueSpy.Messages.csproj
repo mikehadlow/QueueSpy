@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CD4FD95E-9F97-45FB-9DA2-ADAAFB835ED1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>QueueSpy.Messages</RootNamespace>
@@ -39,6 +37,7 @@
     <Compile Include="Heartbeat.cs" />
     <Compile Include="RegisterUser.cs" />
     <Compile Include="QueueSpyQueues.cs" />
+    <Compile Include="ChangePassword.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

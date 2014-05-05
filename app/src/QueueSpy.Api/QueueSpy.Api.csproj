@@ -11,8 +11,6 @@
     <AssemblyName>QueueSpy.Api</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -92,6 +90,8 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Data\DbReader.cs" />
+    <Compile Include="Modules\ChangePasswordPost.cs" />
+    <Compile Include="QueueSpyNancyModuleExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
