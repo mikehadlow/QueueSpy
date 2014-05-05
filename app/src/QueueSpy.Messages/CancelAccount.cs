@@ -1,9 +1,8 @@
 ﻿namespace QueueSpy.Messages
 {
-	public class ChangePassword
+	public class CancelAccount
 	{
 		public int UserId { get; set; }
-		public string NewPassword { get; set; }
 	}
 }
 

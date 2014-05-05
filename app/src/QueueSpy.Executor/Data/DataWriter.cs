@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.Dynamic;
-using System.Data;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Reflection;
 using Npgsql;
@@ -13,6 +12,7 @@ namespace QueueSpy.Executor
 	{
 		int Insert<T> (T model) where T : class, IModel;
 		void Delete<T> (int id) where T : class, IModel;
+		void Update<T> (int id, Action<dynamic> updator) where T : class, IModel;
 	}
 
 	public class DataWriter : IDataWriter
@@ -58,6 +58,21 @@ namespace QueueSpy.Executor
 			foreach (var parameter in paramters) {
 				command.Parameters.AddWithValue (parameter.Key, parameter.Value);
 			}
+		}
+
+		public void Update<T> (int id, Action<dynamic> updator) where T : class, IModel
+		{
+			var properties = GetProperties (updator);
+			var sets = string.Join (", ", properties.Select (x => string.Format("{0} = :{0}", x.Key)));
+			var sql = string.Format ("UPDATE \"{0}\" SET {1} WHERE Id = {2}", typeof(T).Name, sets, id);
+			ExecuteSqlNonQuery (sql, properties);
+		}
+
+		IDictionary<string, object> GetProperties (Action<dynamic> updator)
+		{
+			var properties = new ExpandoObject ();
+			updator (properties);
+			return properties;
 		}
 	}
 

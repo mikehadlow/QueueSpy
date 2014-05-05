@@ -45,7 +45,10 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-offset-2 col-sm-4">
-    <button class="btn btn-default">Cancel Account</button>
-  </div>
+  	<div class="col-sm-offset-2 col-sm-4">
+    	<button ng-click="cancelAccount()" class="btn btn-default">Cancel Account</button>
+  	</div>
+  	<div class="col-sm-offset-2 col-sm-4">
+  		<p>{{cancelAccountMessage}}</p>
+	</div>
 </div>

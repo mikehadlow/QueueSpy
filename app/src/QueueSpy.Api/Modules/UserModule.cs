@@ -13,6 +13,8 @@ namespace QueueSpy.Api
 			Post ["/"] = _ => RegisterUser(bus, userService, this.Bind<RegisterUserPost>());
 
 			Post ["/changePassword"] = _ => ChangePassword (bus, userService, this.Bind<ChangePasswordPost> ());
+
+			Post ["/cancelAccount"] = _ => CancelAccount (bus);
 		}
 
 		public dynamic RegisterUser(IBus bus, IUserService userService, RegisterUserPost user)
@@ -55,16 +57,25 @@ namespace QueueSpy.Api
 				return Respond.WithBadRequest ("Please enter a new password.");
 			}
 
-			var email = this.GetCurrentLoggedInUser().Email;
-			if (userService.IsValidUser(email, changePassword.oldPassword)) {
+			var currentUser = this.GetCurrentLoggedInUser();
+			if (userService.IsValidUser(currentUser.Email, changePassword.oldPassword)) {
 				bus.Send(Messages.QueueSpyQueues.CommandQueue, new Messages.ChangePassword {
-					Email = email,
+					UserId = currentUser.UserId,
 					NewPassword = changePassword.newPassword
 				});
 				return HttpStatusCode.OK;
 			}
 
 			return Respond.WithBadRequest ("Incorrect Old Password.");
+		}
+
+		public dynamic CancelAccount (IBus bus)
+		{
+			Preconditions.CheckNotNull (bus, "bus");
+
+			var currentUser = this.GetCurrentLoggedInUser ();
+			bus.Send (Messages.QueueSpyQueues.CommandQueue, new Messages.CancelAccount { UserId = currentUser.UserId });
+			return HttpStatusCode.OK;
 		}
 	}
 

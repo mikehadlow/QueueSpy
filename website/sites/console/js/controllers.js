@@ -117,7 +117,7 @@ queuespyControllers.controller('LogoutController', function ($window, $location,
 	$location.path('/');
 });
 
-queuespyControllers.controller('AccountController', function ($scope, $http) {
+queuespyControllers.controller('AccountController', function ($scope, $http, $window, $location, $rootScope) {
 	$scope.user = {};
 	$scope.user.email = window.sessionStorage.email;
 
@@ -132,6 +132,20 @@ queuespyControllers.controller('AccountController', function ($scope, $http) {
 			})
 			.error(function (data, status, headers, config) {
 				$scope.changePasswordMessage = data.message;
+			});
+	};
+
+	$scope.cancelAccount = function () {
+		$http
+			.post('/api/user/cancelAccount', {})
+			.success(function (data, status, headers, config) {
+				// $scope.cancelAccountMessage = 'Your account has been cancelled.'
+				delete $window.sessionStorage.token;
+				$rootScope.$emit("LogoutController.logout");
+				$location.path('/');
+			})
+			.error(function (data, status, headers, config) {
+				// $scope.cancelAccountMessage = data.message;
 			});
 	};
 });

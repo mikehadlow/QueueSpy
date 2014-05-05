@@ -4,5 +4,6 @@ CREATE TABLE "User" (
 	Id				SERIAL PRIMARY KEY,
 	Email			VARCHAR(1024) UNIQUE,
 	PasswordHash	VARCHAR(1024),
-	Salt			VARCHAR(1024)
+	Salt			VARCHAR(1024),
+	Active			BOOLEAN
 );

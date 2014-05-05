@@ -38,6 +38,7 @@
     <Compile Include="RegisterUser.cs" />
     <Compile Include="QueueSpyQueues.cs" />
     <Compile Include="ChangePassword.cs" />
+    <Compile Include="CancelAccount.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

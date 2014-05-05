@@ -46,7 +46,7 @@ namespace QueueSpy.Api
 
 			try {
 				loggedInUser = GetUserByEmail(email);
-				return passwordService.PasswordValidates(password, loggedInUser.PasswordHash, loggedInUser.Salt);
+				return passwordService.PasswordValidates(password, loggedInUser.PasswordHash, loggedInUser.Salt) && loggedInUser.Active;
 			}
 			catch (UserNotFoundException) {
 				return false;

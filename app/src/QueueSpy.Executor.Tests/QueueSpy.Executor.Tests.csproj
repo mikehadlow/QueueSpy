@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5E4AA5B5-BCF0-4CCA-B988-DBC29A53DA8A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>QueueSpy.Executor.Tests</RootNamespace>
@@ -46,6 +44,7 @@
     <Reference Include="EasyNetQ">
       <HintPath>..\packages\EasyNetQ.0.30.2.251\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

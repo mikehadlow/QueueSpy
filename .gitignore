@@ -112,3 +112,6 @@ UpgradeLog*.XML
 
 # VIM swap files
 *.swp
+
+# Supervisor files
+supervisord.pid

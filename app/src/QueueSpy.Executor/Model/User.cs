@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QueueSpy.Executor
+﻿namespace QueueSpy.Executor
 {
 	public class User : IModel
 	{
@@ -8,6 +6,7 @@ namespace QueueSpy.Executor
 		public string Email { get; set; }
 		public string PasswordHash { get; set; }
 		public string Salt { get; set; }
+		public bool Active { get; set; }
 	}
 }
 

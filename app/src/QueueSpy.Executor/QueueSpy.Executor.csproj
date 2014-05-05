@@ -11,8 +11,6 @@
     <AssemblyName>QueueSpy.Executor</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,6 +51,7 @@
     <Reference Include="Npgsql">
       <HintPath>..\packages\Npgsql.2.1.3\lib\net45\Npgsql.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Version.cs">
@@ -64,6 +63,8 @@
     <Compile Include="Handlers\RegisterUserHandler.cs" />
     <Compile Include="Data\DataWriter.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Handlers\ChangePasswordHandler.cs" />
+    <Compile Include="Handlers\CancelAccountHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

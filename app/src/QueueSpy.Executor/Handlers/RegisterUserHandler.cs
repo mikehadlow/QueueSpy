@@ -1,5 +1,4 @@
-﻿using System;
-using QueueSpy.Messages;
+﻿using QueueSpy.Messages;
 
 namespace QueueSpy.Executor
 {

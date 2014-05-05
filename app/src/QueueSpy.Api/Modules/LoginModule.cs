@@ -25,9 +25,11 @@ namespace QueueSpy.Api
 		{
 			if (userService.IsValidUser (loginRequest.email, loginRequest.password)) {
 
+				var user = userService.GetUserByEmail (loginRequest.email);
+
 				var payload = new Dictionary<string, object> {
-					{ "email", loginRequest.email },
-					{ "userId", 101 }
+					{ "email", user.Email },
+					{ "userId", user.Id }
 				};
 
 				var token = JsonWebToken.Encode (payload, secretKey, JwtHashAlgorithm.HS256);
