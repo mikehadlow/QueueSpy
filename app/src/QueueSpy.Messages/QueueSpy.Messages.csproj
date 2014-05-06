@@ -35,10 +35,14 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="Heartbeat.cs" />
-    <Compile Include="RegisterUser.cs" />
     <Compile Include="QueueSpyQueues.cs" />
-    <Compile Include="ChangePassword.cs" />
-    <Compile Include="CancelAccount.cs" />
+    <Compile Include="Commands\CancelAccount.cs" />
+    <Compile Include="Commands\ChangePassword.cs" />
+    <Compile Include="Commands\RegisterUser.cs" />
+    <Compile Include="SendEmailRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
 </Project>

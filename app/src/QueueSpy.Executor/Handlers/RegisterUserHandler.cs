@@ -6,14 +6,17 @@ namespace QueueSpy.Executor
 	{
 		private readonly IDataWriter dataWriter;
 		private readonly IPasswordService passwordService;
+		private readonly IMailerService mailerService;
 
-		public RegisterUserHandler (IDataWriter dataWriter, IPasswordService passwordService)
+		public RegisterUserHandler (IDataWriter dataWriter, IPasswordService passwordService, IMailerService mailerService)
 		{
 			Preconditions.CheckNotNull (dataWriter, "dataWriter");
 			Preconditions.CheckNotNull (passwordService, "passwordService");
+			Preconditions.CheckNotNull (mailerService, "mailerService");
 
 			this.dataWriter = dataWriter;
 			this.passwordService = passwordService;
+			this.mailerService = mailerService;
 		}
 
 		public void Handle(RegisterUser registerUser)
@@ -27,6 +30,8 @@ namespace QueueSpy.Executor
 			};
 
 			dataWriter.Insert (user);
+
+			mailerService.Email (registerUser.Email, "Welcome to QueueSpy", "Welcome to QueueSpy (better intro message to follow :)");
 		}
 	}
 }
