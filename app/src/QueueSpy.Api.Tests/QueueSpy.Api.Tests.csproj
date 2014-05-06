@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{82D81605-5ECD-4B72-9F5E-E679FC9DBEA2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>QueueSpy.Api.Tests</RootNamespace>
