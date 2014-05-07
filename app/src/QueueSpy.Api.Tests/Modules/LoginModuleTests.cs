@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Net;
 using Nancy.Json;
-using QueueSpy.Api.Authorization;
+using QueueSpy.Authorization;
 
 namespace QueueSpy.Api.Tests
 {

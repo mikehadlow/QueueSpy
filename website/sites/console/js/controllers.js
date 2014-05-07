@@ -1,5 +1,4 @@
-
-// QueueSpy controllers
+// QueueSpy 
 
 var queuespyApp = angular.module('queuespyApp', ['ngRoute', 'queuespyControllers']);
 
@@ -8,6 +7,14 @@ queuespyApp.config(['$routeProvider', function ($routeProvider){
 		when('/login', {
 			templateUrl: 'html/login.html',
 			controller: 'LoginController'
+		}).
+		when('/forgotten-password', {
+			templateUrl: 'html/forgotten-password.html',
+			controller: 'ForgottenPasswordController'
+		}).
+		when('/password-reset', {
+			templateUrl: 'html/password-reset.html',
+			controller: 'PasswordResetController'
 		}).
 		when('/logout', {
 			template: ' ',
@@ -107,6 +114,34 @@ queuespyControllers.controller('LoginController', function ($scope, $http, $wind
 				delete $window.sessionStorage.token;
 
 				$scope.message = 'Error: Invalid email or password';
+			});
+	};
+});
+
+queuespyControllers.controller('ForgottenPasswordController', function ($scope, $http, $window, $location, $rootScope) {
+	$scope.email = '';
+	$scope.submit = function () {
+		$http
+			.post('/api/user/forgottenPassword', { "email": $scope.email })
+			.success(function (data, status, headers, config) {
+				$scope.message = 'We have sent you an email to reset your password.';
+			})
+			.error(function (data, status, headers, config) {
+				$scope.message = data.message;
+			});
+	};
+});
+
+queuespyControllers.controller('PasswordResetController', function ($scope, $http, $routeParams) {
+	$scope.password = '';
+	$scope.submit = function () {
+		$http
+			.post('/api/user/passwordReset', { "newPassword": $scope.password, "token": $routeParams.token })
+			.success(function () {
+				$scope.message = 'Your password has been successfully reset. Please log in as usual.';
+			})
+			.error(function (data) {
+				$scope.message = data.message;
 			});
 	};
 });

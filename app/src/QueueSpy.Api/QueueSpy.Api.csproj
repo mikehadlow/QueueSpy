@@ -78,7 +78,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Authorization\Jwt.cs" />
     <Compile Include="Authorization\JwtOwinAuth.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Modules\HeartbeatModule.cs" />
@@ -92,6 +91,7 @@
     <Compile Include="Data\DbReader.cs" />
     <Compile Include="Modules\ChangePasswordPost.cs" />
     <Compile Include="QueueSpyNancyModuleExtensions.cs" />
+    <Compile Include="Modules\PasswordResetPost.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

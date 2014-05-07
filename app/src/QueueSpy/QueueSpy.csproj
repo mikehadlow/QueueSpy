@@ -46,10 +46,14 @@
     <Compile Include="Preconditions.cs" />
     <Compile Include="Services\PasswordService.cs" />
     <Compile Include="Services\MailerService.cs" />
+    <Compile Include="Authorization\Jwt.cs" />
+    <Compile Include="Services\DateService.cs" />
+    <Compile Include="EasyNetQExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Services\" />
+    <Folder Include="Authorization\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QueueSpy.Messages\QueueSpy.Messages.csproj">

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using QueueSpy.Api.Authorization;
+using QueueSpy.Authorization;
 
 namespace QueueSpy.Api.Tests.Authorization
 {

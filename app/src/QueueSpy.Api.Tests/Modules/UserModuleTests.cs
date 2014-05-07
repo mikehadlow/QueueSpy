@@ -13,14 +13,16 @@ namespace QueueSpy.Api.Tests
 	{
 		private UserModule userModule;
 		private IUserService userService;
+		private IDateService dateService;
 		private EasyNetQ.IBus bus;
 
 		[SetUp]
 		public void SetUp()
 		{
-			userService = Rhino.Mocks.MockRepository.GenerateStub<IUserService> ();
-			bus = Rhino.Mocks.MockRepository.GenerateStub<EasyNetQ.IBus> ();
-			userModule = new UserModule (userService, bus);
+			userService = MockRepository.GenerateStub<IUserService> ();
+			bus = MockRepository.GenerateStub<EasyNetQ.IBus> ();
+			dateService = MockRepository.GenerateStub<IDateService> ();
+			userModule = new UserModule (userService, bus, dateService);
 		}
 
 		[Test, Explicit("Integration test")]
@@ -71,6 +73,17 @@ namespace QueueSpy.Api.Tests
 		{
 			var response = userModule.RegisterUser (bus, userService, new RegisterUserPost { email = "somebody@somewhere.com", password = "what_do_you_think?" });
 			Assert.That (response == Nancy.HttpStatusCode.Created);
+		}
+
+		[Test]
+		public void Should_be_able_to_reset_password()
+		{
+			var secretKey = System.Configuration.ConfigurationManager.AppSettings ["SecretKey"];
+			var response = userModule.PasswordReset (bus, dateService, secretKey, new PasswordResetPost { 
+				token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImluZm9AcXVldWVzcHkuY29tIiwidXNlcklkIjoyLCJleHAiOjEzOTk0NjQwODB9.vJKXvXZYzOmdDPkYIp5E3B25HlD0_WAABlnAj17HVXA",
+				newPassword = "whatever!"
+			});
+			Assert.That (response == Nancy.HttpStatusCode.OK);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using QueueSpy.Authorization;
 
 namespace QueueSpy.Api.Authorization
 {
@@ -17,8 +18,10 @@ namespace QueueSpy.Api.Authorization
 			"/",
 			"/login",
 			"/login/",
-			"/user",
-			"/user/"
+			"/user/forgottenPassword",
+			"/user/forgottenPassword/",
+			"/user/passwordReset",
+			"/user/passwordReset/"
 		};
 
 		public JwtOwinAuth (AppFunc next)
@@ -42,7 +45,7 @@ namespace QueueSpy.Api.Authorization
 					var token = GetTokenFromAuthorizationHeader (headers ["Authorization"]);
 					try {
 						var payload = JsonWebToken.DecodeToObject (token, secretKey) as Dictionary<string, object>;
-						environment.Add("queuespy.userId", (int)payload["userId"]);
+						environment.Add("queuespy.userId", (int)(long)payload["userId"]);
 						environment.Add("queuespy.email", payload["email"].ToString());
 					} catch (SignatureVerificationException) {
 						return UnauthorizedResponse (environment);

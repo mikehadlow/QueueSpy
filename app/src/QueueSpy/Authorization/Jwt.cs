@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using Nancy.Json;
+using Newtonsoft.Json;
 
-namespace QueueSpy.Api.Authorization
+namespace QueueSpy.Authorization
 {
 	public enum JwtHashAlgorithm
 	{
@@ -19,7 +19,6 @@ namespace QueueSpy.Api.Authorization
 	public static class JsonWebToken
 	{
 		private static readonly Dictionary<JwtHashAlgorithm, Func<byte[], byte[], byte[]>> HashAlgorithms;
-		private static readonly JavaScriptSerializer jsonSerializer = new JavaScriptSerializer { RetainCasing = true };
 
 		static JsonWebToken()
 		{
@@ -43,8 +42,8 @@ namespace QueueSpy.Api.Authorization
 			var segments = new List<string>();
 			var header = new { typ = "JWT", alg = algorithm.ToString() };
 
-			byte[] headerBytes = Encoding.UTF8.GetBytes(jsonSerializer.Serialize(header));
-			byte[] payloadBytes = Encoding.UTF8.GetBytes(jsonSerializer.Serialize(payload));
+			byte[] headerBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(header));
+			byte[] payloadBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(payload));
 
 			segments.Add(Base64UrlEncode(headerBytes));
 			segments.Add(Base64UrlEncode(payloadBytes));
@@ -87,7 +86,7 @@ namespace QueueSpy.Api.Authorization
 			byte[] crypto = Base64UrlDecode(parts[2]);
 
 			var headerJson = Encoding.UTF8.GetString(Base64UrlDecode(header));
-			var headerData = jsonSerializer.Deserialize<Dictionary<string, object>>(headerJson);
+			var headerData = JsonConvert.DeserializeObject<Dictionary<string, object>>(headerJson);
 			var payloadJson = Encoding.UTF8.GetString(Base64UrlDecode(payload));
 
 			if (verify)
@@ -135,7 +134,7 @@ namespace QueueSpy.Api.Authorization
 		public static object DecodeToObject(string token, string key, bool verify = true)
 		{
 			var payloadJson = JsonWebToken.Decode(token, key, verify);
-			var payloadData = jsonSerializer.Deserialize<Dictionary<string, object>>(payloadJson);
+			var payloadData = JsonConvert.DeserializeObject<Dictionary<string, object>>(payloadJson);
 			return payloadData;
 		}
 
@@ -171,7 +170,7 @@ namespace QueueSpy.Api.Authorization
 			case 0: break; // No pad chars in this case
 			case 2: output += "=="; break; // Two pad chars
 			case 3: output += "="; break; // One pad char
-			default: throw new System.Exception("Illegal base64url string!");
+			default: throw new Exception("Illegal base64url string!");
 			}
 			var converted = Convert.FromBase64String(output); // Standard base64 decoder
 			return converted;

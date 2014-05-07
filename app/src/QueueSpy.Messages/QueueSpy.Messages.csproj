@@ -40,6 +40,7 @@
     <Compile Include="Commands\ChangePassword.cs" />
     <Compile Include="Commands\RegisterUser.cs" />
     <Compile Include="SendEmailRequest.cs" />
+    <Compile Include="Commands\ForgottenPassword.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

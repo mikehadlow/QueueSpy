@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Nancy;
 using Nancy.ModelBinding;
-using QueueSpy.Api.Authorization;
+using QueueSpy.Authorization;
 
 namespace QueueSpy.Api
 {
