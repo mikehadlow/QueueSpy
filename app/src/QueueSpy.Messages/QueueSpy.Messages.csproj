@@ -41,6 +41,7 @@
     <Compile Include="Commands\RegisterUser.cs" />
     <Compile Include="SendEmailRequest.cs" />
     <Compile Include="Commands\ForgottenPassword.cs" />
+    <Compile Include="Commands\RegisterBroker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -66,6 +66,8 @@
     <Compile Include="Handlers\ChangePasswordHandler.cs" />
     <Compile Include="Handlers\CancelAccountHandler.cs" />
     <Compile Include="Handlers\ForgottenPasswordHandler.cs" />
+    <Compile Include="Model\Broker.cs" />
+    <Compile Include="Handlers\RegisterBrokerHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

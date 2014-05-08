@@ -69,8 +69,10 @@
     <Compile Include="TinyIocGenericRegistrationSpike.cs" />
     <Compile Include="ExecutorServiceTests.cs" />
     <Compile Include="Data\DataWriterTests.cs" />
+    <Compile Include="Handlers\RegisterBrokerHandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Handlers\" />
   </ItemGroup>
 </Project>
