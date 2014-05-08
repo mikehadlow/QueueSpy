@@ -18,6 +18,8 @@ namespace QueueSpy.Api.Authorization
 			"/",
 			"/login",
 			"/login/",
+			"/user",
+			"/user/",
 			"/user/forgottenPassword",
 			"/user/forgottenPassword/",
 			"/user/passwordReset",
