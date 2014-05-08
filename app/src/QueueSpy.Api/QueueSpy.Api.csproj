@@ -92,6 +92,9 @@
     <Compile Include="Modules\ChangePasswordPost.cs" />
     <Compile Include="QueueSpyNancyModuleExtensions.cs" />
     <Compile Include="Modules\PasswordResetPost.cs" />
+    <Compile Include="Modules\BrokerModule.cs" />
+    <Compile Include="Modules\RegisterBrokerPost.cs" />
+    <Compile Include="Model\Broker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
