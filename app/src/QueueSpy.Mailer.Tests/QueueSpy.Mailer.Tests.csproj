@@ -31,15 +31,6 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="AWS.SessionProvider">
-      <HintPath>..\..\lib\aws\Net45\AWS.SessionProvider.dll</HintPath>
-    </Reference>
-    <Reference Include="AWS.TraceListener">
-      <HintPath>..\..\lib\aws\Net45\AWS.TraceListener.dll</HintPath>
-    </Reference>
-    <Reference Include="AWSSDK">
-      <HintPath>..\..\lib\aws\Net45\AWSSDK.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
