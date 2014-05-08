@@ -32,15 +32,6 @@
     <Reference Include="Nancy">
       <HintPath>..\packages\Nancy.0.22.2\lib\net40\Nancy.dll</HintPath>
     </Reference>
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\packages\RabbitMQ.Client.3.2.4\lib\net30\RabbitMQ.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.28.5.245\lib\net40\EasyNetQ.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -56,6 +47,15 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Configuration" />
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\packages\RabbitMQ.Client.3.3.0\lib\net30\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyNetQ">
+      <HintPath>..\packages\EasyNetQ.0.30.2.254\lib\net40\EasyNetQ.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

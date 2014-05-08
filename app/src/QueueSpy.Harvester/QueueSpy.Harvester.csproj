@@ -35,13 +35,13 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="RabbitMQ.Client">
-      <HintPath>..\packages\RabbitMQ.Client.3.2.4\lib\net30\RabbitMQ.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\RabbitMQ.Client.3.3.0\lib\net30\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.28.5.245\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.0.30.2.254\lib\net40\EasyNetQ.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
