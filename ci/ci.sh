@@ -26,6 +26,9 @@ docker rm queuespy_rabbit
 docker stop queuespy_db
 docker rm queuespy_db
 
+# remove all untagged images
+docker rmi $( docker images | grep '<none>' | tr -s ' ' | cut -d ' ' -f 3)
+
 # start the Postgres DB container
 docker run -d --name queuespy_db queuespy/db
 
@@ -33,11 +36,9 @@ docker run -d --name queuespy_db queuespy/db
 docker run -d -p 55672:55672 --name queuespy_rabbit -e RABBITMQ_PASS="i8rUx_32mn" tutum/rabbitmq
 
 # start the application container
-docker run -d --link queuespy_rabbit:rabbit --link queuespy_db:db --name queuespy_app queuespy/app
+docker run -d --link queuespy_rabbit:rabbit --link queuespy_db:db --name queuespy_app -p 9001:9001 queuespy/app
 
 # start the website container
 docker run -d --link queuespy_app:app --name queuespy_website -p 80:80 -p 443:443 queuespy/website
 
-# remove all untagged images
-docker rmi $( docker images | grep '<none>' | tr -s ' ' | cut -d ' ' -f 3)
 
