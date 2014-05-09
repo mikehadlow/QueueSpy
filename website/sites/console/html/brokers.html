@@ -1,0 +1,18 @@
+<div>
+    <h1>Brokers</h1>
+    <a class="btn btn-default" href="#/broker-add">+</a>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>URL</th>
+            <th>Active</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr ng-repeat="broker in brokers">
+            <td>{{broker.id}}</td>
+            <td><a href="{{broker.url}}">{{broker.url}}</a></td>
+            <td>{{broker.active}}</td>
+            <td><a href="#/broker-delete">Delete</a></td>
+        </tr>
+    </table>
+</div>

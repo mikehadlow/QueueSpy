@@ -24,6 +24,14 @@ queuespyApp.config(['$routeProvider', function ($routeProvider){
 			templateUrl: 'html/account.html',
 			controller: 'AccountController'
 		}).
+        when('/brokers', {
+            templateUrl: 'html/brokers.html',
+            controller: 'BrokerController'
+        }).
+        when('/broker-add', {
+            templateUrl: 'html/broker-add.html',
+            controller: 'BrokerAddController'
+        }).
 		when('/version', {
 			templateUrl: 'html/version.html',
 			controller: 'VersionController'
@@ -183,6 +191,35 @@ queuespyControllers.controller('AccountController', function ($scope, $http, $wi
 				// $scope.cancelAccountMessage = data.message;
 			});
 	};
+});
+
+queuespyControllers.controller('BrokerController', function ($scope, $http) {
+    $scope.brokers = [];
+    $http.get('/api/broker').success(function(data) {
+        $scope.brokers = data;
+    });
+});
+
+queuespyControllers.controller('BrokerAddController', function ($scope, $http) {
+    var nullBroker = {
+        url: '',
+        username: '',
+        password: ''
+    };
+
+    $scope.broker = nullBroker;
+
+    $scope.submit = function () {
+        $http
+            .post('/api/broker', $scope.broker)
+            .success(function (data, status, headers, config) {
+                $scope.message = 'Broker registered.';
+                $scope.broker = nullBroker;
+            })
+            .error(function (data, status, headers, config) {
+                $scope.message = data.message;
+            });
+    };
 });
 
 queuespyControllers.controller('VersionController', function ($scope, $http) {

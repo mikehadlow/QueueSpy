@@ -9,7 +9,7 @@ namespace QueueSpy.Api
 	{
 		public BrokerModule (IBus bus, IDbReader dbReader) : base("/broker")
 		{
-			Get ["/"] = _ => dbReader.Get<Broker>("Id = :Id", x => x.Id = this.GetCurrentLoggedInUser ().UserId);
+			Get ["/"] = _ => dbReader.Get<Broker>("UserId = :UserId", x => x.UserId = this.GetCurrentLoggedInUser ().UserId);
 
 			Post ["/"] = _ => RegisterBroker (bus, this.Bind<RegisterBrokerPost>());
 		}

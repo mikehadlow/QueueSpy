@@ -1,0 +1,40 @@
+<div>
+    <h1>Register New Broker</h1>
+
+    <form ng-submit="submit()" class="form-horizontal" role="form">
+
+        <div class="form-group">
+            <label for="inputUrl" class="col-sm-2 control-label">URL</label>
+            <div class="col-sm-4">
+                <input ng-model="broker.url" type="text" class="form-control" id="inputUrl" placeholder="http://mybroker-server.com:15672/">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-4">
+                <input ng-model="broker.username" type="text" class="form-control" id="inputUsername" placeholder="my-username">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-4">
+                <input ng-model="broker.password" type="password" class="form-control" id="inputPassword">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-4">
+                <button type="submit" class="btn btn-default">Register Broker</button>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-6">
+            <p>{{message}}</a>
+        </div>
+    </div>
+</div>
