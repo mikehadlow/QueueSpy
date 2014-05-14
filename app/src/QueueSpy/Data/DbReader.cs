@@ -7,7 +7,7 @@ using System.Data;
 using System.Reflection;
 using Npgsql;
 
-namespace QueueSpy.Api
+namespace QueueSpy
 {
 	public interface IDbReader
 	{
@@ -63,8 +63,8 @@ namespace QueueSpy.Api
 		public T CreateInstanceFromDataReader<T>(IDataReader reader) where T : class, IModel, new()
 		{
 			var model = new T ();
-			foreach (var property in typeof(T).GetProperties()) {
-				property.SetValue (model, reader [property.Name]);
+			foreach (PropertyInfo property in typeof(T).GetProperties()) {
+				property.SetValue ((object)model, (object)reader [property.Name], null);
 			}
 			return model;
 		}

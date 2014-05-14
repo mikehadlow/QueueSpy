@@ -7,12 +7,4 @@
 			QueuespyApp.Run ();
         }
     }
-
-	public class ExecutorService : IQueueSpyService
-	{
-		public void Start()
-		{
-
-		}
-	}
 }

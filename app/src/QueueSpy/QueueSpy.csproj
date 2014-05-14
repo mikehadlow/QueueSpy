@@ -31,11 +31,20 @@
     <Reference Include="RabbitMQ.Client">
       <HintPath>..\packages\RabbitMQ.Client.3.3.0\lib\net30\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.30.2.254\lib\net40\EasyNetQ.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="Mono.Security">
+      <HintPath>..\packages\Npgsql.2.1.3\lib\net40\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\packages\Npgsql.2.1.3\lib\net40\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="EasyNetQ">
+      <HintPath>..\packages\EasyNetQ.0.30.2.257\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -49,11 +58,17 @@
     <Compile Include="Authorization\Jwt.cs" />
     <Compile Include="Services\DateService.cs" />
     <Compile Include="EasyNetQExtensions.cs" />
+    <Compile Include="Data\DbReader.cs" />
+    <Compile Include="Model\Broker.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\IModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Authorization\" />
+    <Folder Include="Data\" />
+    <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QueueSpy.Messages\QueueSpy.Messages.csproj">

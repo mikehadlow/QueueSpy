@@ -1,4 +1,4 @@
-﻿namespace QueueSpy.Api
+﻿namespace QueueSpy
 {
 	public class Broker : IModel
 	{
