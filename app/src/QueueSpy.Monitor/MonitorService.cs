@@ -47,7 +47,7 @@ namespace QueueSpy.Monitor
 			}
 
 			if (!brokerStatus.IsResponding && currentStatus.ContactOK) {
-				bus.Publish (new Messages.BrokerEvent { 
+				bus.SendCommand (new Messages.BrokerEvent { 
 					BrokerId = brokerStatus.BrokerId,
 					EventTypeId = (int)EventType.BrokerContactLost,
 					Description = "Broker Contact Lost.",
@@ -57,7 +57,7 @@ namespace QueueSpy.Monitor
 			}
 
 			if (brokerStatus.IsResponding && !currentStatus.ContactOK) {
-				bus.Publish (new Messages.BrokerEvent {
+				bus.SendCommand (new Messages.BrokerEvent {
 					BrokerId = brokerStatus.BrokerId,
 					EventTypeId = (int)EventType.BrokerContactEstablished,
 					Description = "Broker Contact Established.",
