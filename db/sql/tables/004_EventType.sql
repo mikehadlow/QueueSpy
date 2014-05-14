@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS "EventType";
 
 CREATE TABLE "EventType" (
-	Id				SERIAL PRIMARY KEY,
+	Id				INT UNIQUE PRIMARY KEY,
 	Description		VARCHAR (1024)
 );

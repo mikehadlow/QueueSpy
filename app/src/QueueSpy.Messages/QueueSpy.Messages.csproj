@@ -43,6 +43,7 @@
     <Compile Include="Commands\ForgottenPassword.cs" />
     <Compile Include="Commands\RegisterBroker.cs" />
     <Compile Include="BrokerStatus.cs" />
+    <Compile Include="Commands\BrokerEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
