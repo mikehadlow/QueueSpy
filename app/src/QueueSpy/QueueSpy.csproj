@@ -62,6 +62,9 @@
     <Compile Include="Model\Broker.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\IModel.cs" />
+    <Compile Include="Model\BrokerStatus.cs" />
+    <Compile Include="Model\EventType.cs" />
+    <Compile Include="Model\BrokerEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

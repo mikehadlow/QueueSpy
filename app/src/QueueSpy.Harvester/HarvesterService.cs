@@ -33,7 +33,7 @@ namespace QueueSpy.Harvester
 			var brokers = dbReader.Get<Broker> ("Active = TRUE");
 
 			foreach (var broker in brokers) {
-				var status = new BrokerStatus {
+				var status = new Messages.BrokerStatus {
 						BrokerId = broker.Id,
 						UserId = broker.UserId,
 						Url = broker.Url,
