@@ -7,17 +7,20 @@ namespace QueueSpy.Monitor
 	{
 		private readonly IBus bus;
 		private readonly IDbReader dbReader;
+		private readonly ILogger logger;
 
 		private readonly IDictionary<int, QueueSpy.BrokerStatus> brokerStatuses = 
 			new Dictionary<int, QueueSpy.BrokerStatus> ();
 
-		public MonitorService(IBus bus, IDbReader dbReader)
+		public MonitorService(IBus bus, IDbReader dbReader, ILogger logger)
 		{
 			Preconditions.CheckNotNull (bus, "bus");
 			Preconditions.CheckNotNull (dbReader, "dbReader");
+			Preconditions.CheckNotNull (logger, "logger");
 
 			this.bus = bus;
 			this.dbReader = dbReader;
+			this.logger = logger;
 		}
 
 		public void Start()
@@ -35,6 +38,8 @@ namespace QueueSpy.Monitor
 
 		void OnBrokerStatus (QueueSpy.Messages.BrokerStatus brokerStatus)
 		{
+			logger.Log ("BrokerStatus received, id: {0}.", brokerStatus.BrokerId);
+
 			var currentStatus = new QueueSpy.BrokerStatus { 
 				BrokerId = brokerStatus.BrokerId,
 				ContactOK = false
@@ -54,6 +59,7 @@ namespace QueueSpy.Monitor
 					DateTimeUTC = System.DateTime.UtcNow
 				});
 				brokerStatuses [brokerStatus.BrokerId].ContactOK = false;
+				logger.Log ("Broker, id: {0}, Lost Contact.", brokerStatus.BrokerId);
 			}
 
 			if (brokerStatus.IsResponding && !currentStatus.ContactOK) {
@@ -64,6 +70,7 @@ namespace QueueSpy.Monitor
 					DateTimeUTC = System.DateTime.UtcNow
 				});
 				brokerStatuses [brokerStatus.BrokerId].ContactOK = true;
+				logger.Log ("Broker, id: {0}, Contact Established.", brokerStatus.BrokerId);
 			}
 		}
 	}

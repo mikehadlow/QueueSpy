@@ -43,7 +43,7 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.30.2.257\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.0.30.2.258\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -64,12 +64,17 @@
       <Project>{CD4FD95E-9F97-45FB-9DA2-ADAAFB835ED1}</Project>
       <Name>QueueSpy.Messages</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QueueSpy\QueueSpy.csproj">
+      <Project>{C64AA71F-6D86-4412-B128-66D3698FB46E}</Project>
+      <Name>QueueSpy</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TinyIocGenericRegistrationSpike.cs" />
     <Compile Include="ExecutorServiceTests.cs" />
     <Compile Include="Data\DataWriterTests.cs" />
     <Compile Include="Handlers\RegisterBrokerHandlerTests.cs" />
+    <Compile Include="Handlers\BrokerEventHandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

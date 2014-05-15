@@ -11,14 +11,17 @@ namespace QueueSpy.Executor
 	{
 		private readonly IBus bus;
 		private readonly TinyIoCContainer container;
+		private readonly ILogger logger;
 
-		public ExecutorService(IBus bus, TinyIoCContainer container)
+		public ExecutorService(IBus bus, TinyIoCContainer container, ILogger logger)
 		{
 			Preconditions.CheckNotNull (bus, "bus");
 			Preconditions.CheckNotNull (container, "container");
+			Preconditions.CheckNotNull (logger, "logger");
 
 			this.bus = bus;
 			this.container = container;
+			this.logger = logger;
 		}
 
 		public void Start()
@@ -43,6 +46,7 @@ namespace QueueSpy.Executor
 			// register all discovered handlers with the container
 			foreach (var handlerType in handlerTypes) {
 				container.Register (handlerType.InterfaceType, handlerType.HandlerType);
+				logger.Log ("Registered handler: {0} for message type {1}", handlerType.HandlerType.Name, handlerType.MessageType.Name);
 			}
 
 			// register handler instances to receive on the command queue

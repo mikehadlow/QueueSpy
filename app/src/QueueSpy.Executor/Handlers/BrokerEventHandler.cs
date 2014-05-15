@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace QueueSpy.Executor
 {
@@ -22,7 +23,7 @@ namespace QueueSpy.Executor
 
 			var brokerEvent = new QueueSpy.Executor.BrokerEvent {
 				BrokerId = command.BrokerId,
-				EventTypeId = (EventType)command.EventTypeId,
+				EventTypeId = command.EventTypeId,
 				DateTimeUTC = command.DateTimeUTC,
 				Description = command.Description
 			};
@@ -30,8 +31,20 @@ namespace QueueSpy.Executor
 			dataWriter.Insert (brokerEvent);
 
 			// update status ...
+			var currentStatus = dbReader.Get<QueueSpy.BrokerStatus> ("BrokerId = :BrokerId", x => x.BrokerId = command.BrokerId).FirstOrDefault();
+			if(currentStatus == null) {
+				currentStatus = new QueueSpy.BrokerStatus { 
+					ContactOK = false,
+					StatusText = "Pending Contact."
+				};
 
-			var currentStatus = dbReader.GetById<QueueSpy.BrokerStatus> (command.BrokerId);
+				var id = dataWriter.Insert (new Executor.BrokerStatus {
+					ContactOK = currentStatus.ContactOK,
+					StatusText = currentStatus.StatusText,
+					BrokerId = command.BrokerId
+				});
+				currentStatus.Id = id;
+			}
 
 			if (currentStatus.ContactOK && command.EventTypeId == (int)EventType.BrokerContactLost) {
 				dataWriter.Update<Executor.BrokerStatus> (currentStatus.Id, x => {
@@ -41,7 +54,7 @@ namespace QueueSpy.Executor
 			}
 
 			if (!currentStatus.ContactOK && command.EventTypeId == (int)EventType.BrokerContactEstablished) {
-				dataWriter.Update<BrokerStatus> (currentStatus.Id, x => {
+				dataWriter.Update<Executor.BrokerStatus> (currentStatus.Id, x => {
 					x.ContactOK = true;
 					x.StatusText = "OK";
 				});

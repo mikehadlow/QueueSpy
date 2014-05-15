@@ -19,7 +19,7 @@ namespace QueueSpy.Harvester.Tests
 			bus = MockRepository.GenerateStub<IBus> ();
 			dbReader = MockRepository.GenerateStub<IDbReader> ();
 
-			harvesterService = new HarvesterService (bus, dbReader);
+			harvesterService = new HarvesterService (bus, dbReader, new Logger());
 		}
 
 		[Test]

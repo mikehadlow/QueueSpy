@@ -11,15 +11,18 @@ namespace QueueSpy.Harvester
 		private const int pollingIntervalSeconds = 5;
 		private readonly IBus bus;
 		private readonly IDbReader dbReader;
+		private readonly ILogger logger;
 		private readonly Timer timer;
 
-		public HarvesterService (IBus bus, IDbReader dbReader)
+		public HarvesterService (IBus bus, IDbReader dbReader, ILogger logger)
 		{
 			Preconditions.CheckNotNull (bus, "bus");
 			Preconditions.CheckNotNull (dbReader, "dbReader");
+			Preconditions.CheckNotNull (logger, "logger");
 
 			this.bus = bus;
 			this.dbReader = dbReader;
+			this.logger = logger;
 			this.timer = new Timer (OnTimer);
 		}
 
@@ -33,28 +36,35 @@ namespace QueueSpy.Harvester
 			var brokers = dbReader.Get<Broker> ("Active = TRUE");
 
 			foreach (var broker in brokers) {
+
+				logger.Log ("Querying broker: {0}", broker.Url);
+
 				var status = new Messages.BrokerStatus {
 						BrokerId = broker.Id,
 						UserId = broker.UserId,
 						Url = broker.Url,
 				};
 
-				var part = BuildBrokerUrl (broker.Url);
-				var client = new ManagementClient (part.HostPart, broker.Username, broker.Password, part.Port, true);
-
 				try {
-					var overview = client.GetOverview ();
-					status.IsResponding = true;
-					status.RabbitMQVersion = overview.ManagementVersion;
+					var part = BuildBrokerUrl (broker.Url);
+					var client = new ManagementClient (part.HostPart, broker.Username, broker.Password, part.Port, true);
 
-					bus.Publish (status);
+					try {
+						var overview = client.GetOverview ();
+						status.IsResponding = true;
+						status.RabbitMQVersion = overview.ManagementVersion;
 
-				} catch (Exception e) {
+					} catch (Exception e) {
+						status.IsResponding = false;
+						status.ErrorMessage = string.Format ("{0}: {1}", e.GetType ().Name, e.Message);
+					}
+
+				} catch (UrlParseException ex) {
 					status.IsResponding = false;
-					status.ErrorMessage = string.Format ("{0}: {1}", e.GetType ().Name, e.Message);
-
-					bus.Publish (status);
+					status.ErrorMessage = string.Format ("{0}", ex.Message);
 				}
+
+				bus.Publish (status);
 			}
 		}
 
@@ -63,10 +73,10 @@ namespace QueueSpy.Harvester
 			var regex = new System.Text.RegularExpressions.Regex ("(https?://[^:]*):([0-9]+)");
 			var result = regex.Match (url);
 			if (!result.Success) {
-				throw new ApplicationException (string.Format ("Failed to parse broker Url: {0}", url));
+				throw new UrlParseException (string.Format ("Failed to parse broker Url: {0}", url));
 			}
 			if (result.Groups.Count != 3) {
-				throw new ApplicationException (string.Format ("URL regex matched, 3 groups were not returned. Url: '{0}'", url));
+				throw new UrlParseException (string.Format ("URL regex matched, 3 groups were not returned. Url: '{0}'", url));
 			}
 			return new UrlPart { HostPart = result.Groups[1].ToString(), Port = int.Parse(result.Groups[2].ToString()) };
 		}
@@ -80,6 +90,43 @@ namespace QueueSpy.Harvester
 		public void Dispose ()
 		{
 			timer.Dispose ();
+		}
+	}
+
+	[Serializable]
+	public class UrlParseException : Exception
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:UrlParseException"/> class
+		/// </summary>
+		public UrlParseException ()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:UrlParseException"/> class
+		/// </summary>
+		/// <param name="message">A <see cref="T:System.String"/> that describes the exception. </param>
+		public UrlParseException (string message) : base (message)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:UrlParseException"/> class
+		/// </summary>
+		/// <param name="message">A <see cref="T:System.String"/> that describes the exception. </param>
+		/// <param name="inner">The exception that is the cause of the current exception. </param>
+		public UrlParseException (string message, Exception inner) : base (message, inner)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:UrlParseException"/> class
+		/// </summary>
+		/// <param name="context">The contextual information about the source or destination.</param>
+		/// <param name="info">The object that holds the serialized object data.</param>
+		protected UrlParseException (System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (info, context)
+		{
 		}
 	}
 }

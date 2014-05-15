@@ -17,7 +17,7 @@ namespace QueueSpy.Executor.Tests
 			var bus = MockRepository.GenerateStub<IBus> ();
 			var container = TinyIoC.TinyIoCContainer.Current;
 
-			executorService = new ExecutorService (bus, container);
+			executorService = new ExecutorService (bus, container, new Logger());
 		}
 
 		[Test ()]
