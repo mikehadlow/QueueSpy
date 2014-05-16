@@ -70,6 +70,8 @@
     <Compile Include="Services\UserServiceTests.cs" />
     <Compile Include="Modules\LoginModuleTests.cs" />
     <Compile Include="Modules\UserModuleTests.cs" />
+    <Compile Include="Modules\BrokerModuleTests.cs" />
+    <Compile Include="NancyModuleTestExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

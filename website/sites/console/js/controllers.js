@@ -32,6 +32,13 @@ queuespyApp.config(['$routeProvider', function ($routeProvider){
             templateUrl: 'html/broker-add.html',
             controller: 'BrokerAddController'
         }).
+        when('/brokers/:brokerId', {
+            templateUrl: 'html/broker-detail.html',
+            controller: 'BrokerDetailController'
+        }).
+        when('/brokers/delete/:brokerId', {
+            template: 'TODO: Delete the broker.'
+        }).
 		when('/version', {
 			templateUrl: 'html/version.html',
 			controller: 'VersionController'
@@ -220,6 +227,24 @@ queuespyControllers.controller('BrokerAddController', function ($scope, $http) {
                 $scope.message = data.message;
             });
     };
+});
+
+queuespyControllers.controller('BrokerDetailController', function ($scope, $http, $routeParams) {
+    $scope.broker = {};
+    $scope.brokerStatus = {};
+    $scope.brokerEvents = [];
+
+    var id = $routeParams.brokerId;
+
+    $http.get('/api/broker/' + id).success(function(data) {
+        $scope.broker = data;
+    });
+    $http.get('/api/broker/status/' + id).success(function(data) {
+        $scope.brokerStatus = data;
+    });
+    $http.get('/api/broker/events/' + id).success(function(data) {
+        $scope.brokerEvents = data;
+    });
 });
 
 queuespyControllers.controller('VersionController', function ($scope, $http) {

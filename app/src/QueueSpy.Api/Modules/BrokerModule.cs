@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Nancy;
 using Nancy.ModelBinding;
 using EasyNetQ;
@@ -12,6 +13,8 @@ namespace QueueSpy.Api
 			Get ["/"] = _ => dbReader.Get<Broker>("UserId = :UserId", x => x.UserId = this.GetCurrentLoggedInUser ().UserId);
 
 			Get ["/{id}"] = parameters => GetBroker (dbReader, parameters.id);
+
+			Get ["/status/{id}"] = parameters => GetStatus (dbReader, parameters.id);
 
 			Get ["/events/{id}"] = parameters => GetEvents (dbReader, parameters.id);
 
@@ -57,10 +60,24 @@ namespace QueueSpy.Api
 		{
 			try {
 				RetrieveBroker(dbReader, id);
-			} catch (Exception) {
+			} catch (BrokerNotFoundException) {
 				return HttpStatusCode.NotFound;
 			}
 			return dbReader.Get<BrokerEvent> ("BrokerId = :BrokerId", x => x.BrokerId = id);
+		}
+
+		public dynamic GetStatus (IDbReader dbReader, int id)
+		{
+			try {
+				RetrieveBroker(dbReader, id);
+			} catch (BrokerNotFoundException) {
+				return HttpStatusCode.NotFound;
+			}
+			var status = dbReader.Get<BrokerStatus> ("BrokerId = :BrokerId", x => x.BrokerId = id).FirstOrDefault ();
+			if (status == null) {
+				return HttpStatusCode.NotFound;
+			}
+			return status;
 		}
 
 		public Broker RetrieveBroker(IDbReader dbReader, int id)

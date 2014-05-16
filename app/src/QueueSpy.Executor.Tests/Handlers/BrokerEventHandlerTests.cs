@@ -18,6 +18,7 @@ namespace QueueSpy.Executor.Tests
 		}
 
 		[Test ()]
+		[Explicit("Requires database on localhost.")]
 		public void Should_insert_brokerEvent ()
 		{
 			handler.Handle (new QueueSpy.Messages.BrokerEvent { 

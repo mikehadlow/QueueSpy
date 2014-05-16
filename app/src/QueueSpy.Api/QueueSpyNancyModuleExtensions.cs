@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Nancy;
 using Nancy.Owin;
 
@@ -8,7 +9,13 @@ namespace QueueSpy.Api
 	{
 		public static CurrentLoggedInUser GetCurrentLoggedInUser(this NancyModule module)
 		{
-			var env = module.Context.GetOwinEnvironment();
+			IDictionary<string, object> env;
+			try {
+				env = module.Context.GetOwinEnvironment();
+			} catch (NullReferenceException) {
+				throw new ApplicationException ("OWIN environment has not been set.");
+			}
+
 			if (!(env.ContainsKey ("queuespy.email") && env.ContainsKey ("queuespy.userId"))) {
 				throw new ApplicationException ("Missing keys: 'queuespy.email' and/or 'queuespy.userId'");
 			}

@@ -1,0 +1,18 @@
+<div class="row">
+    <h1>Broker {{broker.url}}</h1>
+    <p>Status: {{brokerStatus.statusText}}</p>
+</div>
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Event</th>
+            <th>Time UTC</th>
+        </tr>
+        <tr ng-repeat="event in brokerEvents">
+            <td>{{event.id}}</td>
+            <td>{{event.description}}</td>
+            <td>{{event.dateTimeUTC}}</td>
+        </tr>
+    </table>
+</div>
