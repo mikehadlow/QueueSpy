@@ -1,7 +1,10 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Reflection;
 using TinyIoC;
+using QueueSpy.Service;
 
 namespace QueueSpy.Executor.Tests
 {
@@ -30,6 +33,17 @@ namespace QueueSpy.Executor.Tests
 
 			container.Dispose ();
 		}
+
+		[Test]
+		public void Should_be_able_to_resolve_all_implementors_of_an_interface()
+		{
+			var container = TinyIoCContainer.Current;
+			container.AutoRegister (t => t.Assembly == this.GetType ().Assembly);
+
+			var things = container.ResolveImplementationsOf<IThing> (this);
+
+			Assert.AreEqual (things.Count (), 2);
+		}
 	}
 
 	public interface IThing
@@ -42,6 +56,24 @@ namespace QueueSpy.Executor.Tests
 		public void Do()
 		{
 			Console.WriteLine("Did something!");
+		}
+	}
+
+	public class AnotherThing : IThing
+	{
+		public void Do()
+		{
+			Console.WriteLine ("I also did something!");
+		}
+	}
+
+	public class ThingUser
+	{
+		public IEnumerable<IThing> Things { get; set; }
+
+		public ThingUser(IEnumerable<IThing> things)
+		{
+			this.Things = things;
 		}
 	}
 

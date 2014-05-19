@@ -54,6 +54,18 @@ namespace QueueSpy.Harvester
 						status.IsResponding = true;
 						status.RabbitMQVersion = overview.ManagementVersion;
 
+						var connections = client.GetConnections();
+						foreach (var connection in connections) {
+							var connectionMessage = new Messages.Connection { Name = connection.Name };
+							foreach (var property in connection.ClientProperties.PropertiesDictionary) {
+								connectionMessage.ClientProperties.Add(new Messages.ClientProperty {
+									Key = property.Key,
+									Value = property.Value.ToString()
+								});
+							}
+							status.Connections.Add(connectionMessage);
+						}
+
 					} catch (Exception e) {
 						status.IsResponding = false;
 						status.ErrorMessage = string.Format ("{0}: {1}", e.GetType ().Name, e.Message);

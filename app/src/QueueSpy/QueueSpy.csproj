@@ -65,6 +65,8 @@
     <Compile Include="Model\BrokerStatus.cs" />
     <Compile Include="Model\EventType.cs" />
     <Compile Include="Model\BrokerEvent.cs" />
+    <Compile Include="Model\Connection.cs" />
+    <Compile Include="Model\ClientProperty.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

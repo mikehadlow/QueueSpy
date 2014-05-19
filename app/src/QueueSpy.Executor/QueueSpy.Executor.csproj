@@ -102,5 +102,6 @@
     <Folder Include="Handlers\" />
     <Folder Include="Data\" />
     <Folder Include="Model\" />
+    <Folder Include="Handlers\BrokerEventHandlers\" />
   </ItemGroup>
 </Project>

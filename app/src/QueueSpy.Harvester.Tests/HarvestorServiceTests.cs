@@ -36,6 +36,21 @@ namespace QueueSpy.Harvester.Tests
 		[Explicit]
 		public void OnTimer_should_poll_broker()
 		{
+			bus.Stub (x => x.Publish (Arg<Messages.BrokerStatus>.Is.Anything)).WhenCalled (x => {
+				var status = x.Arguments[0] as Messages.BrokerStatus;
+				if(status == null) {
+					Console.WriteLine ("Argument 0 is not BrokerStatus");
+					return;
+				}
+				Console.WriteLine ("IsResponding: {0}", status.IsResponding);
+				foreach (var connection in status.Connections) {
+					Console.WriteLine ("\tConnection Name: {0}", connection.Name);
+					foreach (var property in connection.ClientProperties) {
+						Console.WriteLine ("\t\t{0} -> {1}", property.Key, property.Value);
+					}
+				}
+			});
+
 			var brokers = new List<Broker> {
 				new Broker {
 					Url = "http://localhost:15672/",
@@ -48,7 +63,8 @@ namespace QueueSpy.Harvester.Tests
 			dbReader.Stub (x => x.Get<Broker> ("Active = TRUE")).Return (brokers);
 			harvesterService.OnTimer (null);
 
-			bus.AssertWasCalled (x => x.Publish(Arg<Messages.BrokerStatus>.Is.Anything));
+			bus.AssertWasCalled (x => x.Publish (Arg<Messages.BrokerStatus>.Is.Anything));
+
 		}
 	}
 }

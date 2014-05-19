@@ -61,5 +61,11 @@ namespace QueueSpy.Executor
 			}
 		}
 	}
+
+	public interface IBrokerEventHandler
+	{
+		EventType EventType { get; }
+		void Handle(Messages.BrokerEvent brokerEvent);
+	}
 }
 

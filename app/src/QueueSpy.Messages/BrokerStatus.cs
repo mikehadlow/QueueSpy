@@ -1,4 +1,6 @@
-﻿namespace QueueSpy.Messages
+﻿using System.Collections.Generic;
+
+namespace QueueSpy.Messages
 {
 	public class BrokerStatus
 	{
@@ -8,6 +10,31 @@
 		public bool IsResponding { get; set; }
 		public string ErrorMessage { get; set; }
 		public string RabbitMQVersion { get; set; }
+
+		public IList<Connection> Connections { get; set; }
+
+		public BrokerStatus()
+		{
+			Connections = new List<Connection> ();
+		}
+	}
+
+	public class Connection
+	{
+		public string Name { get; set; }
+
+		public IList<ClientProperty> ClientProperties { get; set; }
+
+		public Connection()
+		{
+			ClientProperties = new List<ClientProperty> ();
+		}
+	}
+
+	public class ClientProperty
+	{
+		public string Key { get; set; }
+		public string Value { get; set; }
 	}
 }
 

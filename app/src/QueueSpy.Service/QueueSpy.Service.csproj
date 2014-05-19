@@ -49,6 +49,7 @@
     <Compile Include="TinyIoc.cs" />
     <Compile Include="HeartbeatPublisher.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="TinyIocExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
