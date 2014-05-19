@@ -23,10 +23,10 @@ namespace QueueSpy.Api.Tests
 		}
 
 		[Test ()]
+		[Explicit("Requires a database on localhost")]
 		public void GetStatus_should_return_broker_status ()
 		{
 			var brokerStatus = (BrokerStatus)module.GetStatus (new DbReader (), 5);
-
 		}
 	}
 }
