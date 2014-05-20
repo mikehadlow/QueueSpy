@@ -7,14 +7,12 @@ namespace QueueSpy.Executor.Tests
 	{
 		private BrokerEventHandler handler;
 		private IDataWriter dataWriter;
-		private IDbReader dataReader;
 
 		[SetUp]
 		public void SetUp()
 		{
 			dataWriter = new DataWriter ();
-			dataReader = new DbReader ();
-			handler = new BrokerEventHandler (dataWriter, dataReader, new TinyIoC.TinyIoCContainer());
+			handler = new BrokerEventHandler (dataWriter, new TinyIoC.TinyIoCContainer());
 		}
 
 		[Test ()]

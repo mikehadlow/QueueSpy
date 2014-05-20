@@ -18,8 +18,13 @@ namespace QueueSpy
 
 		public void Log (string format, params object[] args)
 		{
-			Log(string.Format(format, args));
+			Log(SafeFormat(format, args));
 		}
+
+		public string SafeFormat(string format, params object[] args)
+        {
+			return args.Length == 0 ? format : string.Format (format, args);
+        }
 	}
 }
 
