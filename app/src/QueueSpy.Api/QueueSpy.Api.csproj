@@ -84,6 +84,9 @@
     <Compile Include="Modules\PasswordResetPost.cs" />
     <Compile Include="Modules\BrokerModule.cs" />
     <Compile Include="Modules\RegisterBrokerPost.cs" />
+    <Compile Include="Modules\ConnectionModule.cs" />
+    <Compile Include="Services\BrokerService.cs" />
+    <Compile Include="Services\BrokerNotFoundException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

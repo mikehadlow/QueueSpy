@@ -10,13 +10,13 @@ namespace QueueSpy.Api.Tests
 	public class BrokerModuleTests
 	{
 		private BrokerModule module;
-		private IDbReader dbReader;
+		private IBrokerService dbReader;
 		private IBus bus;
 
 		[SetUp]
 		public void SetUp()
 		{
-			dbReader = MockRepository.GenerateStub<IDbReader> ();
+			dbReader = MockRepository.GenerateStub<IBrokerService> ();
 			bus = MockRepository.GenerateStub<IBus> ();
 			module = new BrokerModule (bus, dbReader);
 			module.SetUser (2, "mike@suteki.co.uk");
@@ -26,7 +26,7 @@ namespace QueueSpy.Api.Tests
 		[Explicit("Requires a database on localhost")]
 		public void GetStatus_should_return_broker_status ()
 		{
-			module.GetStatus (new DbReader (), 5);
+			module.GetStatus (new BrokerService (new DbReader()), 5);
 		}
 	}
 }

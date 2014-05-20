@@ -23,6 +23,11 @@ namespace QueueSpy.Api
 			var userId = int.Parse (env ["queuespy.userId"].ToString());
 			return new CurrentLoggedInUser (userId, email);
 		}
+
+		public static int UserId(this NancyModule module)
+		{
+			return GetCurrentLoggedInUser (module).UserId;
+		}
 	}
 
 	public class CurrentLoggedInUser
