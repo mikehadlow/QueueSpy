@@ -8,14 +8,19 @@ namespace QueueSpy.Executor
 	public class BrokerEventHandler : ICommandHandler<Messages.BrokerEvent>
 	{
 		private readonly IDataWriter dataWriter;
+		private readonly ILogger logger;
+
 		private readonly IDictionary<QueueSpy.EventType, IBrokerEventHandler> brokerEventHandlers = 
 			new Dictionary<EventType, IBrokerEventHandler> ();
 
-		public BrokerEventHandler (IDataWriter dataWriter, TinyIoC.TinyIoCContainer container)
+		public BrokerEventHandler (IDataWriter dataWriter, TinyIoC.TinyIoCContainer container, ILogger logger)
 		{
 			Preconditions.CheckNotNull (dataWriter, "dataWriter");
+			Preconditions.CheckNotNull (container, "container");
+			Preconditions.CheckNotNull (logger, "loger");
 
 			this.dataWriter = dataWriter;
+			this.logger = logger;
 
 			LoadBrokerEventHandlers (container);
 		}
@@ -29,6 +34,7 @@ namespace QueueSpy.Executor
 				
 			foreach (var handler in handlers) {
 				brokerEventHandlers.Add (handler.EventType, handler);
+				logger.Log ("Registered Broker Event Handler: {0} for event type: {1}", handler.GetType ().Name, handler.EventType.ToString ());
 			}
 		}
 

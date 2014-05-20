@@ -12,7 +12,7 @@ namespace QueueSpy.Executor.Tests
 		public void SetUp()
 		{
 			dataWriter = new DataWriter ();
-			handler = new BrokerEventHandler (dataWriter, new TinyIoC.TinyIoCContainer());
+			handler = new BrokerEventHandler (dataWriter, new TinyIoC.TinyIoCContainer(), new Logger());
 		}
 
 		[Test ()]

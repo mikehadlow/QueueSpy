@@ -1,5 +1,8 @@
 ﻿namespace QueueSpy
 {
+	//
+	// Any new items added here must also be added to the EventType table!
+	//
 	public enum EventType
 	{
 		BrokerContactEstablished = 1,
