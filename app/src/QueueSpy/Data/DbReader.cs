@@ -34,7 +34,8 @@ namespace QueueSpy
 
 		public IEnumerable<T> Get<T> (string whereClause = null, Action<dynamic> parameters = null) where T : class, IModel, new()
 		{
-			var parameterString = string.Join (", ", typeof(T).GetProperties ().Select (x => x.Name));
+			var parameterString = string.Join (", ", GetPropertiesOf<T>().Select (x => x.Name));
+
 			var sql = string.Format ("select {0} from \"{1}\" {2}", parameterString, typeof(T).Name, whereClause == null ? "" : "where " + whereClause);
 			Console.WriteLine ("About to run sql: '{0}'", sql);
 
@@ -63,10 +64,24 @@ namespace QueueSpy
 		public T CreateInstanceFromDataReader<T>(IDataReader reader) where T : class, IModel, new()
 		{
 			var model = new T ();
-			foreach (PropertyInfo property in typeof(T).GetProperties()) {
+			foreach (PropertyInfo property in GetPropertiesOf<T>()) {
 				property.SetValue ((object)model, (object)reader [property.Name], null);
 			}
 			return model;
+		}
+
+		public static bool IsCollectionType (Type type)
+		{
+			return type.IsGenericType &&
+			(
+				type.GetGenericTypeDefinition () == typeof(List<>) ||
+				type.GetGenericTypeDefinition () == typeof(Dictionary<,>)
+			);
+		}
+
+		public static IEnumerable<PropertyInfo> GetPropertiesOf<T>()
+		{
+			return typeof(T).GetProperties ().Where (x => !IsCollectionType (x.PropertyType));
 		}
 	}
 			

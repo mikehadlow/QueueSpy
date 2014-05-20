@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace QueueSpy.Api.Tests
 {
@@ -19,6 +20,14 @@ namespace QueueSpy.Api.Tests
 			var user = dbReader.GetById<User> (1);
 			Assert.IsNotNull (user);
 			Assert.AreEqual (user.Email, "mike@suteki.co.uk");
+		}
+
+		[Test]
+		public void Should_be_able_to_detect_collection_types()
+		{
+			Assert.IsTrue (DbReader.IsCollectionType (typeof(List<string>)));
+			Assert.IsTrue (DbReader.IsCollectionType (typeof(Dictionary<string, string>)));
+			Assert.IsFalse (DbReader.IsCollectionType (typeof(string)));
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace QueueSpy
 {
@@ -10,6 +11,13 @@ namespace QueueSpy
 		public DateTime Connected { get; set; }
 		public DateTime Disconnected { get; set; }
 		public bool IsConnected { get; set; }
+
+		public Dictionary<string, string> ClientProperties { get; set; }
+
+		public Connection()
+		{
+			ClientProperties = new Dictionary<string, string> ();
+		}
 	}
 }
 

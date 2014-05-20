@@ -72,6 +72,7 @@
     <Compile Include="Modules\UserModuleTests.cs" />
     <Compile Include="Modules\BrokerModuleTests.cs" />
     <Compile Include="NancyModuleTestExtensions.cs" />
+    <Compile Include="Services\BrokerServiceTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

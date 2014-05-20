@@ -5,6 +5,23 @@
 <div class="row">
     <table class="table">
         <tr>
+            <th>Connection</th>
+            <th>Client</th>
+            <th>Client Host</th>
+            <th>Connected</td>
+        </tr>
+        <tr ng-repeat="connection in connections">
+            <td>{{connection.name}}</td>
+            <td>{{connection.clientProperties.product}}</td>
+            <td>{{connection.clientProperties.platform}}</td>
+            <td>{{connection.connected}}</td>
+        </tr>
+    </table>
+</div>
+
+<div class="row">
+    <table class="table">
+        <tr>
             <th>#</th>
             <th>Event</th>
             <th>Time UTC</th>

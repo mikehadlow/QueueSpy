@@ -64,14 +64,30 @@ namespace QueueSpy.Api
 		{
 			GetBroker (userId, brokerId);
 
-			return dbReader.Get<Connection> ("BrokerId = :BrokerId AND IsConnected = TRUE", x => x.BrokerId = brokerId);
+			var connections = dbReader.Get<Connection> ("BrokerId = :BrokerId AND IsConnected = TRUE", x => x.BrokerId = brokerId).ToList ();
+
+			// very nasty N+1 hack. Need to come up with a nice dbReader abstraction over table joins.
+			foreach (var connection in connections) {
+				var clientProperties = dbReader.Get<ClientProperty> ("ConnectionId = :ConnectionId", x => x.ConnectionId = connection.Id);
+				connection.ClientProperties = clientProperties.ToDictionary (x => x.Key, x => x.Value);
+			}
+
+			return connections;
 		}
 
 		public IEnumerable<Connection> GetDeadConnections (int userId, int brokerId)
 		{
 			GetBroker (userId, brokerId);
 
-			return dbReader.Get<Connection> ("BrokerId = :BrokerId AND IsConnected = FALSE", x => x.BrokerId = brokerId);
+			var connections = dbReader.Get<Connection> ("BrokerId = :BrokerId AND IsConnected = FALSE", x => x.BrokerId = brokerId).ToList ();
+
+			// very nasty N+1 hack. Need to come up with a nice dbReader abstraction over table joins.
+			foreach (var connection in connections) {
+				var clientProperties = dbReader.Get<ClientProperty> ("ConnectionId = :ConnectionId", x => x.ConnectionId = connection.Id);
+				connection.ClientProperties = clientProperties.ToDictionary (x => x.Key, x => x.Value);
+			}
+
+			return connections;
 		}
 	}
 
