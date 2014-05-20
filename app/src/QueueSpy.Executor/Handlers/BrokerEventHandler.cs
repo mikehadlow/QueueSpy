@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace QueueSpy.Executor
 {
@@ -7,14 +9,30 @@ namespace QueueSpy.Executor
 	{
 		private readonly IDataWriter dataWriter;
 		private readonly IDbReader dbReader;
+		private readonly IDictionary<QueueSpy.EventType, IBrokerEventHandler> brokerEventHandlers = 
+			new Dictionary<EventType, IBrokerEventHandler> ();
 
-		public BrokerEventHandler (IDataWriter dataWriter, IDbReader dbReader)
+		public BrokerEventHandler (IDataWriter dataWriter, IDbReader dbReader, TinyIoC.TinyIoCContainer container)
 		{
 			Preconditions.CheckNotNull (dataWriter, "dataWriter");
 			Preconditions.CheckNotNull (dbReader, "dbReader");
 
 			this.dataWriter = dataWriter;
 			this.dbReader = dbReader;
+
+			LoadBrokerEventHandlers (container);
+		}
+
+		void LoadBrokerEventHandlers (TinyIoC.TinyIoCContainer container)
+		{
+			var handlers =
+				from t in Assembly.GetCallingAssembly ().GetTypes ()
+				where t.GetInterfaces ().Any (x => x.Name == typeof(IBrokerEventHandler).Name)
+				select (IBrokerEventHandler)container.Resolve(t);
+				
+			foreach (var handler in handlers) {
+				brokerEventHandlers.Add (handler.EventType, handler);
+			}
 		}
 
 		public void Handle (QueueSpy.Messages.BrokerEvent command)
@@ -29,6 +47,10 @@ namespace QueueSpy.Executor
 			};
 
 			dataWriter.Insert (brokerEvent);
+
+			if (!brokerEventHandlers.ContainsKey ((EventType)command.EventTypeId)) {
+				throw new QueueSpyServiceException ("No handler for broker event type {0} found.", command.EventTypeId);
+			}
 
 			// update status ...
 			var currentStatus = dbReader.Get<QueueSpy.BrokerStatus> ("BrokerId = :BrokerId", x => x.BrokerId = command.BrokerId).FirstOrDefault();

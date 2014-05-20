@@ -71,6 +71,10 @@
     <Compile Include="Handlers\BrokerEventHandler.cs" />
     <Compile Include="Model\BrokerEvent.cs" />
     <Compile Include="Model\BrokerStatus.cs" />
+    <Compile Include="Handlers\BrokerEventHandlers\BrokerContactEstablished.cs" />
+    <Compile Include="Handlers\BrokerEventHandlers\BrokerContactLost.cs" />
+    <Compile Include="Handlers\BrokerEventHandlers\ConnectionEstablished.cs" />
+    <Compile Include="Handlers\BrokerEventHandlers\ConnectionLost.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

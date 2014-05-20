@@ -14,7 +14,7 @@ namespace QueueSpy.Executor.Tests
 		{
 			dataWriter = new DataWriter ();
 			dataReader = new DbReader ();
-			handler = new BrokerEventHandler (dataWriter, dataReader);
+			handler = new BrokerEventHandler (dataWriter, dataReader, new TinyIoC.TinyIoCContainer());
 		}
 
 		[Test ()]

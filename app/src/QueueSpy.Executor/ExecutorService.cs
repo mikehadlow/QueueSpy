@@ -34,7 +34,7 @@ namespace QueueSpy.Executor
 			// Find all types in this assembly that implement ICommandHandler<T>
 			var handlerTypes = 
 				from t in this.GetType().Assembly.GetTypes()
-				where t.GetInterfaces ().Any (x => x.Name == "ICommandHandler`1")
+					where t.GetInterfaces ().Any (x => x.Name == typeof(ICommandHandler<>).Name)
 				let messageType = t.GetInterfaces()[0].GetGenericArguments()[0]
 				select new 
 					{ 

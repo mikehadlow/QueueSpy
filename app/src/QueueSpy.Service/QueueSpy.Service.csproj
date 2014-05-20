@@ -50,6 +50,8 @@
     <Compile Include="HeartbeatPublisher.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="TinyIocExtensions.cs" />
+    <Compile Include="QueueSpyServiceException.cs" />
+    <Compile Include="EasyNetQLogger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
