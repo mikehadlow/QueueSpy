@@ -13,6 +13,9 @@ namespace QueueSpy
 	{
 		T GetById<T>(int id) where T : class, IModel, new();
 		IEnumerable<T> Get<T> (string whereClause = null, Action<dynamic> parameters = null) where T : class, IModel, new();
+		IEnumerable<T> Get<T, J> (string whereClause = null, Action<dynamic> parameters = null) 
+			where T : class, IModel, new()
+			where J : class, IModel, new();
 	}
 
 	public class DbReader : IDbReader
@@ -34,9 +37,23 @@ namespace QueueSpy
 
 		public IEnumerable<T> Get<T> (string whereClause = null, Action<dynamic> parameters = null) where T : class, IModel, new()
 		{
-			var parameterString = string.Join (", ", GetPropertiesOf<T>().Select (x => x.Name));
+			return GetInternal<T>(string.Format("from \"{0}\"", typeof(T).Name), whereClause, parameters);
+		}
 
-			var sql = string.Format ("select {0} from \"{1}\" {2}", parameterString, typeof(T).Name, whereClause == null ? "" : "where " + whereClause);
+		public IEnumerable<T> Get<T, J> (string whereClause = null, Action<dynamic> parameters = null) 
+			where T : class, IModel, new()
+			where J : class, IModel, new()
+		{
+			var fromClause = string.Format ("from \"{0}\" inner join \"{1}\" on \"{0}\".{1}Id = \"{1}\".id", typeof(T).Name, typeof(J).Name);
+			return GetInternal<T> (fromClause, whereClause, parameters);
+		}
+
+		private IEnumerable<T> GetInternal<T> (string fromClause, string whereClause = null, Action<dynamic> parameters = null) where T : class, IModel, new()
+		{
+			var typeName = typeof(T).Name;
+			var parameterString = string.Join (", ", GetPropertiesOf<T>().Select (x => "\"" + typeName + "\"." + x.Name));
+
+			var sql = string.Format ("select {0} {1} {2}", parameterString, fromClause, whereClause == null ? "" : "where " + whereClause);
 			Console.WriteLine ("About to run sql: '{0}'", sql);
 
 			using (var connection = new NpgsqlConnection (connectionString)) {

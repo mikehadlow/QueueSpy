@@ -46,6 +46,8 @@
     <Compile Include="Commands\BrokerEvent.cs" />
     <Compile Include="Commands\BrokerEvents\ConnectionEstablished.cs" />
     <Compile Include="Commands\BrokerEvents\ConnectionLost.cs" />
+    <Compile Include="Commands\BrokerEvents\ConsumerCancelled.cs" />
+    <Compile Include="Commands\BrokerEvents\NewConsumer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

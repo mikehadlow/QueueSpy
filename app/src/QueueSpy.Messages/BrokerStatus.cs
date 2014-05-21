@@ -24,10 +24,12 @@ namespace QueueSpy.Messages
 		public string Name { get; set; }
 
 		public IList<ClientProperty> ClientProperties { get; set; }
+		public IList<Consumer> Consumers { get; set; }
 
 		public Connection()
 		{
 			ClientProperties = new List<ClientProperty> ();
+			Consumers = new List<Consumer> ();
 		}
 	}
 
@@ -35,6 +37,12 @@ namespace QueueSpy.Messages
 	{
 		public string Key { get; set; }
 		public string Value { get; set; }
+	}
+
+	public class Consumer
+	{
+		public string Tag { get; set; }
+		public string QueueName { get; set; }
 	}
 }
 

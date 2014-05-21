@@ -44,7 +44,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.32.0.262\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.0.32.0.264\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +67,7 @@
     <Compile Include="Model\BrokerEvent.cs" />
     <Compile Include="Model\Connection.cs" />
     <Compile Include="Model\ClientProperty.cs" />
+    <Compile Include="Model\Consumer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using System.Threading;
 using EasyNetQ;
 using EasyNetQ.Management.Client;
 using QueueSpy.Messages;
+using System.Collections.Generic;
 
 namespace QueueSpy.Harvester
 {
@@ -55,6 +57,8 @@ namespace QueueSpy.Harvester
 						status.RabbitMQVersion = overview.ManagementVersion;
 
 						var connections = client.GetConnections();
+						var channels = client.GetChannels ();
+
 						foreach (var connection in connections) {
 							var connectionMessage = new Messages.Connection { Name = connection.Name };
 							foreach (var property in connection.ClientProperties.PropertiesDictionary) {
@@ -63,6 +67,7 @@ namespace QueueSpy.Harvester
 									Value = property.Value.ToString()
 								});
 							}
+							AddConsumersToConnection(client, channels, connectionMessage);
 							status.Connections.Add(connectionMessage);
 						}
 
@@ -77,6 +82,20 @@ namespace QueueSpy.Harvester
 				}
 
 				bus.Publish (status);
+			}
+		}
+
+		void AddConsumersToConnection (ManagementClient client, IEnumerable<EasyNetQ.Management.Client.Model.Channel> channels, QueueSpy.Messages.Connection connection)
+		{
+			var channelsThatBelongToConnection = channels.Where (x => x.ConnectionDetails.Name == connection.Name);
+			foreach (var channel in channelsThatBelongToConnection) {
+				var detail = client.GetChannel (channel.Name);
+				foreach (var consumer in detail.ConsumerDetails) {
+					connection.Consumers.Add (new Messages.Consumer { 
+						Tag = consumer.ConsumerTag,
+						QueueName = consumer.Queue.Name
+					});
+				}
 			}
 		}
 

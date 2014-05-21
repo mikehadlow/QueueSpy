@@ -43,7 +43,7 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.32.0.262\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.0.32.0.264\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +53,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MonitorService.cs" />
+    <Compile Include="AnalysisSteps\AnalyseBroker.cs" />
+    <Compile Include="AnalysisSteps\AnalyseConnections.cs" />
+    <Compile Include="AnalysisSteps\AnalyseConsumers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -79,5 +82,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AnalysisSteps\" />
   </ItemGroup>
 </Project>
