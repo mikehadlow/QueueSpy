@@ -10,12 +10,19 @@
             <th>Client Host</th>
             <th>Connected</td>
         </tr>
-        <tr ng-repeat="connection in connections">
+        <tr ng-repeat-start="connection in connections">
             <td>{{connection.name}}</td>
             <td>{{connection.clientProperties.product}}</td>
             <td>{{connection.clientProperties.platform}}</td>
             <td>{{connection.connected}}</td>
         </tr>
+        <tr ng-repeat="consumer in connection.consumers">
+            <td>&nbsp;</td>
+            <td><small>Consuming</small> {{consumer.queueName}}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr ng-repeat-end />
     </table>
 </div>
 

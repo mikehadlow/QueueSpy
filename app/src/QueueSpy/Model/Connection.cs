@@ -13,10 +13,12 @@ namespace QueueSpy
 		public bool IsConnected { get; set; }
 
 		public Dictionary<string, string> ClientProperties { get; set; }
+		public List<Consumer> Consumers { get; set; }
 
 		public Connection()
 		{
 			ClientProperties = new Dictionary<string, string> ();
+			Consumers = new List<Consumer> ();
 		}
 	}
 }

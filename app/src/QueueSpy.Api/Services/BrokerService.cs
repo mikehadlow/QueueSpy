@@ -64,12 +64,16 @@ namespace QueueSpy.Api
 		{
 			GetBroker (userId, brokerId);
 
-			var connections = dbReader.Get<Connection> ("BrokerId = :BrokerId AND IsConnected = TRUE", x => x.BrokerId = brokerId).ToList ();
+			var whereClause = "BrokerId = :BrokerId AND IsConnected = TRUE";
+			Action<dynamic> propertySetter = x => x.BrokerId = brokerId;
 
-			// very nasty N+1 hack. Need to come up with a nice dbReader abstraction over table joins.
+			var connections = dbReader.Get<Connection> (whereClause, propertySetter).ToList ();
+			var allClientProperties = dbReader.Get<ClientProperty, Connection> (whereClause, propertySetter).ToList ();
+			var allConsumers = dbReader.Get<Consumer, Connection> (whereClause + " AND IsConsuming = TRUE", propertySetter).ToList ();
+
 			foreach (var connection in connections) {
-				var clientProperties = dbReader.Get<ClientProperty> ("ConnectionId = :ConnectionId", x => x.ConnectionId = connection.Id);
-				connection.ClientProperties = clientProperties.ToDictionary (x => x.Key, x => x.Value);
+				connection.ClientProperties = allClientProperties.Where (x => x.ConnectionId == connection.Id).ToDictionary (x => x.Key, x => x.Value);
+				connection.Consumers = allConsumers.Where (x => x.ConnectionId == connection.Id).ToList ();
 			}
 
 			return connections;
