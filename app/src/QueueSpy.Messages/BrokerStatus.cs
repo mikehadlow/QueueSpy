@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace QueueSpy.Messages
 {
@@ -10,6 +11,7 @@ namespace QueueSpy.Messages
 		public bool IsResponding { get; set; }
 		public string ErrorMessage { get; set; }
 		public string RabbitMQVersion { get; set; }
+		public DateTime SampledAtUtc { get; set; }
 
 		public IList<Connection> Connections { get; set; }
 		public IList<Queue> Queues { get; set; }
@@ -50,6 +52,9 @@ namespace QueueSpy.Messages
 	public class Queue
 	{
 		public string Name { get; set; }
+		public int Ready { get; set; }
+		public int Unacked { get; set; }
+		public int Total { get; set; }
 	}
 }
 

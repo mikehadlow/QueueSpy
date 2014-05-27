@@ -50,6 +50,7 @@
     <Compile Include="Commands\BrokerEvents\NewConsumer.cs" />
     <Compile Include="Commands\BrokerEvents\QueueCreated.cs" />
     <Compile Include="Commands\BrokerEvents\QueueDeleted.cs" />
+    <Compile Include="Commands\QueueLevel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

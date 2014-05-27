@@ -42,9 +42,10 @@ namespace QueueSpy.Harvester
 				logger.Log ("Querying broker: {0}", broker.Url);
 
 				var status = new Messages.BrokerStatus {
-						BrokerId = broker.Id,
-						UserId = broker.UserId,
-						Url = broker.Url,
+					BrokerId = broker.Id,
+					UserId = broker.UserId,
+					Url = broker.Url,
+					SampledAtUtc = DateTime.UtcNow
 				};
 
 				try {
@@ -104,7 +105,12 @@ namespace QueueSpy.Harvester
 		void AddQueuesToBroker (ManagementClient client, QueueSpy.Messages.BrokerStatus brokerStatus)
 		{
 			var queues = client.GetQueues ();
-			brokerStatus.Queues = queues.Select (x => new Messages.Queue { Name = x.Name }).ToList ();
+			brokerStatus.Queues = queues.Select (x => new Messages.Queue { 
+				Name = x.Name,
+				Ready = x.MessagesReady,
+				Unacked = x.MessagesUnacknowledged,
+				Total = x.Messages
+			}).ToList ();
 		}
 
 		public UrlPart BuildBrokerUrl (string url)

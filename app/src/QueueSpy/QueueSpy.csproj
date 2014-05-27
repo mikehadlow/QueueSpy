@@ -69,6 +69,7 @@
     <Compile Include="Model\ClientProperty.cs" />
     <Compile Include="Model\Consumer.cs" />
     <Compile Include="Model\Queue.cs" />
+    <Compile Include="Model\QueueLevel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
