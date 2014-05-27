@@ -30,7 +30,7 @@ namespace QueueSpy.Monitor
 				foreach (var newQueue in newQueues) {
 					bus.SendCommand (new Messages.QueueCreated { 
 						BrokerId = brokerStatus.BrokerId,
-						EventTypeId = (int)EventType.ConsumerCancelled,
+						EventTypeId = (int)EventType.QueueCreated,
 						DateTimeUTC = DateTime.UtcNow,
 						Description = string.Format ("New queue created: {0}", newQueue),
 						Name = newQueue
@@ -41,7 +41,7 @@ namespace QueueSpy.Monitor
 				foreach (var deletedQueue in deletedQueues) {
 					bus.SendCommand (new Messages.QueueDeleted { 
 						BrokerId = brokerStatus.BrokerId,
-						EventTypeId = (int)EventType.ConsumerCancelled,
+						EventTypeId = (int)EventType.QueueDeleted,
 						DateTimeUTC = DateTime.UtcNow,
 						Description = string.Format ("Queue deleted: {0}", deletedQueue),
 						QueueId = queues.Single (x => x.Name == deletedQueue).Id

@@ -28,11 +28,11 @@
 
 <div class="row">
     <table class="table">
-        <tr ng-repeat="queue in queues">
+        <tr> 
             <th>Queue</th>
             <th>Created</th>
         </tr>
-        <tr>
+        <tr ng-repeat="queue in queues">
             <td>{{queue.name}}</td>
             <td>{{queue.created}}</td>
         </tr>

@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using Rhino.Mocks;
+using EasyNetQ;
 
 namespace QueueSpy.Executor.Tests
 {
@@ -11,8 +13,10 @@ namespace QueueSpy.Executor.Tests
 		[SetUp]
 		public void SetUp()
 		{
-			dataWriter = new DataWriter ();
-			handler = new BrokerEventHandler (dataWriter, new TinyIoC.TinyIoCContainer(), new Logger());
+			dataWriter = MockRepository.GenerateStub<IDataWriter> ();
+			var container = new TinyIoC.TinyIoCContainer ();
+			container.AutoRegister (t => t.Assembly.FullName.StartsWith("QueueSpy"));			
+			handler = new BrokerEventHandler (dataWriter, container, new Logger());
 		}
 
 		[Test ()]
@@ -24,6 +28,35 @@ namespace QueueSpy.Executor.Tests
 				EventTypeId = 1,
 				DateTimeUTC = System.DateTime.UtcNow,
 				Description = "Test broker event."
+			});
+		}
+
+		[Test]
+		public void Should_handle_polymorphic_events ()
+		{
+			handler.Handle (new Messages.ConsumerCancelled {
+				BrokerId = 4,
+				EventTypeId = (int)EventType.ConsumerCancelled,
+				DateTimeUTC = System.DateTime.UtcNow,
+				Description = "test",
+				ConsumerId = 101
+			});
+		}
+
+		[Test]
+		[Explicit("Needs a connection to RabbitMQ")]
+		public void Should_handle_broker_message_OK ()
+		{
+			// run Executor, then use this to test message handling ...
+
+			var bus = RabbitHutch.CreateBus ("host=localhost");
+
+			bus.Send (Messages.QueueSpyQueues.CommandQueue, new Messages.ConsumerCancelled {
+				BrokerId = 1,
+				EventTypeId = (int)EventType.ConsumerCancelled,
+				DateTimeUTC = System.DateTime.UtcNow,
+				Description = "test",
+				ConsumerId = 1
 			});
 		}
 	}

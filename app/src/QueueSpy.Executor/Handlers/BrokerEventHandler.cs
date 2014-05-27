@@ -28,7 +28,7 @@ namespace QueueSpy.Executor
 		void LoadBrokerEventHandlers (TinyIoC.TinyIoCContainer container)
 		{
 			var handlers =
-				from t in Assembly.GetCallingAssembly ().GetTypes ()
+				from t in GetType().Assembly.GetTypes ()
 				where t.GetInterfaces ().Any (x => x.Name == typeof(IBrokerEventHandler).Name)
 				select (IBrokerEventHandler)container.Resolve(t);
 				
