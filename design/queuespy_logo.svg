@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="queuespy_logo.png">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="219"
+     inkscape:cy="360"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1858"
+     inkscape:window-height="1178"
+     inkscape:window-x="1334"
+     inkscape:window-y="229"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2985" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#008080;fill-opacity:1;stroke:none;stroke-opacity:1"
+       d="M 350 452.375 C 211.92881 452.375 100 564.30381 100 702.375 C 100 840.44619 211.92881 952.375 350 952.375 C 398.12861 952.375 443.07654 938.78552 481.21875 915.21875 C 480.44441 911.0494 480 906.7687 480 902.375 C 480 863.71507 511.34007 832.375 550 832.375 C 554.3937 832.375 558.6744 832.78816 562.84375 833.5625 C 586.40195 795.42513 600 750.49413 600 702.375 C 600 564.30381 488.07119 452.375 350 452.375 z M 350 552.375 C 432.84271 552.375 500 619.53229 500 702.375 C 500 718.02286 497.60146 733.09952 493.15625 747.28125 C 509.48969 760.09594 520 780.00454 520 802.375 C 520 841.03493 488.65993 872.375 450 872.375 C 427.63042 872.375 407.721 861.86359 394.90625 845.53125 C 380.72452 849.97646 365.64786 852.375 350 852.375 C 267.15729 852.375 200 785.21771 200 702.375 C 200 619.53229 267.15729 552.375 350 552.375 z M 350 652.375 C 322.38576 652.375 300 674.76076 300 702.375 C 300 729.98924 322.38576 752.375 350 752.375 C 377.61424 752.375 400 729.98924 400 702.375 C 400 674.76076 377.61424 652.375 350 652.375 z M 450 752.375 C 422.38576 752.375 400 774.76076 400 802.375 C 400 829.98924 422.38576 852.375 450 852.375 C 477.61424 852.375 500 829.98924 500 802.375 C 500 774.76076 477.61424 752.375 450 752.375 z M 550 852.375 C 522.38576 852.375 500 874.76076 500 902.375 C 500 929.98924 522.38576 952.375 550 952.375 C 577.61424 952.375 600 929.98924 600 902.375 C 600 874.76076 577.61424 852.375 550 852.375 z "
+       id="path2987" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#008080;fill-opacity:1;stroke:none"
+       id="path3796"
+       sodipodi:cx="250"
+       sodipodi:cy="602.36218"
+       sodipodi:rx="50"
+       sodipodi:ry="50"
+       d="m 300,602.36218 a 50,50 0 1 1 -100,0 50,50 0 1 1 100,0 z" />
+  </g>
+</svg>
