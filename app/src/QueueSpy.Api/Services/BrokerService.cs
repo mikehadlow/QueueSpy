@@ -12,6 +12,7 @@ namespace QueueSpy.Api
 		IEnumerable<BrokerEvent> GetEvents(int userId, int brokerId);
 		IEnumerable<Connection> GetLiveConnections (int userId, int brokerId);
 		IEnumerable<Connection> GetDeadConnections (int userId, int brokerId);
+		IEnumerable<Queue> GetQueues (int userId, int brokerId);
 	}
 
 	public class BrokerService : IBrokerService
@@ -84,14 +85,20 @@ namespace QueueSpy.Api
 			GetBroker (userId, brokerId);
 
 			var connections = dbReader.Get<Connection> ("BrokerId = :BrokerId AND IsConnected = FALSE", x => x.BrokerId = brokerId).ToList ();
+			var clientProperties = dbReader.Get<ClientProperty, Connection> ("BrokerId = :BrokerId AND IsConnected = FALSE", x => x.BrokerId = brokerId).ToList ();
 
-			// very nasty N+1 hack. Need to come up with a nice dbReader abstraction over table joins.
 			foreach (var connection in connections) {
-				var clientProperties = dbReader.Get<ClientProperty> ("ConnectionId = :ConnectionId", x => x.ConnectionId = connection.Id);
-				connection.ClientProperties = clientProperties.ToDictionary (x => x.Key, x => x.Value);
+				connection.ClientProperties = clientProperties.Where(x => x.ConnectionId == connection.Id).ToDictionary (x => x.Key, x => x.Value);
 			}
 
 			return connections;
+		}
+
+		public IEnumerable<Queue> GetQueues (int userId, int brokerId)
+		{
+			GetBroker (userId, brokerId);
+
+			return dbReader.Get<Queue> ("BrokerId = :BrokerId AND IsCurrent = TRUE", x => x.BrokerId = brokerId).ToList ();
 		}
 	}
 

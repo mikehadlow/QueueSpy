@@ -56,6 +56,7 @@
     <Compile Include="AnalysisSteps\AnalyseBroker.cs" />
     <Compile Include="AnalysisSteps\AnalyseConnections.cs" />
     <Compile Include="AnalysisSteps\AnalyseConsumers.cs" />
+    <Compile Include="AnalysisSteps\AnalyseQueues.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

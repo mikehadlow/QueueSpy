@@ -48,6 +48,8 @@
     <Compile Include="Commands\BrokerEvents\ConnectionLost.cs" />
     <Compile Include="Commands\BrokerEvents\ConsumerCancelled.cs" />
     <Compile Include="Commands\BrokerEvents\NewConsumer.cs" />
+    <Compile Include="Commands\BrokerEvents\QueueCreated.cs" />
+    <Compile Include="Commands\BrokerEvents\QueueDeleted.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

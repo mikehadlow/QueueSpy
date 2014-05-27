@@ -18,6 +18,8 @@ namespace QueueSpy.Api
 
 			Get ["/events/{id}"] = parameters => GetEvents (brokerService, parameters.id);
 
+			Get ["/queues/{id}"] = parameters => GetQueues (brokerService, parameters.id);
+
 			Post ["/"] = _ => RegisterBroker (bus, this.Bind<RegisterBrokerPost>());
 		}
 
@@ -69,6 +71,15 @@ namespace QueueSpy.Api
 		{
 			try {
 				return brokerService.GetBrokerStatus(this.UserId(), id);
+			} catch (ItemNotFoundException) {
+				return HttpStatusCode.NotFound;
+			}
+		}
+
+		public dynamic GetQueues (IBrokerService brokerService, int id)
+		{
+			try {
+				return brokerService.GetQueues(this.UserId(), id);
 			} catch (ItemNotFoundException) {
 				return HttpStatusCode.NotFound;
 			}

@@ -71,6 +71,8 @@ namespace QueueSpy.Harvester
 							status.Connections.Add(connectionMessage);
 						}
 
+						AddQueuesToBroker(client, status);
+
 					} catch (Exception e) {
 						status.IsResponding = false;
 						status.ErrorMessage = string.Format ("{0}: {1}", e.GetType ().Name, e.Message);
@@ -97,6 +99,12 @@ namespace QueueSpy.Harvester
 					});
 				}
 			}
+		}
+
+		void AddQueuesToBroker (ManagementClient client, QueueSpy.Messages.BrokerStatus brokerStatus)
+		{
+			var queues = client.GetQueues ();
+			brokerStatus.Queues = queues.Select (x => new Messages.Queue { Name = x.Name }).ToList ();
 		}
 
 		public UrlPart BuildBrokerUrl (string url)

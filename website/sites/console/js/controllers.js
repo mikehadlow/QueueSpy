@@ -234,6 +234,7 @@ queuespyControllers.controller('BrokerDetailController', function ($scope, $http
     $scope.brokerStatus = {};
     $scope.brokerEvents = [];
     $scope.connections = [];
+    $scope.queues = [];
 
     var id = $routeParams.brokerId;
 
@@ -251,6 +252,10 @@ queuespyControllers.controller('BrokerDetailController', function ($scope, $http
 
     $http.get('/api/connection/' + id).success(function(data) {
         $scope.connections = data;
+    });
+
+    $http.get('/api/broker/queues/' + id).success(function(data) {
+        $scope.queues = data;
     });
 });
 

@@ -12,10 +12,12 @@ namespace QueueSpy.Messages
 		public string RabbitMQVersion { get; set; }
 
 		public IList<Connection> Connections { get; set; }
+		public IList<Queue> Queues { get; set; }
 
 		public BrokerStatus()
 		{
 			Connections = new List<Connection> ();
+			Queues = new List<Queue> ();
 		}
 	}
 
@@ -43,6 +45,11 @@ namespace QueueSpy.Messages
 	{
 		public string Tag { get; set; }
 		public string QueueName { get; set; }
+	}
+
+	public class Queue
+	{
+		public string Name { get; set; }
 	}
 }
 
