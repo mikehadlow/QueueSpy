@@ -87,6 +87,7 @@
     <Compile Include="Modules\ConnectionModule.cs" />
     <Compile Include="Services\BrokerService.cs" />
     <Compile Include="Services\BrokerNotFoundException.cs" />
+    <Compile Include="Modules\QueueModule.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

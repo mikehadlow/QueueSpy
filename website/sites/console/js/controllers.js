@@ -39,6 +39,10 @@ queuespyApp.config(['$routeProvider', function ($routeProvider){
         when('/brokers/delete/:brokerId', {
             template: 'TODO: Delete the broker.'
         }).
+        when('/queues/:queueId', {
+            templateUrl: 'html/queue-detail.html',
+            controller: 'QueueDetailController'
+        }).
 		when('/version', {
 			templateUrl: 'html/version.html',
 			controller: 'VersionController'
@@ -256,6 +260,21 @@ queuespyControllers.controller('BrokerDetailController', function ($scope, $http
 
     $http.get('/api/broker/queues/' + id).success(function(data) {
         $scope.queues = data;
+    });
+});
+
+queuespyControllers.controller('QueueDetailController', function ($scope, $http, $routeParams) {
+    $scope.queue = {};
+    $scope.levels = [];
+
+    var id = $routeParams.queueId;
+
+    $http.get('/api/queue/' + id).success(function(data) {
+        $scope.queue = data;
+    });
+
+    $http.get('/api/queue/' + id + '/levels').success(function(data) {
+        $scope.levels = data;
     });
 });
 

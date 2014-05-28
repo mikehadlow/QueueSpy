@@ -1,0 +1,22 @@
+<div class="row">
+    <h1>Queue {{queue.name}}</h1>
+</div>
+
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>Time</th>
+            <th>Total</th>
+            <th>Unacked</th>
+            <th>Ready</th>
+        </tr>
+        <tr ng-repeat="level in levels">
+            <td>{{level.sampledAt}}</td>
+            <td>{{level.total}}</td>
+            <td>{{level.unacked}}</td>
+            <td>{{level.ready}}</td>
+        </tr>
+    </table>
+</div>
+
+                

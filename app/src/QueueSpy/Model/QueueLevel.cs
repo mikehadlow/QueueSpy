@@ -6,9 +6,9 @@ namespace QueueSpy
 	{
 		public int Id { get; set; }
 		public int QueueId	{ get; set; }
-		public int Ready { get; set; }
-		public int Unacked { get; set; }
-		public int Total { get; set; }
+		public long Ready { get; set; }
+		public long Unacked { get; set; }
+		public long Total { get; set; }
 		public DateTime SampledAt { get; set; }
 	}
 }
