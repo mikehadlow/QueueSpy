@@ -52,7 +52,7 @@ namespace QueueSpy.Monitor
 					BrokerId = brokerStatus.BrokerId,
 					EventTypeId = (int)EventType.BrokerContactLost,
 					Description = "Broker Contact Lost.",
-					DateTimeUTC = System.DateTime.UtcNow
+					DateTimeUTC = brokerStatus.SampledAtUtc
 				});
 				brokerStatuses [brokerStatus.BrokerId].ContactOK = false;
 				logger.Log ("Broker, id: {0}, Lost Contact.", brokerStatus.BrokerId);
@@ -63,7 +63,7 @@ namespace QueueSpy.Monitor
 					BrokerId = brokerStatus.BrokerId,
 					EventTypeId = (int)EventType.BrokerContactEstablished,
 					Description = "Broker Contact Established.",
-					DateTimeUTC = System.DateTime.UtcNow
+					DateTimeUTC = brokerStatus.SampledAtUtc
 				});
 				brokerStatuses [brokerStatus.BrokerId].ContactOK = true;
 				logger.Log ("Broker, id: {0}, Contact Established.", brokerStatus.BrokerId);

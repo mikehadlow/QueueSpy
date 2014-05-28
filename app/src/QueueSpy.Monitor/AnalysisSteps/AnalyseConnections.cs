@@ -44,7 +44,7 @@ namespace QueueSpy.Monitor
 						BrokerId = brokerStatus.BrokerId,
 						EventTypeId = (int)EventType.ConnectionEstablished,
 						Description = string.Format("Connection '{0}' Established.", newConnection.Name),
-						DateTimeUTC = System.DateTime.UtcNow,
+						DateTimeUTC = brokerStatus.SampledAtUtc,
 						Name = newConnection.Name,
 						Properties = newConnection.ClientProperties.ToDictionary(x => x.Key, x => x.Value)
 					});
@@ -57,7 +57,7 @@ namespace QueueSpy.Monitor
 						BrokerId = brokerStatus.BrokerId,
 						EventTypeId = (int)EventType.ConnectionLost,
 						Description = string.Format ("Connection '{0}' Lost.", lostConnection.Name),
-						DateTimeUTC = System.DateTime.UtcNow,
+						DateTimeUTC = brokerStatus.SampledAtUtc,
 						ConnectionId = lostConnection.Id
 					});
 				}

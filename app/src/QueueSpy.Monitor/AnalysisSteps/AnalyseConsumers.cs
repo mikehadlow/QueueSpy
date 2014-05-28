@@ -40,7 +40,7 @@ namespace QueueSpy.Monitor
 				bus.SendCommand (new Messages.ConsumerCancelled { 
 					BrokerId = brokerStatus.BrokerId,
 					EventTypeId = (int)EventType.ConsumerCancelled,
-					DateTimeUTC = DateTime.UtcNow,
+					DateTimeUTC = brokerStatus.SampledAtUtc,
 					Description = string.Format("Consumer started consuming from queue {0}", closedConsumer.QueueName),
 					ConsumerId = closedConsumer.Id
 				});
@@ -54,7 +54,7 @@ namespace QueueSpy.Monitor
 						bus.SendCommand (new Messages.NewConsumer { 
 							BrokerId = brokerStatus.BrokerId,
 							EventTypeId = (int)EventType.NewConsumer,
-							DateTimeUTC = DateTime.UtcNow,
+							DateTimeUTC = brokerStatus.SampledAtUtc,
 							Description = string.Format("Consumer cancelled consuming from queue {0}", consumer.QueueName),
 							ConnectionName = connection.Name,
 							Tag = consumer.Tag,

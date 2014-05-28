@@ -84,6 +84,7 @@
     <Compile Include="Handlers\BrokerEventHandlers\QueueCreated.cs" />
     <Compile Include="Handlers\BrokerEventHandlers\QueueDeleted.cs" />
     <Compile Include="Model\QueueLevel.cs" />
+    <Compile Include="Handlers\QueueLevelHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
