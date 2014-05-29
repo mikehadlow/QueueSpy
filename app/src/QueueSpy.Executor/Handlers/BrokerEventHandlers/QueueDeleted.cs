@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace QueueSpy.Executor
 {
 	public class QueueDeleted : IBrokerEventHandler
@@ -17,7 +16,7 @@ namespace QueueSpy.Executor
 		{
 			var queueDeleted = (Messages.QueueDeleted)brokerEvent;
 
-			dataWriter.Update<Executor.Queue>(queueDeleted.QueueId, x => { 
+			dataWriter.Update<Queue>(queueDeleted.QueueId, x => { 
 				x.Deleted = queueDeleted.DateTimeUTC;
 				x.IsCurrent = false;
 			});
