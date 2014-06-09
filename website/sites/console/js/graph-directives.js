@@ -37,6 +37,11 @@ d3Graph.directive("qsD3Graph", ["d3Service", function(d3Service) {
             if(newData.length == 0) {
                 return;
             }
+            newData.sort(function(a, b) {
+                if(a[0] > b[0]) return 1;
+                if(a[0] < b[0]) return -1;
+                return 0;
+            });
             drawLineGraph(element[0], newData, yLabel, warnLine);
         }, false);
     }
