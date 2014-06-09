@@ -56,12 +56,9 @@
     <div class="container-fluid">
       <div class="row">
 
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-sm-3 col-md-2 sidebar" ng-controller="SidebarController">
           <ul class="nav nav-sidebar">
-            <li><a href="#/brokers">Brokers</a></li>
-            <li class="active"><a href="#/version">Version</a></li>
-            <li><a href="#/users">Users</a></li>
-            <li><a href="#/heartbeats">Heartbeats</a></li>
+            <li ng-repeat="link in links"><a href="{{link.href}}">{{link.label}}</a></li>
           </ul>
         </div>
 

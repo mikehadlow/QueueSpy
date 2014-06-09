@@ -114,6 +114,15 @@ queuespyControllers.controller('ProfileController', function ($scope, $window, $
 	});
 });
 
+queuespyControllers.controller('SidebarController', function ($scope) {
+    $scope.links = [
+        { href: "#/brokers", label: "Brokers" },
+        { href: "#/version", label: "Version" },
+        { href: "#/users", label: "Users" },
+        { href: "#/heartbeats", label: "Heartbeats" }
+    ];
+});
+
 queuespyControllers.controller('LoginController', function ($scope, $http, $window, $location, $rootScope) {
 	$scope.message = '';
 	$scope.user = { email: '', password: '' };
