@@ -1,6 +1,6 @@
 // QueueSpy 
 
-var queuespyApp = angular.module('queuespyApp', ['ngRoute', 'queuespyControllers', 'd3']);
+var queuespyApp = angular.module('queuespyApp', ['ngRoute', 'queuespyControllers', 'd3Graph']);
 
 queuespyApp.config(['$routeProvider', function ($routeProvider){
 	$routeProvider.
@@ -266,6 +266,7 @@ queuespyControllers.controller('BrokerDetailController', function ($scope, $http
 queuespyControllers.controller('QueueDetailController', function ($scope, $http, $routeParams) {
     $scope.queue = {};
     $scope.levels = [];
+    $scope.graphLevels = [];
 
     var id = $routeParams.queueId;
 
@@ -275,6 +276,9 @@ queuespyControllers.controller('QueueDetailController', function ($scope, $http,
 
     $http.get('/api/queue/' + id + '/levels').success(function(data) {
         $scope.levels = data;
+        $scope.graphLevels = data.map(function(d) {
+            return [new Date(d.sampledAt), +d.total];
+        });
     });
 });
 

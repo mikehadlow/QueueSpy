@@ -23,10 +23,22 @@ d3Graph.directive("qsD3Graph", ["d3Service", function(d3Service) {
             label: "OMG!"
         };
 
+        scope.$watch('data', function(newData, oldData) {
+            if(!newData) {
+                return;
+            }
+            if(newData.length == 0) {
+                return;
+            }
+            drawLineGraph(element[0], newData, "yLabel", warnLine);
+        }, true);
+
         drawLineGraph(element[0], scope.data, "yLabel", warnLine);
     }
     
     var drawLineGraph = function(element, data, yLabel, warnLine) {
+
+        d3.select(element).select('*').remove();
 
         var svg = d3.select(element).append("svg")
             .attr("width", "100%")
@@ -113,6 +125,10 @@ d3Graph.directive("qsD3Graph", ["d3Service", function(d3Service) {
             .on('mouseover', function() { focus.style('display', null); })
             .on('mouseout', function() { focus.style('display', 'none'); })
             .on('mousemove', function() { 
+                if(data.length == 0) {
+                    return;
+                }
+
                 var mouse = d3.mouse(this);
                 var mouseDate = xScale.invert(mouse[0]);
                 var i = bisectDate(data, mouseDate); // returns the index to the current data item
