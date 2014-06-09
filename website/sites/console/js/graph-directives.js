@@ -18,10 +18,17 @@ d3Graph.directive("qsD3Graph", ["d3Service", function(d3Service) {
 
     var link = function(scope, element, attrs) {
 
-        var warnLine = {
-            lineValue: 200,
-            label: "OMG!"
-        };
+        var yLabel = attrs.ylabel || "";
+        var warnLevel = parseInt(attrs.warnlevel) || 0;
+        var warnLabel = attrs.warnlabel;
+
+        var warnLine = null;
+        if(warnLabel) {
+            warnLine = {
+                lineValue: warnLevel,
+                label: warnLabel
+            };
+        }
 
         scope.$watch('data', function(newData, oldData) {
             if(!newData) {
@@ -30,10 +37,8 @@ d3Graph.directive("qsD3Graph", ["d3Service", function(d3Service) {
             if(newData.length == 0) {
                 return;
             }
-            drawLineGraph(element[0], newData, "yLabel", warnLine);
-        }, true);
-
-        drawLineGraph(element[0], scope.data, "yLabel", warnLine);
+            drawLineGraph(element[0], newData, yLabel, warnLine);
+        }, false);
     }
     
     var drawLineGraph = function(element, data, yLabel, warnLine) {
@@ -41,8 +46,7 @@ d3Graph.directive("qsD3Graph", ["d3Service", function(d3Service) {
         d3.select(element).select('*').remove();
 
         var svg = d3.select(element).append("svg")
-            .attr("width", "100%")
-            .attr("height", 400);
+            .attr("class", "graph queue");
 
         var margin = { top: 50, left: 50, right: 50, bottom: 50 };
         

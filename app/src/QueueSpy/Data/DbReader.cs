@@ -53,7 +53,7 @@ namespace QueueSpy
 			var typeName = typeof(T).Name;
 			var parameterString = string.Join (", ", GetPropertiesOf<T>().Select (x => "\"" + typeName + "\"." + x.Name));
 
-			var sql = string.Format ("select {0} {1} {2}", parameterString, fromClause, whereClause == null ? "" : "where " + whereClause);
+			var sql = string.Format ("select {0} {1} {2} order by id desc limit 1000", parameterString, fromClause, whereClause == null ? "" : "where " + whereClause);
 			Console.WriteLine ("About to run sql: '{0}'", sql);
 
 			using (var connection = new NpgsqlConnection (connectionString)) {

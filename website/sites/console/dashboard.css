@@ -97,6 +97,11 @@ body {
 
 /* graph styles */
 
+.graph.queue {
+    width: 100%;
+    height: 300px;
+}
+
 .axis path,
 .axis line {
   fill: none;
