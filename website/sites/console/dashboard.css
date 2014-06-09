@@ -94,3 +94,65 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+/* graph styles */
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+/*
+.x.axis path {
+  display: none;
+}
+*/
+.axis text {
+    font-size: 10px;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+.circle {
+    fill: white;
+    stroke: steelblue;
+    stroke-width: 2px;
+}
+
+.area {
+    fill: steelblue;
+    stroke: none;
+    opacity: 0.1;
+}
+
+.zeroline {
+    fill: none;
+    stroke: red;
+    stroke-width: 0.5px;
+    stroke-dasharray: 5 5;
+}
+
+.zerolinetext {
+    fill: red;
+}
+
+.overlay {
+    fill: none;
+    stroke: none;
+    pointer-events: all;
+}
+
+.focusLine {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 0.5px;
+}
+
+.focusCircle {
+    fill: red;
+}

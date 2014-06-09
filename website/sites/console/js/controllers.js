@@ -1,6 +1,6 @@
 // QueueSpy 
 
-var queuespyApp = angular.module('queuespyApp', ['ngRoute', 'queuespyControllers']);
+var queuespyApp = angular.module('queuespyApp', ['ngRoute', 'queuespyControllers', 'd3']);
 
 queuespyApp.config(['$routeProvider', function ($routeProvider){
 	$routeProvider.
@@ -81,17 +81,6 @@ queuespyApp.factory('authInterceptor', function ($rootScope, $q, $window, $locat
 
 queuespyApp.config(function ($httpProvider) {
 	$httpProvider.interceptors.push('authInterceptor');
-});
-
-queuespyApp.directive('ngSparkline', function() {
-    return {
-        restrict: 'A',
-        require: '^ngModel',
-        scope: {
-            ngModel: '='
-        },
-        template: '<div class="sparkline">This is sparkline for {{ngModel}}!</div>'
-    };
 });
 
 // Controllers

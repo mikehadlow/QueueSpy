@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="testApp">
+    <head>
+        <title>Graph Directive Test</title>
+        <link rel="stylesheet" href="dashboard.css" />
+    </head>
+    <body>
+        <div ng-controller="GraphController">
+            <div qs-d3-graph data="data"></div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular.min.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="js/graph-directives.js"></script>
+        <script>
+        
+            var testApp = angular.module('testApp', ['d3Graph']);
+
+            testApp.controller('GraphController', function($scope) {
+
+                $scope.title = "Hello, at least angular is working!";
+
+                var data = [];
+                var today = new Date();
+                var value = 100;
+                for(var i=0; i<100; i++) {
+                    var date = new Date();
+                    date.setDate(today.getDate() + i);
+                    value += (Math.random() * 10) - 5;
+                    data.push([date, value]);
+                }
+                $scope.data = data;
+            });
+        
+        </script>
+    </body>
+</html>
