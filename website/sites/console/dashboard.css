@@ -48,15 +48,25 @@ body {
   margin-bottom: 20px;
   margin-left: -20px;
 }
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
+.nav-sidebar li {
+  list-style-type: none;
 }
 .nav-sidebar > .active > a {
   color: #fff;
   background-color: #428bca;
 }
-
+.icon {
+    display: block;
+    float: left;
+    width: 16px;
+    height: 16px;
+}
+.expanded {
+    background-image: url(img/expanded.png);
+}
+.collapsed {
+    background-image: url(img/collapsed.png);
+}
 
 /*
  * Main content

@@ -59,10 +59,14 @@
       <div class="row">
 
         <div class="col-sm-4 col-md-3 sidebar" ng-controller="SidebarController">
-          <ul class="nav nav-sidebar" frang-tree>
+          <ul class="nav-sidebar" frang-tree>
             <li frang-tree-repeat="link in links">
+                <span class="icon"
+                    ng-class="{collapsed: link.collapsed, expanded: !link.collapsed}"
+                    ng-show="link.children && link.children.length > 0"
+                    ng-click="link.collapsed = !link.collapsed"></span>
                 <a href="{{link.href}}">{{link.label}}</a>
-                <ul class="" ng-if="link.children && link.children.length > 0" frang-tree-insert-children="link.children">
+                <ul class="" ng-if="!link.collapsed && link.children && link.children.length > 0" frang-tree-insert-children="link.children">
                 </ul>
             </li>
           </ul>
