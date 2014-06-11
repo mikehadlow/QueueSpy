@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS "Connection";
 
 CREATE TABLE "Connection" (
 	Id				SERIAL PRIMARY KEY,
-	BrokerId		INT REFERENCES "Broker"(Id),
+	VHostId 		INT REFERENCES "VHost"(Id),
 	Name			VARCHAR(1024),
 	Connected		TIMESTAMP,
 	Disconnected	TIMESTAMP,
