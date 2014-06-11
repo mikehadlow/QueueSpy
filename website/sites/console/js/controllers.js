@@ -114,10 +114,26 @@ queuespyControllers.controller('ProfileController', function ($scope, $window, $
 	});
 });
 
-queuespyControllers.controller('SidebarController', function ($scope, $http) {
-    $http.get('/api/links').success(function(data) {
-        $scope.links = data;
-    });
+queuespyControllers.controller('SidebarController', function ($scope, $http, $rootScope) {
+    var update = function() { 
+        $http.get('/api/links')
+            .success(function(data) {
+                $scope.links = data;
+            })
+            .error(function() {
+                $scope.links = [];
+            });
+    }
+
+	$rootScope.$on("LoginController.login", function (event) {
+        update();
+	});
+
+	$rootScope.$on("LogoutController.logout", function (event) {
+        update();
+	});
+
+    update();
 });
 
 queuespyControllers.controller('LoginController', function ($scope, $http, $window, $location, $rootScope) {
