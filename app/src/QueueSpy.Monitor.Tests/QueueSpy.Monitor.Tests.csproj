@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CDA14634-E796-43B4-8841-B28FA24E4CF3}</ProjectGuid>
+    <ProjectGuid>{9C7BB769-89F0-49CE-938D-9D2EF1A62CA5}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>QueueSpy.Service</RootNamespace>
-    <AssemblyName>QueueSpy.Service</AssemblyName>
+    <RootNamespace>QueueSpy.Monitor.Tests</RootNamespace>
+    <AssemblyName>QueueSpy.Monitor.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -25,46 +25,49 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\packages\RabbitMQ.Client.3.3.2\lib\net30\RabbitMQ.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="EasyNetQ">
       <HintPath>..\packages\EasyNetQ.0.32.3.272\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\packages\RabbitMQ.Client.3.3.2\lib\net30\RabbitMQ.Client.dll</HintPath>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\Version.cs">
-      <Link>Properties\Version.cs</Link>
-    </Compile>
-    <Compile Include="QueuespyApp.cs" />
-    <Compile Include="TinyIoc.cs" />
-    <Compile Include="HeartbeatPublisher.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="TinyIocExtensions.cs" />
-    <Compile Include="QueueSpyServiceException.cs" />
-    <Compile Include="EasyNetQLogger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QueueSpy.Messages\QueueSpy.Messages.csproj">
-      <Project>{CD4FD95E-9F97-45FB-9DA2-ADAAFB835ED1}</Project>
-      <Name>QueueSpy.Messages</Name>
+    <ProjectReference Include="..\QueueSpy.Monitor\QueueSpy.Monitor.csproj">
+      <Project>{71F6C802-309C-4B62-9879-E5305A1A5678}</Project>
+      <Name>QueueSpy.Monitor</Name>
     </ProjectReference>
     <ProjectReference Include="..\QueueSpy\QueueSpy.csproj">
       <Project>{C64AA71F-6D86-4412-B128-66D3698FB46E}</Project>
       <Name>QueueSpy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\QueueSpy.Service\QueueSpy.Service.csproj">
+      <Project>{CDA14634-E796-43B4-8841-B28FA24E4CF3}</Project>
+      <Name>QueueSpy.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\QueueSpy.Messages\QueueSpy.Messages.csproj">
+      <Project>{CD4FD95E-9F97-45FB-9DA2-ADAAFB835ED1}</Project>
+      <Name>QueueSpy.Messages</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnalysisModelBuilderTests.cs" />
   </ItemGroup>
 </Project>

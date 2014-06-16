@@ -12,10 +12,17 @@ namespace QueueSpy
 	public interface IDbReader
 	{
 		T GetById<T>(int id) where T : class, IModel, new();
+
 		IEnumerable<T> Get<T> (string whereClause = null, Action<dynamic> parameters = null) where T : class, IModel, new();
+
 		IEnumerable<T> Get<T, J> (string whereClause = null, Action<dynamic> parameters = null) 
 			where T : class, IModel, new()
 			where J : class, IModel, new();
+
+		IEnumerable<T> Get<T, J1, J2> (string whereClause = null, Action<dynamic> parameters = null) 
+			where T : class, IModel, new()
+			where J1 : class, IModel, new()
+			where J2 : class, IModel, new();
 	}
 
 	public class DbReader : IDbReader
@@ -45,6 +52,18 @@ namespace QueueSpy
 			where J : class, IModel, new()
 		{
 			var fromClause = string.Format ("from \"{0}\" inner join \"{1}\" on \"{0}\".{1}Id = \"{1}\".id", typeof(T).Name, typeof(J).Name);
+			return GetInternal<T> (fromClause, whereClause, parameters);
+		}
+
+		public IEnumerable<T> Get<T, J1, J2> (string whereClause = null, Action<dynamic> parameters = null) 
+			where T : class, IModel, new() 
+			where J1 : class, IModel, new() 
+			where J2 : class, IModel, new()
+		{
+			var fromClause = string.Format ("from \"{0}\" inner join \"{1}\" on \"{0}\".{1}Id = \"{1}\".Id inner join \"{2}\" on \"{1}\".{2}Id = \"{2}\".Id", 
+				typeof(T).Name, 
+				typeof(J1).Name, 
+				typeof(J2).Name);
 			return GetInternal<T> (fromClause, whereClause, parameters);
 		}
 

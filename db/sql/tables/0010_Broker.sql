@@ -6,5 +6,6 @@ CREATE TABLE "Broker" (
 	Url				VARCHAR(1024),
 	Username		VARCHAR(1024),
 	Password		VARCHAR(1024),
-	Active			BOOLEAN
+	Active			BOOLEAN,
+    ContactOK       BOOLEAN
 );

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace QueueSpy.Messages
@@ -13,10 +14,32 @@ namespace QueueSpy.Messages
 		public string RabbitMQVersion { get; set; }
 		public DateTime SampledAtUtc { get; set; }
 
+		public IList<VHost> VHosts { get; set; }
+
+		public BrokerStatus()
+		{
+			VHosts = new List<VHost> ();
+		}
+
+		public VHost GetOrCreateVHost(string name)
+		{
+			var vhost = VHosts.SingleOrDefault (x => x.Name == name);
+			if(vhost == null) {
+				vhost = new VHost { Name = name };
+				VHosts.Add (vhost);
+			}
+			return vhost;
+		}
+	}
+
+	public class VHost
+	{
+		public string Name { get; set; }
+
 		public IList<Connection> Connections { get; set; }
 		public IList<Queue> Queues { get; set; }
 
-		public BrokerStatus()
+		public VHost ()
 		{
 			Connections = new List<Connection> ();
 			Queues = new List<Queue> ();

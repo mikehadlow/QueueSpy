@@ -2,10 +2,9 @@
 
 namespace QueueSpy.Messages
 {
-	public class QueueCreated : BrokerEvent
+	public class VHostCreated : BrokerEvent
 	{
 		public string Name { get; set; }
-		public string VHostName { get; set; }
 	}
 }
 

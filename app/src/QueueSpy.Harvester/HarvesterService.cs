@@ -69,7 +69,7 @@ namespace QueueSpy.Harvester
 								});
 							}
 							AddConsumersToConnection(client, channels, connectionMessage);
-							status.Connections.Add(connectionMessage);
+							status.GetOrCreateVHost(connection.Vhost).Connections.Add(connectionMessage);
 						}
 
 						AddQueuesToBroker(client, status);
@@ -105,12 +105,14 @@ namespace QueueSpy.Harvester
 		void AddQueuesToBroker (ManagementClient client, QueueSpy.Messages.BrokerStatus brokerStatus)
 		{
 			var queues = client.GetQueues ();
-			brokerStatus.Queues = queues.Select (x => new Messages.Queue { 
-				Name = x.Name,
-				Ready = x.MessagesReady,
-				Unacked = x.MessagesUnacknowledged,
-				Total = x.Messages
-			}).ToList ();
+			foreach(var queue in queues) {
+				brokerStatus.GetOrCreateVHost (queue.Vhost).Queues.Add (new Messages.Queue { 
+					Name = queue.Name,
+					Ready = queue.MessagesReady,
+					Unacked = queue.MessagesUnacknowledged,
+					Total = queue.Messages
+				});
+			}
 		}
 
 		public UrlPart BuildBrokerUrl (string url)

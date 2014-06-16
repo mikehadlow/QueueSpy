@@ -35,15 +35,15 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Configuration" />
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\packages\RabbitMQ.Client.3.3.0\lib\net30\RabbitMQ.Client.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.32.1.268\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.0.32.3.272\lib\net40\EasyNetQ.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\packages\RabbitMQ.Client.3.3.2\lib\net30\RabbitMQ.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -53,10 +53,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MonitorService.cs" />
-    <Compile Include="AnalysisSteps\AnalyseBroker.cs" />
-    <Compile Include="AnalysisSteps\AnalyseConnections.cs" />
-    <Compile Include="AnalysisSteps\AnalyseConsumers.cs" />
-    <Compile Include="AnalysisSteps\AnalyseQueues.cs" />
+    <Compile Include="IBrokerModelLoader.cs" />
+    <Compile Include="Compare.cs" />
+    <Compile Include="AnalysisModelBuilder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -83,8 +82,5 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AnalysisSteps\" />
   </ItemGroup>
 </Project>

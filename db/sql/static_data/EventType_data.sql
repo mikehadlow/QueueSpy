@@ -1,4 +1,4 @@
-DELETE FROM "EventType";
+﻿DELETE FROM "EventType";
 
 INSERT INTO "EventType" (Id, Description) VALUES 
 	(1, 'Broker contact established.'),
@@ -8,4 +8,6 @@ INSERT INTO "EventType" (Id, Description) VALUES
 	(5, 'Consumer Cancelled'),
 	(6, 'New Consumer'),
 	(7, 'Queue Created'),
-	(8, 'Queue Deleted');
+	(8, 'Queue Deleted'),
+	(9, 'VHost Deleted'),
+	(10, 'VHost Created');

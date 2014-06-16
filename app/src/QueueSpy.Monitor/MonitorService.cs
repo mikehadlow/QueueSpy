@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,32 +10,22 @@ namespace QueueSpy.Monitor
 	{
 		private readonly IBus bus;
 		private readonly ILogger logger;
+		private readonly IBrokerModelLoader brokerModelLoader;
 
-		private readonly IList<IAnalysisStep> analysisSteps = new List<IAnalysisStep> ();
+		private readonly Compare<Broker, Messages.BrokerStatus, int> analysisModel;
 
-		public MonitorService(IBus bus, ILogger logger, TinyIoC.TinyIoCContainer container)
+		public MonitorService(IBus bus, ILogger logger, TinyIoC.TinyIoCContainer container, IBrokerModelLoader brokerModelLoader)
 		{
 			Preconditions.CheckNotNull (bus, "bus");
 			Preconditions.CheckNotNull (logger, "logger");
 			Preconditions.CheckNotNull (container, "container");
+			Preconditions.CheckNotNull (brokerModelLoader, "brokerModelLoader");
 
 			this.bus = bus;
 			this.logger = logger;
+			this.brokerModelLoader = brokerModelLoader;
 
-			LoadAnalysisSteps (container);
-		}
-
-		void LoadAnalysisSteps (TinyIoC.TinyIoCContainer container)
-		{
-			var steps =
-				from t in Assembly.GetCallingAssembly ().GetTypes ()
-				where t.GetInterfaces ().Any (x => x.Name == typeof(IAnalysisStep).Name)
-				select (IAnalysisStep)container.Resolve(t);
-				
-			foreach (var step in steps) {
-				analysisSteps.Add (step);
-				logger.Log ("Registered AnalysisStep: {0}", step.GetType ().Name);
-			}
+			analysisModel = AnalysisModelBuilder.BuildAnalysisModel ();
 		}
 
 		public void Start()
@@ -45,17 +36,19 @@ namespace QueueSpy.Monitor
 		void OnBrokerStatus (QueueSpy.Messages.BrokerStatus brokerStatus)
 		{
 			logger.Log ("BrokerStatus received, id: {0}.", brokerStatus.BrokerId);
-			foreach (var step in analysisSteps) {
-				step.Analyse (brokerStatus);
-			}
-		}
-	}
+			var brokerModel = brokerModelLoader.LoadBrokerModel (brokerStatus.BrokerId);
 
-	/// <summary>
-	/// Represents a step in the analysis of a broker status message.
-	/// </summary>
-	public interface IAnalysisStep
-	{
-		void Analyse(Messages.BrokerStatus brokerStatus);
+			var context = new CompareContext {
+				Bus = bus
+			};
+
+			context.SendMessage = brokerEvent => {
+				brokerEvent.BrokerId = brokerStatus.BrokerId;
+				brokerEvent.DateTimeUTC = brokerStatus.SampledAtUtc;
+				bus.SendCommand<Messages.BrokerEvent>(brokerEvent);
+			};
+
+			analysisModel.VisitUnchanged (brokerModel, brokerStatus, context);
+		}
 	}
 }

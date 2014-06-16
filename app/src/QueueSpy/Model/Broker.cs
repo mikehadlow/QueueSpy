@@ -1,4 +1,6 @@
-﻿namespace QueueSpy
+﻿using System.Collections.Generic;
+
+namespace QueueSpy
 {
 	public class Broker : IModel
 	{
@@ -8,6 +10,14 @@
 		public string Username { get; set; }
 		public string Password { get; set; }
 		public bool Active { get; set; }
+		public bool ContactOK { get; set; }
+
+		public IList<VHost> VHosts { get; set; }
+
+		public Broker ()
+		{
+			VHosts = new List<VHost> ();
+		}
 	}
 }
 

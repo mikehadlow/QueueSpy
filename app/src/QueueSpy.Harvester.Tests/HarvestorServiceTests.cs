@@ -43,10 +43,13 @@ namespace QueueSpy.Harvester.Tests
 					return;
 				}
 				Console.WriteLine ("IsResponding: {0}", status.IsResponding);
-				foreach (var connection in status.Connections) {
-					Console.WriteLine ("\tConnection Name: {0}", connection.Name);
-					foreach (var property in connection.ClientProperties) {
-						Console.WriteLine ("\t\t{0} -> {1}", property.Key, property.Value);
+				foreach (var vhost in status.VHosts) {
+					Console.WriteLine ("\tVhost: {0}", vhost.Name);
+					foreach (var connection in vhost.Connections) {
+						Console.WriteLine ("\t\tConnection Name: {0}", connection.Name);
+						foreach (var property in connection.ClientProperties) {
+							Console.WriteLine ("\t\t\t{0} -> {1}", property.Key, property.Value);
+						}
 					}
 				}
 			});

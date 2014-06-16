@@ -43,14 +43,14 @@
       <HintPath>..\packages\Npgsql.2.1.3\lib\net45\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\packages\RabbitMQ.Client.3.3.0\lib\net30\RabbitMQ.Client.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.32.1.268\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.0.32.3.272\lib\net40\EasyNetQ.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\packages\RabbitMQ.Client.3.3.2\lib\net30\RabbitMQ.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -70,7 +70,6 @@
     <Compile Include="Handlers\RegisterBrokerHandler.cs" />
     <Compile Include="Handlers\BrokerEventHandler.cs" />
     <Compile Include="Model\BrokerEvent.cs" />
-    <Compile Include="Model\BrokerStatus.cs" />
     <Compile Include="Handlers\BrokerEventHandlers\BrokerContactEstablished.cs" />
     <Compile Include="Handlers\BrokerEventHandlers\BrokerContactLost.cs" />
     <Compile Include="Handlers\BrokerEventHandlers\ConnectionEstablished.cs" />
@@ -85,6 +84,7 @@
     <Compile Include="Handlers\BrokerEventHandlers\QueueDeleted.cs" />
     <Compile Include="Model\QueueLevel.cs" />
     <Compile Include="Handlers\QueueLevelHandler.cs" />
+    <Compile Include="Model\VHost.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

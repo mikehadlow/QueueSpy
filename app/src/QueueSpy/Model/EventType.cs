@@ -12,7 +12,9 @@
 		ConsumerCancelled = 5,
 		NewConsumer = 6,
 		QueueCreated = 7,
-		QueueDeleted = 8
+		QueueDeleted = 8,
+		VHostDeleted = 9,
+		VHostCreated = 10
 	}
 }
 

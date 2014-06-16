@@ -51,6 +51,8 @@
     <Compile Include="Commands\BrokerEvents\QueueCreated.cs" />
     <Compile Include="Commands\BrokerEvents\QueueDeleted.cs" />
     <Compile Include="Commands\QueueLevel.cs" />
+    <Compile Include="Commands\BrokerEvents\VHostCreated.cs" />
+    <Compile Include="Commands\BrokerEvents\VHostDeleted.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
