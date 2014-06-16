@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Nancy;
 using System.Collections.Generic;
 
@@ -31,14 +32,22 @@ namespace QueueSpy.Api
 					Href = string.Format ("#/brokers/{0}", broker.Id),
 					Label = broker.Url
 				};
-
 				brokers.Children.Add (brokerLink);
 
-				foreach(var queue in brokerService.GetQueues(this.UserId(), broker.Id)) {
-					brokerLink.Children.Add (new Link {
-						Href = string.Format ("#/queues/{0}", queue.Id),
-						Label = queue.Name
-					});
+				var queues = brokerService.GetQueues (this.UserId (), broker.Id);
+				foreach (var vhost in brokerService.GetVHosts(this.UserId(), broker.Id)) {
+					var vhostLink = new Link {
+						Href = string.Format ("#/vhosts/{0}", vhost.Id),
+						Label = vhost.Name
+					};
+					brokerLink.Children.Add (vhostLink);
+
+					foreach (var queue in queues.Where(x => x.VHostId == vhost.Id)) {
+						vhostLink.Children.Add (new Link {
+							Href = string.Format ("#/queues/{0}", queue.Id),
+							Label = queue.Name
+						});
+					}
 				}
 			}
 

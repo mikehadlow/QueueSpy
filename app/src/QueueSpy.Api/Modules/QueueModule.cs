@@ -18,7 +18,8 @@ namespace QueueSpy.Api
 		{
 			try {
 				var queue = dbReader.GetById<Queue> (queueId);
-				var broker = dbReader.GetById<Broker> (queue.BrokerId);
+				var vhost = dbReader.GetById<VHost> (queue.VHostId);
+				var broker = dbReader.GetById<Broker> (vhost.BrokerId);
 				if(broker.UserId != this.UserId()) {
 					return HttpStatusCode.NotFound;
 				}

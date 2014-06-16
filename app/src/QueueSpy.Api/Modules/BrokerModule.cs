@@ -14,7 +14,7 @@ namespace QueueSpy.Api
 
 			Get ["/{id}"] = parameters => GetBroker (brokerService, parameters.id);
 
-			Get ["/status/{id}"] = parameters => GetStatus (brokerService, parameters.id);
+			Get ["/vhosts/{id}"] = parameters => GetVHosts (brokerService, parameters.id);
 
 			Get ["/events/{id}"] = parameters => GetEvents (brokerService, parameters.id);
 
@@ -58,19 +58,19 @@ namespace QueueSpy.Api
 			}
 		}
 
-		public dynamic GetEvents (IBrokerService brokerService, int id)
+		public dynamic GetVHosts (IBrokerService brokerService, int id)
 		{
 			try {
-				return brokerService.GetEvents(this.UserId(), id);
+				return brokerService.GetVHosts(this.UserId(), id);
 			} catch (ItemNotFoundException) {
 				return HttpStatusCode.NotFound;
 			}
 		}
 
-		public dynamic GetStatus (IBrokerService brokerService, int id)
+		public dynamic GetEvents (IBrokerService brokerService, int id)
 		{
 			try {
-				return brokerService.GetBrokerStatus(this.UserId(), id);
+				return brokerService.GetEvents(this.UserId(), id);
 			} catch (ItemNotFoundException) {
 				return HttpStatusCode.NotFound;
 			}

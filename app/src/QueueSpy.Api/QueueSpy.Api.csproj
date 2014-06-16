@@ -116,7 +116,5 @@
     <Folder Include="Authorization\" />
     <Folder Include="Services\" />
     <Folder Include="Modules\" />
-    <Folder Include="Model\" />
-    <Folder Include="Data\" />
   </ItemGroup>
 </Project>

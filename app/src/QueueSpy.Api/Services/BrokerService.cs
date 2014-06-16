@@ -8,7 +8,7 @@ namespace QueueSpy.Api
 	{
 		IEnumerable<Broker> GetUsersBrokers(int userId);
 		Broker GetBroker(int userId, int brokerId);
-		BrokerStatus GetBrokerStatus(int userId, int brokerId);
+		IEnumerable<VHost> GetVHosts (int userId, int brokerId);
 		IEnumerable<BrokerEvent> GetEvents(int userId, int brokerId);
 		IEnumerable<Connection> GetLiveConnections (int userId, int brokerId);
 		IEnumerable<Connection> GetDeadConnections (int userId, int brokerId);
@@ -43,22 +43,18 @@ namespace QueueSpy.Api
 			return broker;
 		}
 
-		public BrokerStatus GetBrokerStatus (int userId, int brokerId)
-		{
-			GetBroker (userId, brokerId);
-
-			var status = dbReader.Get<BrokerStatus> ("BrokerId = :BrokerId", x => x.BrokerId = brokerId).FirstOrDefault ();
-			if (status == null) {
-				throw new ItemNotFoundException ();
-			}
-			return status;
-		}
-
 		public IEnumerable<BrokerEvent> GetEvents (int userId, int brokerId)
 		{
 			GetBroker (userId, brokerId);
 
 			return dbReader.Get<BrokerEvent> ("BrokerId = :BrokerId", x => x.BrokerId = brokerId);
+		}
+
+		public IEnumerable<VHost> GetVHosts (int userId, int brokerId)
+		{
+			GetBroker (userId, brokerId);
+
+			return dbReader.Get<VHost> ("BrokerId = :BrokerId", x => x.BrokerId = brokerId);
 		}
 
 		public IEnumerable<Connection> GetLiveConnections (int userId, int brokerId)
@@ -68,9 +64,9 @@ namespace QueueSpy.Api
 			var whereClause = "BrokerId = :BrokerId AND IsConnected = TRUE";
 			Action<dynamic> propertySetter = x => x.BrokerId = brokerId;
 
-			var connections = dbReader.Get<Connection> (whereClause, propertySetter).ToList ();
-			var allClientProperties = dbReader.Get<ClientProperty, Connection> (whereClause, propertySetter).ToList ();
-			var allConsumers = dbReader.Get<Consumer, Connection> (whereClause + " AND IsConsuming = TRUE", propertySetter).ToList ();
+			var connections = dbReader.Get<Connection, VHost> (whereClause, propertySetter).ToList ();
+			var allClientProperties = dbReader.Get<ClientProperty, Connection, VHost> (whereClause, propertySetter).ToList ();
+			var allConsumers = dbReader.Get<Consumer, Connection, VHost> (whereClause + " AND IsConsuming = TRUE", propertySetter).ToList ();
 
 			foreach (var connection in connections) {
 				connection.ClientProperties = allClientProperties.Where (x => x.ConnectionId == connection.Id).ToDictionary (x => x.Key, x => x.Value);
@@ -84,8 +80,8 @@ namespace QueueSpy.Api
 		{
 			GetBroker (userId, brokerId);
 
-			var connections = dbReader.Get<Connection> ("BrokerId = :BrokerId AND IsConnected = FALSE", x => x.BrokerId = brokerId).ToList ();
-			var clientProperties = dbReader.Get<ClientProperty, Connection> ("BrokerId = :BrokerId AND IsConnected = FALSE", x => x.BrokerId = brokerId).ToList ();
+			var connections = dbReader.Get<Connection, VHost> ("BrokerId = :BrokerId AND IsConnected = FALSE", x => x.BrokerId = brokerId).ToList ();
+			var clientProperties = dbReader.Get<ClientProperty, Connection, VHost> ("BrokerId = :BrokerId AND IsConnected = FALSE", x => x.BrokerId = brokerId).ToList ();
 
 			foreach (var connection in connections) {
 				connection.ClientProperties = clientProperties.Where(x => x.ConnectionId == connection.Id).ToDictionary (x => x.Key, x => x.Value);
@@ -98,7 +94,7 @@ namespace QueueSpy.Api
 		{
 			GetBroker (userId, brokerId);
 
-			return dbReader.Get<Queue> ("BrokerId = :BrokerId AND IsCurrent = TRUE", x => x.BrokerId = brokerId).ToList ();
+			return dbReader.Get<Queue, VHost> ("BrokerId = :BrokerId AND IsCurrent = TRUE", x => x.BrokerId = brokerId).ToList ();
 		}
 	}
 
