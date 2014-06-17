@@ -85,6 +85,8 @@
     <Compile Include="Model\QueueLevel.cs" />
     <Compile Include="Handlers\QueueLevelHandler.cs" />
     <Compile Include="Model\VHost.cs" />
+    <Compile Include="Handlers\BrokerEventHandlers\VHostCreated.cs" />
+    <Compile Include="Handlers\BrokerEventHandlers\VHostDeleted.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

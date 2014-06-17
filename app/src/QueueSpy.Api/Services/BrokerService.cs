@@ -54,7 +54,7 @@ namespace QueueSpy.Api
 		{
 			GetBroker (userId, brokerId);
 
-			return dbReader.Get<VHost> ("BrokerId = :BrokerId", x => x.BrokerId = brokerId);
+			return dbReader.Get<VHost> ("BrokerId = :BrokerId AND Active = TRUE", x => x.BrokerId = brokerId);
 		}
 
 		public IEnumerable<Connection> GetLiveConnections (int userId, int brokerId)

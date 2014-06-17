@@ -111,6 +111,8 @@ namespace QueueSpy
 			return type.IsGenericType &&
 			(
 				type.GetGenericTypeDefinition () == typeof(List<>) ||
+				type.GetGenericTypeDefinition () == typeof(IList<>) ||
+				type.GetGenericTypeDefinition () == typeof(IDictionary<,>) ||
 				type.GetGenericTypeDefinition () == typeof(Dictionary<,>)
 			);
 		}

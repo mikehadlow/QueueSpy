@@ -3,5 +3,6 @@
 CREATE TABLE "VHost" ( 
     Id              SERIAL PRIMARY KEY,
     BrokerId	    INT REFERENCES "Broker"(Id),
-    Name            VARCHAR(1024)
+    Name            VARCHAR(1024),
+    Active          BOOLEAN
 );

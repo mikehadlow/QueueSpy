@@ -110,6 +110,7 @@ namespace QueueSpy.Monitor
 
 	public class CompareContext
 	{
+		public DateTime SampledAt {	get; set; }
 		public IBus Bus { get; set; }
 		public Action<Messages.BrokerEvent> SendMessage { get; set; }
 

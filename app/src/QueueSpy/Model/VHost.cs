@@ -7,6 +7,7 @@ namespace QueueSpy
 		public int Id { get; set; }
 		public int BrokerId { get; set; }
 		public string Name { get; set; }
+		public bool Active { get; set; }
 
 		public IList<Connection> Connections { get; set; }
 		public IList<Queue> Queues { get; set; }

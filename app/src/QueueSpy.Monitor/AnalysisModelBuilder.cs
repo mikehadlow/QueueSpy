@@ -162,6 +162,7 @@ namespace QueueSpy.Monitor
 				Ready = queueStatus.Ready,
 				Unacked = queueStatus.Unacked,
 				Total = queueStatus.Total,
+				SampledAt = context.SampledAt
 			});
 		}
 

@@ -39,7 +39,8 @@ namespace QueueSpy.Monitor
 			var brokerModel = brokerModelLoader.LoadBrokerModel (brokerStatus.BrokerId);
 
 			var context = new CompareContext {
-				Bus = bus
+				Bus = bus,
+				SampledAt = brokerStatus.SampledAtUtc
 			};
 
 			context.SendMessage = brokerEvent => {
