@@ -14,6 +14,9 @@ docker build -t queuespy/app --no-cache=true app/
 docker build -t queuespy/db --no-cache=true db/
 
 # stop and remove containers in correct dependency order
+docker stop queuespy_logs
+docker rm queuespy_logs
+
 docker stop queuespy_website
 docker rm queuespy_website
 
@@ -29,6 +32,9 @@ docker rm queuespy_db
 # remove all untagged images
 docker rmi $( docker images | grep '<none>' | tr -s ' ' | cut -d ' ' -f 3)
 
+# start the log container
+docker run -d -v /home/mike/logs:/logs --name queuespy_logs ubuntu echo "starting log container"
+
 # start the Postgres DB container
 docker run -d --name queuespy_db queuespy/db
 
@@ -36,9 +42,9 @@ docker run -d --name queuespy_db queuespy/db
 docker run -d -p 55672:55672 --name queuespy_rabbit -e RABBITMQ_PASS="i8rUx_32mn" tutum/rabbitmq
 
 # start the application container
-docker run -d --link queuespy_rabbit:rabbit --link queuespy_db:db --name queuespy_app -p 9001:9001 queuespy/app
+docker run -d --volumes-from queuespy_logs --link queuespy_rabbit:rabbit --link queuespy_db:db --name queuespy_app -p 9001:9001 queuespy/app
 
 # start the website container
-docker run -d --link queuespy_app:app --name queuespy_website -p 80:80 -p 443:443 queuespy/website
+docker run -d --volumes-from queuespy_logs --link queuespy_app:app --name queuespy_website -p 80:80 -p 443:443 queuespy/website
 
 
