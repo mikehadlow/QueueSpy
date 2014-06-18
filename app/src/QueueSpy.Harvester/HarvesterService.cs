@@ -75,11 +75,13 @@ namespace QueueSpy.Harvester
 						AddQueuesToBroker(client, status);
 
 					} catch (Exception e) {
+						logger.Log ("Exception in Harvester: {0}", e);
 						status.IsResponding = false;
 						status.ErrorMessage = string.Format ("{0}: {1}", e.GetType ().Name, e.Message);
 					}
 
 				} catch (UrlParseException ex) {
+					logger.Log ("UrlParseException in Harvester: {0}", ex);
 					status.IsResponding = false;
 					status.ErrorMessage = string.Format ("{0}", ex.Message);
 				}
