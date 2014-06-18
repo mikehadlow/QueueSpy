@@ -39,7 +39,7 @@ docker run -d -v /home/mike/logs:/logs --name queuespy_logs ubuntu echo "startin
 docker run -d --name queuespy_db queuespy/db
 
 # start the RabbitMQ container
-docker run -d -p 55672:55672 --name queuespy_rabbit -e RABBITMQ_PASS="i8rUx_32mn" tutum/rabbitmq
+docker run -d -p 15672:15672 --name queuespy_rabbit -e RABBITMQ_PASS="i8rUx_32mn" tutum/rabbitmq
 
 # start the application container
 docker run -d --volumes-from queuespy_logs --link queuespy_rabbit:rabbit --link queuespy_db:db --name queuespy_app -p 9001:9001 queuespy/app
