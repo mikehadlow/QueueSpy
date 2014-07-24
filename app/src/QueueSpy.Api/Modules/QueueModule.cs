@@ -14,7 +14,7 @@ namespace QueueSpy.Api
 			Get ["/{id}/levels"] = parameters => GetQueueLevels (dbReader, parameters.id);
 		}
 
-		dynamic GetQueueDetails (IDbReader dbReader, int queueId)
+		public dynamic GetQueueDetails (IDbReader dbReader, int queueId)
 		{
 			try {
 				var queue = dbReader.GetById<Queue> (queueId);
@@ -29,7 +29,7 @@ namespace QueueSpy.Api
 			}
 		}
 
-		dynamic GetQueueLevels (IDbReader dbReader, int queueId)
+		public dynamic GetQueueLevels (IDbReader dbReader, int queueId)
 		{
 			return dbReader.Get<QueueLevel> ("QueueId = :QueueId", x => x.QueueId = queueId).ToList();
 		}
