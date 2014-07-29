@@ -38,6 +38,14 @@ namespace QueueSpy.Alerter
 		void HandleBrokerEvent (QueueSpy.Messages.BrokerEvent brokerEvent)
 		{
 			logger.Log (string.Format ("Got BrokerEvent {0}", brokerEvent.Description));
+
+			// Very simple initial implementation, just alert on all broker events
+			bus.SendCommand<Messages.Alert> (new Messages.Alert {
+				BrokerId = brokerEvent.BrokerId,
+				AlertTypeId = brokerEvent.EventTypeId,
+				DateTimeUTC = brokerEvent.DateTimeUTC,
+				Description = brokerEvent.Description
+			});
 		}
 	}
 }
