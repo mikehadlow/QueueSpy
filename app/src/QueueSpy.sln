@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueSpy.Service.Tests", "Q
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueSpy.Monitor.Tests", "QueueSpy.Monitor.Tests\QueueSpy.Monitor.Tests.csproj", "{9C7BB769-89F0-49CE-938D-9D2EF1A62CA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueSpy.Alerter", "QueueSpy.Alerter\QueueSpy.Alerter.csproj", "{8DFBED0D-8919-45A9-A297-85A422166066}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{872C848F-5EBF-41B3-8946-2AC54F8E5A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{872C848F-5EBF-41B3-8946-2AC54F8E5A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{872C848F-5EBF-41B3-8946-2AC54F8E5A62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DFBED0D-8919-45A9-A297-85A422166066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DFBED0D-8919-45A9-A297-85A422166066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DFBED0D-8919-45A9-A297-85A422166066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DFBED0D-8919-45A9-A297-85A422166066}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C7BB769-89F0-49CE-938D-9D2EF1A62CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C7BB769-89F0-49CE-938D-9D2EF1A62CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C7BB769-89F0-49CE-938D-9D2EF1A62CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
