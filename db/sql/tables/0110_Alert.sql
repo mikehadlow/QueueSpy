@@ -1,0 +1,6 @@
+﻿DROP TABLE IF EXISTS "AlertType";
+
+CREATE TABLE "AlertType" (
+	Id			INT UNIQUE PRIMARY KEY,
+	Description		VARCHAR (1024)
+);
