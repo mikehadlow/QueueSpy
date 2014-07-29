@@ -10,6 +10,7 @@ namespace QueueSpy.Api
 		Broker GetBroker(int userId, int brokerId);
 		IEnumerable<VHost> GetVHosts (int userId, int brokerId);
 		IEnumerable<BrokerEvent> GetEvents(int userId, int brokerId);
+		IEnumerable<Alert> GetAlerts (int userId, int brokerId);
 		IEnumerable<Connection> GetLiveConnections (int userId, int brokerId);
 		IEnumerable<Connection> GetDeadConnections (int userId, int brokerId);
 		IEnumerable<Queue> GetQueues (int userId, int brokerId);
@@ -48,6 +49,13 @@ namespace QueueSpy.Api
 			GetBroker (userId, brokerId);
 
 			return dbReader.Get<BrokerEvent> ("BrokerId = :BrokerId", x => x.BrokerId = brokerId);
+		}
+
+		public IEnumerable<Alert> GetAlerts (int userId, int brokerId)
+		{
+			GetBroker (userId, brokerId);
+
+			return dbReader.Get<Alert> ("BrokerId = :BrokerId", x => x.BrokerId = brokerId);
 		}
 
 		public IEnumerable<VHost> GetVHosts (int userId, int brokerId)
