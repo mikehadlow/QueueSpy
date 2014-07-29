@@ -70,6 +70,8 @@
     <Compile Include="Model\Queue.cs" />
     <Compile Include="Model\QueueLevel.cs" />
     <Compile Include="Model\VHost.cs" />
+    <Compile Include="Model\AlertType.cs" />
+    <Compile Include="Model\Alert.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
