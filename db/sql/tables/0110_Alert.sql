@@ -1,6 +1,9 @@
-﻿DROP TABLE IF EXISTS "AlertType";
+﻿DROP TABLE IF EXISTS "Alert";
 
-CREATE TABLE "AlertType" (
-	Id			INT UNIQUE PRIMARY KEY,
-	Description		VARCHAR (1024)
+CREATE TABLE "Alert" (
+    Id              SERIAL PRIMARY KEY,
+    BrokerId        INT REFERENCES "Broker"(Id),
+    AlertTypeId     INT REFERENCES "AlertType"(Id),
+    Description     VARCHAR (1024),
+    DateTimeUTC     TIMESTAMP
 );
