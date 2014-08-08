@@ -27,7 +27,7 @@ namespace QueueSpy.Executor
 		{
 			var newConsumer = (Messages.NewConsumer)brokerEvent;
 
-			var connection = dbReader.Get<QueueSpy.Connection> ("Name = :Name", x => x.Name = newConsumer.ConnectionName)
+			var connection = dbReader.Get<QueueSpy.Connection> ("Name = :Name and IsConnected = TRUE", x => x.Name = newConsumer.ConnectionName)
 				.SingleOrDefault ();
 
 			if (connection == null) {
