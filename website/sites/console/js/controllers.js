@@ -43,6 +43,18 @@ queuespyApp.config(['$routeProvider', function ($routeProvider){
             templateUrl: 'html/queue-detail.html',
             controller: 'QueueDetailController'
         }).
+        when('/events/:brokerId', {
+            templateUrl: 'html/events.html',
+            controller: 'EventsController'
+        }).
+        when('/alerts/:brokerId', {
+            templateUrl: 'html/alerts.html',
+            controller: 'AlertsController'
+        }).
+        when('/connections/:brokerId', {
+            templateUrl: 'html/connections.html',
+            controller: 'ConnectionsController'
+        }).
 		when('/version', {
 			templateUrl: 'html/version.html',
 			controller: 'VersionController'
@@ -301,6 +313,36 @@ queuespyControllers.controller('QueueDetailController', function ($scope, $http,
         $scope.graphLevels = data.map(function(d) {
             return [new Date(d.sampledAt), +d.total];
         });
+    });
+});
+
+queuespyControllers.controller('EventsController', function ($scope, $http, $routeParams) {
+    $scope.events = [];
+
+    var id = $routeParams.brokerId;
+
+    $http.get('/api/broker/events/' + id).success(function(data) {
+        $scope.events = data;
+    });
+});
+
+queuespyControllers.controller('AlertsController', function ($scope, $http, $routeParams) {
+    $scope.alerts = [];
+
+    var id = $routeParams.brokerId;
+
+    $http.get('/api/broker/alerts/' + id).success(function(data) {
+        $scope.alerts = data;
+    });
+});
+
+queuespyControllers.controller('ConnectionsController', function ($scope, $http, $routeParams) {
+    $scope.connections = [];
+
+    var id = $routeParams.brokerId;
+
+    $http.get('/api/connection/' + id).success(function(data) {
+        $scope.connections = data;
     });
 });
 

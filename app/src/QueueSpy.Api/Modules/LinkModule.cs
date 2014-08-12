@@ -19,6 +19,7 @@ namespace QueueSpy.Api
 		IEnumerable<QueueSpy.Api.Link> GetLinks (IBrokerService brokerService)
 		{
 			var links = new List<Api.Link> ();
+			var userId = this.UserId ();
 
 			// hard coded first level links:
 			var brokers = new Link { Href = "#/brokers", Label = "Brokers" };
@@ -27,20 +28,43 @@ namespace QueueSpy.Api
 			links.Add (new Link { Href = "#/users", Label = "Users" });
 			links.Add (new Link { Href = "#/heartbeats", Label = "Heartbeats" });
 
-			foreach(var broker in brokerService.GetUsersBrokers(this.UserId())) {
+			foreach(var broker in brokerService.GetUsersBrokers(userId)) {
 				var brokerLink = new Link { 
 					Href = string.Format ("#/brokers/{0}", broker.Id),
 					Label = broker.Url
 				};
 				brokers.Children.Add (brokerLink);
 
-				var queues = brokerService.GetQueues (this.UserId (), broker.Id);
-				foreach (var vhost in brokerService.GetVHosts(this.UserId(), broker.Id)) {
+				brokerLink.Children.Add (new Link { 
+					Href = string.Format("#/events/{0}", broker.Id),
+					Label = "Events"
+				});
+
+				brokerLink.Children.Add (new Link { 
+					Href = string.Format("#/alerts/{0}", broker.Id),
+					Label = "Alerts"
+				});
+
+				brokerLink.Children.Add (new Link { 
+					Href = string.Format("#/connections/{0}", broker.Id),
+					Label = "Connections"
+				});
+
+				var vhostsLink = new Link {
+					Href = string.Format("#/unknown"),
+					Label = "VHosts"
+				};
+				brokerLink.Children.Add (vhostsLink);
+
+				var queues = brokerService.GetQueues (userId, broker.Id);
+				var vhosts = brokerService.GetVHosts (userId, broker.Id);
+
+				foreach (var vhost in vhosts) {
 					var vhostLink = new Link {
 						Href = string.Format ("#/vhosts/{0}", vhost.Id),
 						Label = vhost.Name
 					};
-					brokerLink.Children.Add (vhostLink);
+					vhostsLink.Children.Add (vhostLink);
 
 					foreach (var queue in queues.Where(x => x.VHostId == vhost.Id)) {
 						vhostLink.Children.Add (new Link {

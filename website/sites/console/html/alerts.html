@@ -1,0 +1,16 @@
+<div class="row">
+    <h1>Alerts</h1>
+</div>
+
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>Description</th>
+            <th>Date/Time</th>
+        </tr>
+        <tr ng-repeat="alert in alerts">
+            <td>{{alert.description}}</td>
+            <td>{{alert.dateTimeUTC}}</td>
+        </tr>
+    </table>
+</div>

@@ -51,6 +51,11 @@ body {
 .nav-sidebar li {
   list-style-type: none;
 }
+.nav-sidebar ul {
+  margin-left: 0;
+  padding-left: 30px; /* 30px indentation in left tree view */
+}
+
 .nav-sidebar > .active > a {
   color: #fff;
   background-color: #428bca;
