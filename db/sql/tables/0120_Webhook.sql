@@ -1,0 +1,8 @@
+﻿DROP TABLE IF EXISTS "Webhook";
+
+CREATE TABLE "Webhook" (
+	Id				SERIAL PRIMARY KEY,
+	UserId				INT REFERENCES "User"(Id),
+	Url				VARCHAR(1024)
+);
+

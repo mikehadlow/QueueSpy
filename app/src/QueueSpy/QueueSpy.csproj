@@ -72,6 +72,7 @@
     <Compile Include="Model\VHost.cs" />
     <Compile Include="Model\AlertType.cs" />
     <Compile Include="Model\Alert.cs" />
+    <Compile Include="Model\Webhook.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

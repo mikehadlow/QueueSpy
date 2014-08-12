@@ -90,6 +90,8 @@
     <Compile Include="Model\Alert.cs" />
     <Compile Include="Model\AlertType.cs" />
     <Compile Include="Handlers\AlertHandler.cs" />
+    <Compile Include="Model\Webhook.cs" />
+    <Compile Include="Handlers\WebhookHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

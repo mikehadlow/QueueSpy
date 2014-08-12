@@ -54,6 +54,7 @@
     <Compile Include="Commands\BrokerEvents\VHostCreated.cs" />
     <Compile Include="Commands\BrokerEvents\VHostDeleted.cs" />
     <Compile Include="Commands\Alert.cs" />
+    <Compile Include="Commands\NewWebhook.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
