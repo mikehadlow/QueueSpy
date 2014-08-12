@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using EasyNetQ;
 using TinyIoC;
 using EasyNetQ.Topology;
+using System.Collections.Generic;
 
 namespace QueueSpy.Alerter
 {
@@ -9,14 +11,35 @@ namespace QueueSpy.Alerter
 	{
 		private readonly IBus bus;
 		private readonly ILogger logger;
+		private readonly IDbReader dbReader;
 
-		public AlerterService (IBus bus, ILogger logger)
+		private readonly IList<IAlertSink> alertSinks = new List<IAlertSink>();
+
+		public AlerterService (IBus bus, ILogger logger, IDbReader dbReader, TinyIoC.TinyIoCContainer container)
 		{
 			Preconditions.CheckNotNull (bus, "bus");
 			Preconditions.CheckNotNull (logger, "logger");
+			Preconditions.CheckNotNull (dbReader, "dbReader");
 
 			this.bus = bus;
 			this.logger = logger;
+			this.dbReader = dbReader;
+
+			LoadAlertSinks (container);
+		}
+
+		private void LoadAlertSinks(TinyIoC.TinyIoCContainer container)
+		{
+			var alertSinkInstances =
+				from t in GetType ().Assembly.GetTypes ()
+				where t.GetInterfaces ().Any (x => x.Name == typeof(IAlertSink).Name)
+				select (IAlertSink)container.Resolve (t);
+
+			foreach(var alertSink in alertSinkInstances)
+			{
+				logger.Log (string.Format("Loaded IAlertSink {0}", alertSink.GetType()));
+				alertSinks.Add (alertSink);
+			}
 		}
 
 		public void Start ()
@@ -40,13 +63,41 @@ namespace QueueSpy.Alerter
 			logger.Log (string.Format ("Got BrokerEvent {0}", brokerEvent.Description));
 
 			// Very simple initial implementation, just alert on all broker events
-			bus.SendCommand<Messages.Alert> (new Messages.Alert {
-				BrokerId = brokerEvent.BrokerId,
-				AlertTypeId = brokerEvent.EventTypeId,
+			// TODO: Filter on user preferences
+			var broker = dbReader.GetById<Broker> (brokerEvent.BrokerId);
+			var user = dbReader.GetById<User> (broker.UserId);
+
+			var alertInfo = new AlertInfo {
+				Broker = broker,
+				User = user,
+				AlertType = AlertTypeFromEventTypeId(brokerEvent.EventTypeId),
 				DateTimeUTC = brokerEvent.DateTimeUTC,
 				Description = brokerEvent.Description
-			});
+			};
+
+			foreach(var alertSink in alertSinks) {
+				alertSink.Handle (alertInfo);
+			}
 		}
+
+		AlertType AlertTypeFromEventTypeId (int eventTypeId)
+		{
+			return (AlertType)eventTypeId;
+		}
+	}
+
+	public interface IAlertSink
+	{
+		void Handle (AlertInfo alertInfo);
+	}
+
+	public class AlertInfo
+	{
+		public Broker Broker { get; set; }
+		public User User { get; set; }
+		public AlertType AlertType { get; set; }
+		public DateTime DateTimeUTC { get; set; }
+		public string Description { get; set; }
 	}
 }
 

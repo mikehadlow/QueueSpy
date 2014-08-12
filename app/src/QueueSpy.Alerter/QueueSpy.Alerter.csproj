@@ -45,6 +45,8 @@
       <Link>Properties\Version.cs</Link>
     </Compile>
     <Compile Include="AlerterService.cs" />
+    <Compile Include="AlertSinks\CommandAlertSink.cs" />
+    <Compile Include="AlertSinks\EmailAlertSink.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -64,5 +66,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AlertSinks\" />
   </ItemGroup>
 </Project>

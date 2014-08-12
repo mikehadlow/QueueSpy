@@ -38,7 +38,7 @@ namespace QueueSpy.Mailer
 		public void HandleEmailRequest(Messages.SendEmailRequest emailRequest)
 		{
 			using (var message = new MailMessage (fromAddress, emailRequest.ToAddress) {
-				Subject = emailRequest.Subject,
+				Subject = "[QueueSpy] " + emailRequest.Subject,
 				Body = emailRequest.Body
 			}) {
 				smtpClient.Send (message);
