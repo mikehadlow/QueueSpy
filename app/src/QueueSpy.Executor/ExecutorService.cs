@@ -70,9 +70,11 @@ namespace QueueSpy.Executor
 		private void AddReceiveRegistration<T>(IReceiveRegistration receiveRegistration, ICommandHandler<T> commandHandler) 
 			where T : class
 		{
-			receiveRegistration.Add ((Func<T, Task>)(
-				command => Task.Factory.StartNew (() => commandHandler.Handle (command))
-			));
+//			receiveRegistration.Add ((Func<T, Task>)(
+//				command => Task.Factory.StartNew (() => commandHandler.Handle (command))
+//			));
+
+			receiveRegistration.Add ((Action<T>)commandHandler.Handle);
 		}
 	}
 
