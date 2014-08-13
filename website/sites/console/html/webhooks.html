@@ -1,0 +1,19 @@
+<div class="row">
+    <h1>Web Hooks</h1>
+    <a href="#/webhook-add/">Add New Web Hook</a>
+</div>
+
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>URL</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr ng-repeat="webhook in webhooks">
+            <td>{{webhook.url}}</td>
+            <td>test</td>
+            <td>delete</td>
+        </tr>
+    </table>
+</div>

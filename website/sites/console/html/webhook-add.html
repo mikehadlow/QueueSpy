@@ -1,0 +1,26 @@
+<div>
+    <h1>Add New Web Hook</h1>
+
+    <form ng-submit="submit()" class="form-horizontal" role="form">
+
+        <div class="form-group">
+            <label for="inputUrl" class="col-sm-2 control-label">URL</label>
+            <div class="col-sm-4">
+                <input ng-model="webhook.url" type="text" class="form-control" id="inputUrl" placeholder="http://myserver/myhook/">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-4">
+                <button type="submit" class="btn btn-default">Add Web Hook</button>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-6">
+            <p>{{message}}</a>
+        </div>
+    </div>
+</div>

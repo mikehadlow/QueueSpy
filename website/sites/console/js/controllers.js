@@ -55,6 +55,14 @@ queuespyApp.config(['$routeProvider', function ($routeProvider){
             templateUrl: 'html/connections.html',
             controller: 'ConnectionsController'
         }).
+        when('/webhooks', {
+            templateUrl: 'html/webhooks.html',
+            controller: 'WebhooksController'
+        }).
+        when('/webhook-add', {
+            templateUrl: 'html/webhook-add.html',
+            controller: 'WebhookAddController'
+        }).
 		when('/version', {
 			templateUrl: 'html/version.html',
 			controller: 'VersionController'
@@ -344,6 +352,33 @@ queuespyControllers.controller('ConnectionsController', function ($scope, $http,
     $http.get('/api/connection/' + id).success(function(data) {
         $scope.connections = data;
     });
+});
+
+queuespyControllers.controller('WebhooksController', function ($scope, $http, $routeParams) {
+    $scope.webhooks = [];
+
+    $http.get('/api/webhook').success(function(data) {
+        $scope.webhooks = data;
+    });
+});
+
+queuespyControllers.controller('WebhookAddController', function ($scope, $http, $routeParams) {
+
+    var nullWebhook = { url: '' };
+
+    $scope.webhook = nullWebhook;
+
+    $scope.submit = function () {
+        $http
+            .post('/api/webhook', $scope.webhook)
+            .success(function (data, status, headers, config) {
+                $scope.message = 'Web Hook Added';
+                $scope.webhook = nullWebhook;
+            })
+            .error(function (data, status, headers, config) {
+                $scope.message = data.message;
+            });
+    };
 });
 
 queuespyControllers.controller('VersionController', function ($scope, $http) {

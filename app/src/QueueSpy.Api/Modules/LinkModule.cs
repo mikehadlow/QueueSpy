@@ -24,6 +24,8 @@ namespace QueueSpy.Api
 			// hard coded first level links:
 			var brokers = new Link { Href = "#/brokers", Label = "Brokers" };
 			links.Add (brokers);
+
+			links.Add (new Link { Href = "#/webhooks", Label = "Web Hooks" });
 			links.Add (new Link { Href = "#/version", Label = "Version" });
 			links.Add (new Link { Href = "#/users", Label = "Users" });
 			links.Add (new Link { Href = "#/heartbeats", Label = "Heartbeats" });

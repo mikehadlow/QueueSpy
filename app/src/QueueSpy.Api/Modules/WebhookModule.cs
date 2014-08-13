@@ -22,11 +22,12 @@ namespace QueueSpy.Api
 			return dbReader.Get<Webhook> ("UserId = :UserId", x => x.UserId = userId);
 		}
 
-		object CreateNewWebhook (IBus bus, NewWebhookPost newWebhookPost)
+		dynamic CreateNewWebhook (IBus bus, NewWebhookPost newWebhookPost)
 		{
+			Console.WriteLine ("Got new webhook: {0}", newWebhookPost.url);
 			bus.SendCommand (new Messages.NewWebhook {
 				Url = newWebhookPost.url,
-				UserId = newWebhookPost.userId
+				UserId = this.UserId()
 			});
 
 			return HttpStatusCode.OK;
