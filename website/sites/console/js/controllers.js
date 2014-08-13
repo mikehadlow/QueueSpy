@@ -357,9 +357,25 @@ queuespyControllers.controller('ConnectionsController', function ($scope, $http,
 queuespyControllers.controller('WebhooksController', function ($scope, $http, $routeParams) {
     $scope.webhooks = [];
 
-    $http.get('/api/webhook').success(function(data) {
-        $scope.webhooks = data;
-    });
+    var update = function() {
+        $http.get('/api/webhook').success(function(data) {
+            $scope.webhooks = data;
+        });
+    };
+
+    $scope.delete = function (id) {
+        $http
+            .delete('/api/webhook/' + id)
+            .success(function () {
+                setTimeout(update, 1000);
+            });
+    };
+
+    $scope.test = function (id) {
+        // TODO implement webhook test back-end;
+    };
+
+    update();
 });
 
 queuespyControllers.controller('WebhookAddController', function ($scope, $http, $routeParams) {

@@ -2,7 +2,7 @@
 
 namespace QueueSpy.Executor
 {
-	public class WebhookHandler : ICommandHandler<Messages.NewWebhook>
+	public class WebhookHandler : ICommandHandler<Messages.NewWebhook>, ICommandHandler<Messages.DeleteWebHook>
 	{
 		private readonly IDataWriter dataWriter;
 
@@ -19,6 +19,11 @@ namespace QueueSpy.Executor
 				Url = command.Url,
 				UserId = command.UserId
 			});
+		}
+
+		public void Handle (Messages.DeleteWebHook command)
+		{
+			dataWriter.Delete<Executor.Webhook> (command.WebHookId);
 		}
 	}
 }

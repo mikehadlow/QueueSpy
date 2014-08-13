@@ -4,6 +4,7 @@ using System;
 using EasyNetQ;
 using EasyNetQ.Consumer;
 using TinyIoC;
+using System.Threading.Tasks;
 
 namespace QueueSpy.Executor
 {
@@ -35,7 +36,8 @@ namespace QueueSpy.Executor
 			var handlerTypes = 
 				from t in this.GetType().Assembly.GetTypes()
 					where t.GetInterfaces ().Any (x => x.Name == typeof(ICommandHandler<>).Name)
-				let messageType = t.GetInterfaces()[0].GetGenericArguments()[0]
+				from i in t.GetInterfaces ()
+				let messageType = i.GetGenericArguments()[0]
 				select new 
 					{ 
 						HandlerType = t, 
@@ -68,7 +70,9 @@ namespace QueueSpy.Executor
 		private void AddReceiveRegistration<T>(IReceiveRegistration receiveRegistration, ICommandHandler<T> commandHandler) 
 			where T : class
 		{
-			receiveRegistration.Add ((Action<T>)commandHandler.Handle);
+			receiveRegistration.Add ((Func<T, Task>)(
+				command => Task.Factory.StartNew (() => commandHandler.Handle (command))
+			));
 		}
 	}
 

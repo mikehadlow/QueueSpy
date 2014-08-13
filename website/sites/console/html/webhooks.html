@@ -1,6 +1,8 @@
 <div class="row">
     <h1>Web Hooks</h1>
-    <a href="#/webhook-add/">Add New Web Hook</a>
+</div>
+<div class="row">
+    <a href="#/webhook-add/" class="btn btn-default">Add New Web Hook</a>
 </div>
 
 <div class="row">
@@ -12,8 +14,8 @@
         </tr>
         <tr ng-repeat="webhook in webhooks">
             <td>{{webhook.url}}</td>
-            <td>test</td>
-            <td>delete</td>
+            <td><button ng-click="test(webhook.id)" class="btn btn-default">test</button></td>
+            <td><button ng-click="delete(webhook.id)" class="btn btn-default">delete</button></td>
         </tr>
     </table>
 </div>

@@ -15,6 +15,8 @@ namespace QueueSpy.Api
 			Get ["/"] = parameters => GetWebhooks (dbReader, this.UserId());
 
 			Post ["/"] = _ => CreateNewWebhook (bus, this.Bind<NewWebhookPost>());
+
+			Delete ["/{id}"] = parameters => DeleteWebhook (bus, parameters.id);
 		}
 
 		IEnumerable<Webhook> GetWebhooks (IDbReader dbReader, int userId)
@@ -24,11 +26,20 @@ namespace QueueSpy.Api
 
 		dynamic CreateNewWebhook (IBus bus, NewWebhookPost newWebhookPost)
 		{
-			Console.WriteLine ("Got new webhook: {0}", newWebhookPost.url);
+			if(string.IsNullOrWhiteSpace(newWebhookPost.url)) {
+				return Respond.WithBadRequest ("You must enter a URL for the web hook.");
+			}
 			bus.SendCommand (new Messages.NewWebhook {
 				Url = newWebhookPost.url,
 				UserId = this.UserId()
 			});
+
+			return HttpStatusCode.OK;
+		}
+
+		dynamic DeleteWebhook (IBus bus, int id)
+		{
+			bus.SendCommand (new Messages.DeleteWebHook { WebHookId = id });
 
 			return HttpStatusCode.OK;
 		}
